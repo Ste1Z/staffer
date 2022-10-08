@@ -1,25 +1,43 @@
 package ru.alexanderrogachev.staffer.models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+@Getter
+@Setter
+@Entity
+@Table(name = "staffers")
 public class Staffer {
-
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int stafferId;
-
+    @Column(name = "name")
     private String name;
-
+    @Column(name = "surname")
     private String surname;
-
+    @Column(name = "patronymic")
     private String patronymic;
-
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
-
+    @Column(name = "home_shop")
     private String homeShop;
-
+    @Column(name = "email")
     private String email;
 
-    public Staffer(int stafferId, String name, String surname, String patronymic, Date dateOfBirth, String homeShop, String email) {
-        this.stafferId = stafferId;
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "staffer_requests", joinColumns = @JoinColumn(name = "staffer_id"), inverseJoinColumns = @JoinColumn(name = "request_id"))
+    private List<Request> stafferRequests;
+
+    public Staffer() {
+    }
+
+    public Staffer(String name, String surname, String patronymic, Date dateOfBirth, String homeShop, String email) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
@@ -28,66 +46,16 @@ public class Staffer {
         this.email = email;
     }
 
-    public int getStafferId() {
-        return stafferId;
-    }
-
-    public void setStafferId(int stafferId) {
-        this.stafferId = stafferId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getHomeShop() {
-        return homeShop;
-    }
-
-    public void setHomeShop(String homeShop) {
-        this.homeShop = homeShop;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void addRequestToStaffer(Request request) {
+        if (stafferRequests == null) {
+            stafferRequests = new ArrayList<>();
+        }
+        stafferRequests.add(request);
     }
 
     @Override
     public String toString() {
         return "Staffer{" +
-                "stafferId=" + stafferId +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", patronymic='" + patronymic + '\'' +
