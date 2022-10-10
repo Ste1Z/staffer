@@ -27,11 +27,4 @@ public class Shop {
         this.code = code;
     }
 
-    @Override
-    public String toString() {
-        return "Shop{" +
-                "name='" + name + '\'' +
-                ", code=" + code +
-                '}';
-    }
 }

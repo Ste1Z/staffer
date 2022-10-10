@@ -30,7 +30,7 @@ public class Request {
     @Column(name = "end_time")
     private Date endTime;
     @Column(name = "confirmation")
-    private String confirmation;
+    private Boolean confirmation;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "staffer_requests", joinColumns = @JoinColumn(name = "request_id"), inverseJoinColumns = @JoinColumn(name = "staffer_id"))
@@ -39,7 +39,7 @@ public class Request {
     public Request() {
     }
 
-    public Request(int stafferId, String shopName, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime, String confirmation) {
+    public Request(int stafferId, String shopName, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime, Boolean confirmation) {
         this.stafferId = stafferId;
         this.shopName = shopName;
         this.dateOfRequest = dateOfRequest;
@@ -56,16 +56,4 @@ public class Request {
         requestStaffers.add(staffer);
     }
 
-    @Override
-    public String toString() {
-        return "Request{" +
-                ", stafferId=" + stafferId +
-                ", shopName='" + shopName + '\'' +
-                ", dateOfRequest=" + dateOfRequest +
-                ", dateOfWork=" + dateOfWork +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", confirmation='" + confirmation + '\'' +
-                '}';
-    }
 }

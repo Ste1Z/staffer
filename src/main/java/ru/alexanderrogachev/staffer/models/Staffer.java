@@ -27,8 +27,6 @@ public class Staffer {
     private Date dateOfBirth;
     @Column(name = "home_shop")
     private String homeShop;
-    @Column(name = "email")
-    private String email;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "staffer_requests", joinColumns = @JoinColumn(name = "staffer_id"), inverseJoinColumns = @JoinColumn(name = "request_id"))
@@ -37,13 +35,12 @@ public class Staffer {
     public Staffer() {
     }
 
-    public Staffer(String name, String surname, String patronymic, Date dateOfBirth, String homeShop, String email) {
+    public Staffer(String name, String surname, String patronymic, Date dateOfBirth, String homeShop) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
         this.dateOfBirth = dateOfBirth;
         this.homeShop = homeShop;
-        this.email = email;
     }
 
     public void addRequestToStaffer(Request request) {
@@ -53,15 +50,4 @@ public class Staffer {
         stafferRequests.add(request);
     }
 
-    @Override
-    public String toString() {
-        return "Staffer{" +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", homeShop='" + homeShop + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

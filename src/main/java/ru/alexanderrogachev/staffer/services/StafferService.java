@@ -1,4 +1,4 @@
-package ru.alexanderrogachev.staffer.service;
+package ru.alexanderrogachev.staffer.services;
 
 import ru.alexanderrogachev.staffer.models.Staffer;
 

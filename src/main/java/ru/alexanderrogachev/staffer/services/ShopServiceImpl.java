@@ -1,4 +1,4 @@
-package ru.alexanderrogachev.staffer.service;
+package ru.alexanderrogachev.staffer.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
