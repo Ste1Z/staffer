@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.repositories.ShopRepository;
 
+import java.util.List;
+
 @Controller
 public class ShopController {
 
@@ -17,14 +19,14 @@ public class ShopController {
 
     @GetMapping("/shops")
     public String shops(@RequestParam(required = false) String filter, Model model) {
-        Iterable<Shop> shops = shopRepository.findAll();
+        List<Shop> shops = shopRepository.findAll();
+        List<Shop> filterShops;
         if (filter != null && !filter.isEmpty()) {
-            shops = shopRepository.findByName(filter);
+            filterShops = shopRepository.findByName(filter);
         } else {
-            shops = shopRepository.findAll();
+            filterShops = shops;
         }
-        model.addAttribute("shops", shops);
-        model.addAttribute("filter", shops);
+        model.addAttribute("filterShops", filterShops);
         return "shops";
     }
 

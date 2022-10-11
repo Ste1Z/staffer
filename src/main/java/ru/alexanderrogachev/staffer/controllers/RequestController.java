@@ -10,6 +10,7 @@ import ru.alexanderrogachev.staffer.models.Request;
 import ru.alexanderrogachev.staffer.repositories.RequestRepository;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class RequestController {
@@ -19,14 +20,14 @@ public class RequestController {
 
     @GetMapping("/requests")
     public String requests(@RequestParam(required = false) String filter, Model model) {
-        Iterable<Request> requests = requestRepository.findAll();
+        List<Request> requests = requestRepository.findAll();
+        List<Request> filterRequests;
         if (filter != null && !filter.isEmpty()) {
-            requests = requestRepository.findByShopName(filter);
+            filterRequests = requestRepository.findByShopName(filter);
         } else {
-            requests = requestRepository.findAll();
+            filterRequests = requests;
         }
-        model.addAttribute("requests", requests);
-        model.addAttribute("filter", requests);
+        model.addAttribute("filterRequests", filterRequests);
         return "requests";
     }
 

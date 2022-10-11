@@ -12,11 +12,11 @@
         <fieldset>
             <legend>Добавить нового сотрудника:</legend>
             <form name="add_staffer" method="get" action="/staffers">
-                <@t.formInput id="t1" name = "name" label = "Имя"/><br/>
-                <@t.formInput id="t2" name = "surname" label = "Фамилия"/><br/>
-                <@t.formInput id="t3" name = "patronymic" label = "Отчество"/><br/>
-                <@t.formInput id="t4" name = "dateOfBirth" label = "Дата рождения"/><br/>
-                <@t.formInput id="t5" name = "homeShop" label = "Родной магазин"/><br/>
+                <@t.formInput id="f1" name = "name" label = "Имя"/><br/>
+                <@t.formInput id="f2" name = "surname" label = "Фамилия"/><br/>
+                <@t.formInput id="f3" name = "patronymic" label = "Отчество"/><br/>
+                <@t.formInput id="f4" name = "dateOfBirth" label = "Дата рождения"/><br/>
+                <@t.formInput id="f5" name = "homeShop" label = "Родной магазин"/><br/>
                 <input type="submit" value="Добавить"/>
             </form>
         </fieldset>
@@ -26,13 +26,33 @@
     <div>
         <fieldset>
             <legend>Фильтр списка:</legend>
-            <form name="filter_staffer" method="get" action="/staffers">
-                <@t.formInput id = "t6" name = "filter" label = "Фильтр"/><br/>
+            <form name="filter_shop" method="get" action="/staffers">
+                <@t.formInput id = "f6" name = "filter" label = "Фильтр"/><br/>
                 <input type="submit" value="Найти"/>
             </form>
         </fieldset>
     </div>
     <br><br>
-    <@t.table id = "t7" rows = staffers![]/>
+
+    <table border="1px" cellspacing="2" border="1" cellpadding="5">
+        <th>№</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Отчество</th>
+        <th>Дата рождения</th>
+        <th>Родной магазин</th>
+        <#list filterStaffers![] as staffer>
+            <tr>
+                <td>${staffer?index + 1}</td>
+                <td>${staffer.name}</td>
+                <td>${staffer.surname}</td>
+                <td>${staffer.patronymic}</td>
+                <td>${staffer.dateOfBirth}</td>
+                <td>${staffer.homeShop}</td>
+            </tr>
+        <#else>
+            Ничего не найдено
+        </#list>
+    </table>
 
 </@c.page>

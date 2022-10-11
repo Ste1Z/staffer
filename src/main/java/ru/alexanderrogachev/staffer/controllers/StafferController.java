@@ -10,6 +10,7 @@ import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.repositories.StafferRepository;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class StafferController {
@@ -19,14 +20,14 @@ public class StafferController {
 
     @GetMapping("/staffers")
     public String staffers(@RequestParam(required = false) String filter, Model model) {
-        Iterable<Staffer> staffers = stafferRepository.findAll();
+        List<Staffer> staffers = stafferRepository.findAll();
+        List<Staffer> filterStaffers;
         if (filter != null && !filter.isEmpty()) {
-            staffers = stafferRepository.findByName(filter);
+            filterStaffers = stafferRepository.findByName(filter);
         } else {
-            staffers = stafferRepository.findAll();
+            filterStaffers = staffers;
         }
-        model.addAttribute("staffers", staffers);
-        model.addAttribute("filter", staffers);
+        model.addAttribute("filterStaffers", filterStaffers);
         return "staffers";
     }
 

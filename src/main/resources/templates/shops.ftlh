@@ -11,8 +11,8 @@
         <fieldset>
             <legend>Добавить новый магазин:</legend>
             <form name="add_shop" method="get" action="/shops">
-                <@t.formInput id="t1" name = "name" label = "Название"/><br/>
-                <@t.formInput id="t2" name = "code" label = "Код магазина"/><br/>
+                <@t.formInput id="f1" name = "name" label = "Название"/><br/>
+                <@t.formInput id="f2" name = "code" label = "Код магазина"/><br/>
                 <input type="submit" value="Добавить"/>
             </form>
         </fieldset>
@@ -23,12 +23,27 @@
         <fieldset>
             <legend>Фильтр списка:</legend>
             <form name="filter_shop" method="get" action="/shops">
-                <@t.formInput id = "t3" name = "filter" label = "Фильтр"/><br/>
+                <@t.formInput id = "f3" name = "filter" label = "Фильтр"/><br/>
                 <input type="submit" value="Найти"/>
             </form>
         </fieldset>
     </div>
     <br><br>
-    <@t.table id = "t4" rows = shops![]/>
+
+    <table border="1px" cellspacing="2" border="1" cellpadding="5">
+        <th>№</th>
+        <th>Название</th>
+        <th>Код</th>
+        <#list filterShops![] as shop>
+            <tr>
+                <td>${shop?index + 1}</td>
+                <td>${shop.name}</td>
+                <td>${shop.code}</td>
+
+            </tr>
+        <#else>
+            Ничего не найдено
+        </#list>
+    </table>
 
 </@c.page>
