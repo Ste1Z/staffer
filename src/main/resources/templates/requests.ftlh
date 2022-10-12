@@ -2,11 +2,14 @@
 <#import "parts/table.ftlh" as t>
 
 <@c.page>
+
+<#--Кнопка на главную -->
     <br>
     <form method="get" action="http://localhost:8080" name="to_main">
         <button>Главная</button>
     </form>
     <br><br>
+<#--Форма добавления нового запроса -->
     <div>
         <fieldset>
             <legend>Добавить новый запрос:</legend>
@@ -23,7 +26,7 @@
         </fieldset>
     </div>
     <br><br>
-
+<#--Фильтрация списка запросов-->
     <div>
         <fieldset>
             <legend>Фильтр списка:</legend>
@@ -34,7 +37,7 @@
         </fieldset>
     </div>
     <br><br>
-
+<#--Отфильтрованный список заявок. Отображение всего списка без введенного значения -->
     <table border="1px" cellspacing="2" border="1" cellpadding="5">
         <th>№</th>
         <th>ID сотрудника</th>

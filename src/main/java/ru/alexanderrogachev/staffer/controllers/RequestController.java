@@ -18,6 +18,7 @@ public class RequestController {
     @Autowired
     private RequestRepository requestRepository;
 
+    //Отображение списка запросов и фильтрация
     @GetMapping("/requests")
     public String requests(@RequestParam(required = false) String filter, Model model) {
         List<Request> requests = requestRepository.findAll();
@@ -31,6 +32,7 @@ public class RequestController {
         return "requests";
     }
 
+    //Добавление нового запроса
     @PostMapping("/requests")
     public String add(@RequestParam int stafferId, @RequestParam String shopName, @RequestParam Date dateOfRequest, @RequestParam Date dateOfWork,
                       @RequestParam Date startTime, @RequestParam Date endTime, @RequestParam Boolean confirmation, Model model) {

@@ -3,11 +3,13 @@
 
 <@c.page>
 
+<#--Кнопка на главную -->
     <br>
     <form method="get" action="http://localhost:8080" name="to_main">
         <button>Главная</button>
     </form>
     <br><br>
+<#--Форма добавления нового сотрудника -->
     <div>
         <fieldset>
             <legend>Добавить нового сотрудника:</legend>
@@ -22,7 +24,7 @@
         </fieldset>
     </div>
     <br><br>
-
+<#--Фильтрация списка сотрудников-->
     <div>
         <fieldset>
             <legend>Фильтр списка:</legend>
@@ -33,7 +35,7 @@
         </fieldset>
     </div>
     <br><br>
-
+<#--Отфильтрованный список сотрудников. Отображение всего списка без введенного значения -->
     <table border="1px" cellspacing="2" border="1" cellpadding="5">
         <th>№</th>
         <th>Имя</th>

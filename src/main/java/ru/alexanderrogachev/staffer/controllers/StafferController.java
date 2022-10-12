@@ -18,6 +18,7 @@ public class StafferController {
     @Autowired
     private StafferRepository stafferRepository;
 
+    //Отображение списка сотрудников и фильтрация
     @GetMapping("/staffers")
     public String staffers(@RequestParam(required = false) String filter, Model model) {
         List<Staffer> staffers = stafferRepository.findAll();
@@ -31,6 +32,7 @@ public class StafferController {
         return "staffers";
     }
 
+    //Добавление нового сотрудника
     @PostMapping("/staffers")
     public String add(@RequestParam String name, @RequestParam String surname, @RequestParam String patronymic,
                       @RequestParam Date dateOfBirth, @RequestParam String homeShop, Model model) {

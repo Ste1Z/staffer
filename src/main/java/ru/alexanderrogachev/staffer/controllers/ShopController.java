@@ -17,6 +17,7 @@ public class ShopController {
     @Autowired
     private ShopRepository shopRepository;
 
+    //Отображение списка магазинов и фильтрация
     @GetMapping("/shops")
     public String shops(@RequestParam(required = false) String filter, Model model) {
         List<Shop> shops = shopRepository.findAll();
@@ -30,6 +31,7 @@ public class ShopController {
         return "shops";
     }
 
+    //Добавление нового магазина
     @PostMapping("/shops")
     public String add(@RequestParam String name, @RequestParam int code, Model model) {
         Shop shop = new Shop(name, code);
