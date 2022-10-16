@@ -12,4 +12,6 @@ public interface RequestService {
     public Request getRequest(int id);
 
     public void deleteRequest(int id);
+
+    public List<Request> findRequestByShopName(String name);
 }

@@ -2,6 +2,7 @@ package ru.alexanderrogachev.staffer.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,18 +14,26 @@ import java.util.List;
 @Entity
 @Table(name = "staffers")
 public class Staffer {
+
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int stafferId;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "surname")
     private String surname;
+
     @Column(name = "patronymic")
     private String patronymic;
+
     @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
+
     @Column(name = "home_shop")
     private String homeShop;
 
@@ -41,13 +50,6 @@ public class Staffer {
         this.patronymic = patronymic;
         this.dateOfBirth = dateOfBirth;
         this.homeShop = homeShop;
-    }
-
-    public void addRequestToStaffer(Request request) {
-        if (stafferRequests == null) {
-            stafferRequests = new ArrayList<>();
-        }
-        stafferRequests.add(request);
     }
 
 }

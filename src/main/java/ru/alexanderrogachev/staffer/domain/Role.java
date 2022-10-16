@@ -2,11 +2,15 @@ package ru.alexanderrogachev.staffer.domain;
 
 //Список ролей на сайте
 public enum Role {
+
+    //Неавторизованный пользователь
+    ROLE_GUEST,
     //Добавление в созданные заявки
-    STAFFER,
+    ROLE_STAFFER,
     //Добавление в созданные заявки
     //Добавление и редактирование своих заявок
-    SHOP_ADMIN,
+    ROLE_SHOP_ADMIN,
     //Абсолютная власть
-    PRIME_ADMIN
+    ROLE_PRIME_ADMIN
+
 }

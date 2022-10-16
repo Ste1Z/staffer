@@ -2,6 +2,7 @@ package ru.alexanderrogachev.staffer.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.repositories.ShopRepository;
 
@@ -10,13 +11,19 @@ import java.util.List;
 @Service
 public class ShopServiceImpl implements ShopService {
 
+
+    private final ShopRepository shopRepository;
+
     @Autowired
-    private ShopRepository shopRepository;
+    public ShopServiceImpl(ShopRepository shopRepository) {
+        this.shopRepository = shopRepository;
+    }
 
     @Override
     public List<Shop> getAllShops() {
         return shopRepository.findAll();
     }
+
 
     @Override
     public void saveShop(Shop shop) {
@@ -29,7 +36,12 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public void deleteShop(int id) {
-        shopRepository.deleteById(id);
+    public void deleteShopByName(String name) {
+        shopRepository.deleteShopByName(name);
+    }
+
+    @Override
+    public List<Shop> findShopByName(String name) {
+        return shopRepository.findByName(name);
     }
 }

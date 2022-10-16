@@ -10,8 +10,13 @@ import java.util.List;
 @Service
 public class RequestServiceImpl implements RequestService {
 
+
+    private final RequestRepository requestRepository;
+
     @Autowired
-    private RequestRepository requestRepository;
+    public RequestServiceImpl(RequestRepository requestRepository) {
+        this.requestRepository = requestRepository;
+    }
 
     @Override
     public List<Request> getAllRequests() {
@@ -31,5 +36,10 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public void deleteRequest(int id) {
         requestRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Request> findRequestByShopName(String shopName) {
+        return requestRepository.findByShopName(shopName);
     }
 }

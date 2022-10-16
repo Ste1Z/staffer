@@ -2,6 +2,7 @@ package ru.alexanderrogachev.staffer.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,22 +14,38 @@ import java.util.List;
 @Entity
 @Table(name = "requests")
 public class Request {
+
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int requestId;
+
     @Column(name = "staffer_id")
     private int stafferId;
+
     @Column(name = "shop_name")
     private String shopName;
+
     @Column(name = "date_of_request")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfRequest;
+
     @Column(name = "date_of_work")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfWork;
+
     @Column(name = "start_time")
+    @Temporal(TemporalType.TIME)
+    @DateTimeFormat(pattern = "hh:mm:ss")
     private Date startTime;
+
     @Column(name = "end_time")
+    @Temporal(TemporalType.TIME)
+    @DateTimeFormat(pattern = "hh:mm:ss")
     private Date endTime;
+
     @Column(name = "confirmation")
     private Boolean confirmation;
 
@@ -47,13 +64,6 @@ public class Request {
         this.startTime = startTime;
         this.endTime = endTime;
         this.confirmation = confirmation;
-    }
-
-    public void addStafferToRequest(Staffer staffer) {
-        if (requestStaffers == null) {
-            requestStaffers = new ArrayList<>();
-        }
-        requestStaffers.add(staffer);
     }
 
 }

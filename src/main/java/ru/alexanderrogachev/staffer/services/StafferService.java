@@ -12,4 +12,6 @@ public interface StafferService {
     public Staffer getStaffer(int id);
 
     public void deleteStaffer(int id);
+
+    public List<Staffer> findStafferByName(String name);
 }

@@ -3,17 +3,25 @@
 
 <@c.page>
 
+<#--кнопка выхода из профиля -->
+    <form method="get" action="auth/logout" name="to_logout" style="position: absolute; top:5px; right: 5px"
+          xmlns="http://www.w3.org/1999/html">
+        <button>Выйти из профиля</button>
+    </form>
+    <br>
+
 <#--Кнопка на главную -->
     <br>
     <form method="get" action="http://localhost:8080" name="to_main">
         <button>Главная</button>
     </form>
     <br><br>
+
 <#--Форма добавления нового магазина -->
     <div>
         <fieldset>
             <legend>Добавить новый магазин:</legend>
-            <form name="add_shop" method="get" action="/shops">
+            <form name="add_shop" method="post" action="/shops">
                 <@t.formInput id="f1" name = "name" label = "Название"/><br/>
                 <@t.formInput id="f2" name = "code" label = "Код магазина"/><br/>
                 <input type="submit" value="Добавить"/>
@@ -21,6 +29,7 @@
         </fieldset>
     </div>
     <br><br>
+
 <#--Фильтрация списка магазинов-->
     <div>
         <fieldset>
@@ -32,21 +41,28 @@
         </fieldset>
     </div>
     <br><br>
+
 <#--Отфильтрованный список магазинов. Отображение всего списка без введенного значения -->
     <table border="1px" cellspacing="2" border="1" cellpadding="5">
         <th>№</th>
         <th>Название</th>
         <th>Код</th>
-        <#list filterShops![] as shop>
-            <tr>
-                <td>${shop?index + 1}</td>
-                <td>${shop.name}</td>
-                <td>${shop.code}</td>
-
-            </tr>
-        <#else>
-            Ничего не найдено
-        </#list>
+        <th>Удаление</th>
+            <#list filterShops![] as shop>
+                <tr>
+                    <td>${shop?index + 1}</td>
+                    <td>${shop.name}</td>
+                    <td>${shop.code}</td>
+                    <td>
+                        <form action="/shops/${shop.name}" method="post">
+                            <input type="hidden" value="${shop.name}"/>
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            <#else>
+                Ничего не найдено
+            </#list>
     </table>
 
 </@c.page>

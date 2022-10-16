@@ -1,7 +1,14 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/table.ftlh" as t>
 
+
 <@c.page>
+
+<#--кнопка выхода из профиля -->
+    <form method="get" action="auth/logout" name="to_logout" style="position: absolute; top:5px; right: 5px">
+        <button>Выйти из профиля</button>
+    </form>
+    <br>
 
 <#--Кнопка на главную -->
     <br>
@@ -9,18 +16,19 @@
         <button>Главная</button>
     </form>
     <br><br>
+
 <#--Форма добавления нового запроса -->
     <div>
         <fieldset>
             <legend>Добавить новый запрос:</legend>
-            <form name="add_request" method="get" action="/requests">
-                <@t.formInput id="f1" name = "stafferId" label = "ID сотрудника"/><br/>
-                <@t.formInput id="f2" name = "shopName" label = "Название магазина"/><br/>
-                <@t.formInput id="f3" name = "dateOfRequest" label = "Дата запроса"/><br/>
-                <@t.formInput id="f4" name = "dateOfWork" label = "Дата работы"/><br/>
-                <@t.formInput id="f5" name = "startTime" label = "Время начала"/><br/>
-                <@t.formInput id="f6" name = "endTime" label = "Время окончания"/><br/>
-                <@t.formInput id="f7" name = "confirmation" label = "Подтверждение"/><br/>
+            <form name="add_request" method="post" action="/requests">
+                <@t.formInput id="f1" name="stafferId" label="ID сотрудника"/><br/>
+                <@t.formInput id="f2" name="shopName" label="Название магазина"/><br/>
+                <@t.formInput id="date" type="date" name="dateOfRequest" label="Дата запроса"/><br/>
+                <@t.formInput id="date" type="date" name="dateOfWork" label="Дата работы"/><br/>
+                <@t.formInput id="f5" type="time" name="startTime" label="Время начала"/><br/>
+                <@t.formInput id="f6" type="time" name="endTime" label="Время окончания"/><br/>
+                <@t.formInput id="f7" name="confirmation" label="Подтверждение"/><br/>
                 <input type="submit" value="Добавить"/>
             </form>
         </fieldset>

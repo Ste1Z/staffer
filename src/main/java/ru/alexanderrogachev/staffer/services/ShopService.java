@@ -11,5 +11,8 @@ public interface ShopService {
 
     public Shop getShop(int id);
 
-    public void deleteShop(int id);
+    public void deleteShopByName(String name);
+
+    public List<Shop> findShopByName(String name);
+
 }

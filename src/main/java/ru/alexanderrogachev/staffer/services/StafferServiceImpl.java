@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class StafferServiceImpl implements StafferService {
 
+    private final StafferRepository stafferRepository;
+
     @Autowired
-    private StafferRepository stafferRepository;
+    public StafferServiceImpl(StafferRepository stafferRepository) {
+        this.stafferRepository = stafferRepository;
+    }
 
     @Override
     public List<Staffer> getAllStaffers() {
@@ -31,5 +35,10 @@ public class StafferServiceImpl implements StafferService {
     @Override
     public void deleteStaffer(int id) {
         stafferRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Staffer> findStafferByName(String name) {
+        return stafferRepository.findByName(name);
     }
 }

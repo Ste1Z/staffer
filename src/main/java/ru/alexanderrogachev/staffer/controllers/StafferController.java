@@ -4,27 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.alexanderrogachev.staffer.models.Staffer;
-import ru.alexanderrogachev.staffer.repositories.StafferRepository;
+import ru.alexanderrogachev.staffer.services.StafferServiceImpl;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
 public class StafferController {
 
+    private final StafferServiceImpl stafferService;
+
     @Autowired
-    private StafferRepository stafferRepository;
+    public StafferController(StafferServiceImpl stafferService) {
+        this.stafferService = stafferService;
+    }
 
     //Отображение списка сотрудников и фильтрация
     @GetMapping("/staffers")
     public String staffers(@RequestParam(required = false) String filter, Model model) {
-        List<Staffer> staffers = stafferRepository.findAll();
+        List<Staffer> staffers = stafferService.getAllStaffers();
         List<Staffer> filterStaffers;
         if (filter != null && !filter.isEmpty()) {
-            filterStaffers = stafferRepository.findByName(filter);
+            filterStaffers = stafferService.findStafferByName(filter);
         } else {
             filterStaffers = staffers;
         }
@@ -34,13 +38,11 @@ public class StafferController {
 
     //Добавление нового сотрудника
     @PostMapping("/staffers")
-    public String add(@RequestParam String name, @RequestParam String surname, @RequestParam String patronymic,
-                      @RequestParam Date dateOfBirth, @RequestParam String homeShop, Model model) {
-        Staffer staffer = new Staffer(name, surname, patronymic, dateOfBirth, homeShop);
-        stafferRepository.save(staffer);
-        Iterable<Staffer> staffers = stafferRepository.findAll();
-        model.addAttribute("staffers", staffers);
+    public String add(@ModelAttribute("staffer") Staffer staffer) {
+        stafferService.saveStaffer(staffer);
         return "staffers";
     }
+
+
 
 }

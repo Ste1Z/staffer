@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 //Класс пользователя
 
@@ -13,28 +14,35 @@ import java.util.Set;
 @Entity
 @Table(name = "credentials")
 public class User {
+
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotEmpty(message = "Имя не должно быть пустым")
+    @Size(min = 2, max = 30, message = "Имя должно быть длиной не менее 2 и не более 30 символов")
     @Column(name = "staffer_username")
     private String username;
+
+    @NotEmpty(message = "Пароль не должен быть пустым")
+    @Size(min = 2, message = "Имя должно быть длиной не менее 2 символов")
     @Column(name = "staffer_password")
     private String password;
+
+    @Column(name = "roles")
+    private String role;
+
     @Column(name = "enabled")
     private boolean enabled;
-//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "credentials", joinColumns = @JoinColumn(name = "roles"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String username, String password, boolean enabled) {
+    public User(String username, String password, boolean enabled, String role) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
-//        this.roles = roles;
+        this.role = role;
     }
 }

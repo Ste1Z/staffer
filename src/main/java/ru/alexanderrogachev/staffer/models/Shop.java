@@ -8,14 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//TODO добавить город
+
 @Getter
 @Setter
 @Entity
 @Table(name = "shops")
 public class Shop {
+
     @Id
     @Column(name = "name")
     private String name;
+
     @Column(name = "code")
     private int code;
 

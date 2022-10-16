@@ -9,5 +9,7 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     List<Shop> findByName(String name);
 
+    void deleteShopByName(String name);
+
 
 }

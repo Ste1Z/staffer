@@ -4,27 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.alexanderrogachev.staffer.models.Request;
-import ru.alexanderrogachev.staffer.repositories.RequestRepository;
+import ru.alexanderrogachev.staffer.services.RequestServiceImpl;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
 public class RequestController {
 
+    private final RequestServiceImpl requestService;
+
     @Autowired
-    private RequestRepository requestRepository;
+    public RequestController(RequestServiceImpl requestService) {
+        this.requestService = requestService;
+    }
 
     //Отображение списка запросов и фильтрация
     @GetMapping("/requests")
     public String requests(@RequestParam(required = false) String filter, Model model) {
-        List<Request> requests = requestRepository.findAll();
+        List<Request> requests = requestService.getAllRequests();
         List<Request> filterRequests;
         if (filter != null && !filter.isEmpty()) {
-            filterRequests = requestRepository.findByShopName(filter);
+            filterRequests = requestService.findRequestByShopName(filter);
         } else {
             filterRequests = requests;
         }
@@ -34,12 +38,8 @@ public class RequestController {
 
     //Добавление нового запроса
     @PostMapping("/requests")
-    public String add(@RequestParam int stafferId, @RequestParam String shopName, @RequestParam Date dateOfRequest, @RequestParam Date dateOfWork,
-                      @RequestParam Date startTime, @RequestParam Date endTime, @RequestParam Boolean confirmation, Model model) {
-        Request request = new Request(stafferId, shopName, dateOfRequest, dateOfWork, startTime, endTime, confirmation);
-        requestRepository.save(request);
-        Iterable<Request> requests = requestRepository.findAll();
-        model.addAttribute("requests", requests);
+    public String add(@ModelAttribute("request") Request request) {
+        requestService.saveRequest(request);
         return "requests";
     }
 }
