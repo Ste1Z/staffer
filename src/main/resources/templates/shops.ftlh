@@ -3,7 +3,7 @@
 
 <@c.page>
 
-<#--кнопка выхода из профиля -->
+<#--Кнопка выхода из профиля -->
     <form method="get" action="auth/logout" name="to_logout" style="position: absolute; top:5px; right: 5px"
           xmlns="http://www.w3.org/1999/html">
         <button>Выйти из профиля</button>
@@ -24,6 +24,7 @@
             <form name="add_shop" method="post" action="/shops">
                 <@t.formInput id="f1" name = "name" label = "Название"/><br/>
                 <@t.formInput id="f2" name = "code" label = "Код магазина"/><br/>
+                <@t.formInput id="f3" name = "branch" label = "Филиал"/><br/>
                 <input type="submit" value="Добавить"/>
             </form>
         </fieldset>
@@ -35,7 +36,7 @@
         <fieldset>
             <legend>Фильтр списка:</legend>
             <form name="filter_shop" method="get" action="/shops">
-                <@t.formInput id = "f3" name = "filter" label = "Фильтр"/><br/>
+                <@t.formInput id = "f4" name = "filter" label = "Фильтр"/><br/>
                 <input type="submit" value="Найти"/>
             </form>
         </fieldset>
@@ -47,12 +48,14 @@
         <th>№</th>
         <th>Название</th>
         <th>Код</th>
+        <th>Филиал</th>
         <th>Удаление</th>
             <#list filterShops![] as shop>
                 <tr>
                     <td>${shop?index + 1}</td>
                     <td>${shop.name}</td>
                     <td>${shop.code}</td>
+                    <td>${shop.branch}</td>
                     <td>
                         <form action="/shops/${shop.name}" method="post">
                             <input type="hidden" value="${shop.name}"/>

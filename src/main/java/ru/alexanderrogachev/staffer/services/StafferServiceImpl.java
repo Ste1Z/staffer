@@ -41,4 +41,9 @@ public class StafferServiceImpl implements StafferService {
     public List<Staffer> findStafferByName(String name) {
         return stafferRepository.findByName(name);
     }
+
+    @Override
+    public Staffer findStafferById(int id) {
+        return stafferRepository.findByStafferId(id);
+    }
 }

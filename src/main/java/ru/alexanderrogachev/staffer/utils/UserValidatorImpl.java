@@ -1,6 +1,7 @@
 package ru.alexanderrogachev.staffer.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -24,12 +25,15 @@ public class UserValidatorImpl implements Validator {
         return User.class.equals(clazz);
     }
 
+    //TODO переделать без ошибки в основе
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        Optional<User> optional = userDetailsService.getUser(user.getUsername());
-        if (optional.isPresent()) {
-            errors.rejectValue("username", "", "Пользователь с таким именем уже существует");
+        try {
+            userDetailsService.loadUserByUsername(user.getUsername());
+        } catch (UsernameNotFoundException ignored) {
+            return;
         }
+        errors.rejectValue("username", "", "Пользователь с таким именем уже существует");
     }
 }

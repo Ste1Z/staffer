@@ -29,10 +29,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetailsImpl(user.get());
     }
 
-    public Optional<User> getUser(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) throw new UsernameNotFoundException("Пользователь с таким именем не найден");
-        return user;
-    }
-
 }

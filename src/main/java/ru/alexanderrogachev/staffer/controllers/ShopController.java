@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.services.ShopServiceImpl;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller

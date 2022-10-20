@@ -26,6 +26,7 @@
                 <@t.formInput id="f3" name = "patronymic" label = "Отчество"/><br/>
                 <@t.formInput type="date"  id="f4" name = "dateOfBirth" label = "Дата рождения"/><br/>
                 <@t.formInput id="f5" name = "homeShop" label = "Родной магазин"/><br/>
+                <@t.formInput id="f6" name = "phoneNumber" label = "Номер телефона"/><br/>
                 <input type="submit" value="Добавить"/>
             </form>
         </fieldset>

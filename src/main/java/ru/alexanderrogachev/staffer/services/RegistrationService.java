@@ -24,8 +24,11 @@ public class RegistrationService {
     public void register(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        user.setEnabled(true);
+        System.out.println("пароль установлен");
         user.setRole("ROLE_STAFFER");
+        System.out.println("роль установлена");
+        user.setEnabled(true);
+        System.out.println("активация установлена");
         userRepository.save(user);
     }
 }

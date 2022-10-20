@@ -23,12 +23,15 @@ public class Shop {
     @Column(name = "code")
     private int code;
 
+    @Column(name = "branch")
+    private String branch;
+
     public Shop() {
     }
 
-    public Shop(String name, int code) {
+    public Shop(String name, int code, String branch) {
         this.name = name;
         this.code = code;
+        this.branch = branch;
     }
-
 }

@@ -2,45 +2,28 @@
 
 <@c.page>
 
+<#--кнопка профиля -->
+    <form method="get" action="/my_profile" name="to_my_profile" style="position: absolute; top:5px; right: 5px">
+        <button>Мой профиль</button>
+    </form>
+
 <#--кнопка выхода из профиля -->
-    <form method="post" action="auth/logout" name="to_logout" style="position: absolute; top:5px; right: 5px">
+    <form method="post" action="auth/logout" name="to_logout" style="position: absolute; top:40px; right: 5px">
         <button>Выйти из профиля</button>
     </form>
-    <br>
 
-<#--кнопка на страницу магазинов -->
+<#--кнопка на страницу поиска заявок -->
     <br>
-    <form method="get" action="/shops" name="to_shops">
-        <button>Магазины</button>
+    <form method="get" action="/shops" name="to_find_request">
+        <button>Поиск заявок</button>
     </form>
     <br>
 
-<#--кнопка на страницу работников -->
-    <form method="get" action="/staffers" name="to_staffers">
-        <button>Работники</button>
+<#--кнопка на страницу создания заявок -->
+    <br>
+    <form method="get" action="/shops" name="to_create_a_request">
+        <button>Создать заявку</button>
     </form>
     <br>
-
-<#--кнопка на страницу заявок -->
-    <form method="get" action="/requests" name="to_requests">
-        <button>Заявки</button>
-    </form>
-    <br>
-
-<#--кнопка входа в профиль -->
-    <form method="get" action="/auth/login" name="to_login">
-        <button>Войти в профиль</button>
-    </form>
-    <br>
-
-
-
-<#--кнопка на страницу регистрации -->
-    <form method="get" action="/auth/registration" name="to_registration">
-        <button>Регистрация</button>
-    </form>
-    <br>
-
-
 
 </@c.page>

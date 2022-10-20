@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.alexanderrogachev.staffer.domain.User;
+import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.services.RegistrationService;
+import ru.alexanderrogachev.staffer.services.StafferServiceImpl;
 import ru.alexanderrogachev.staffer.utils.UserValidatorImpl;
 
 import javax.validation.Valid;
@@ -21,10 +23,13 @@ public class RegistrationController {
 
     private final UserValidatorImpl userValidator;
 
+    private final StafferServiceImpl stafferService;
+
     @Autowired
-    public RegistrationController(RegistrationService registrationService, UserValidatorImpl userValidator) {
+    public RegistrationController(RegistrationService registrationService, UserValidatorImpl userValidator, StafferServiceImpl stafferService) {
         this.registrationService = registrationService;
         this.userValidator = userValidator;
+        this.stafferService = stafferService;
     }
 
     @GetMapping("/registration")
@@ -35,7 +40,10 @@ public class RegistrationController {
     //TODO Изменить параметр ролей
     //Регистрация
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String performRegistration(@ModelAttribute("staffer") Staffer staffer, @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        staffer.setUsersStaffer(user);
+        user.setStaffer(staffer);
+
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) return "/auth/registration";
         registrationService.register(user);

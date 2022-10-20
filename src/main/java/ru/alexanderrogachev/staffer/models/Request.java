@@ -20,11 +20,11 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int requestId;
 
-    @Column(name = "staffer_id")
-    private int stafferId;
-
     @Column(name = "shop_name")
     private String shopName;
+
+    @Column(name = "number_of_req_staffers")
+    private int numberOfReqStaffers;
 
     @Column(name = "date_of_request")
     @Temporal(TemporalType.DATE)
@@ -38,16 +38,13 @@ public class Request {
 
     @Column(name = "start_time")
     @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "hh:mm:ss")
+    @DateTimeFormat(pattern = "HH:mm:ss")
     private Date startTime;
 
     @Column(name = "end_time")
     @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "hh:mm:ss")
+    @DateTimeFormat(pattern = "HH:mm:ss")
     private Date endTime;
-
-    @Column(name = "confirmation")
-    private Boolean confirmation;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "staffer_requests", joinColumns = @JoinColumn(name = "request_id"), inverseJoinColumns = @JoinColumn(name = "staffer_id"))
@@ -56,14 +53,12 @@ public class Request {
     public Request() {
     }
 
-    public Request(int stafferId, String shopName, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime, Boolean confirmation) {
-        this.stafferId = stafferId;
+    public Request(String shopName, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime) {
         this.shopName = shopName;
         this.dateOfRequest = dateOfRequest;
         this.dateOfWork = dateOfWork;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.confirmation = confirmation;
     }
 
 }

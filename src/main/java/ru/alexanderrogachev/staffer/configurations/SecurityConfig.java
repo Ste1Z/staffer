@@ -28,13 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()// TODO включить csrf
                 .authorizeRequests()
                 .antMatchers("/admin").hasRole("PRIME_ADMIN")
-                .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
+                .antMatchers("/auth/login", "/auth/registration", "/process_login", "/error").permitAll()
                 .anyRequest().hasAnyRole("STAFFER", "SHOP_ADMIN", "PRIME_ADMIN")//TODO поменять доступ ролей
 //                .anyRequest().authenticated()//TODO отключить строку
                 .and()
                 .formLogin()
                 .loginPage("/auth/login").loginProcessingUrl("/process_login")
-                .defaultSuccessUrl("/staffers", true)//TODO поменять стартовую страницу после логина
+                .defaultSuccessUrl("/main", true)
                 .failureUrl("/auth/login?error")
                 .and()
                 .logout().logoutUrl("/auth/logout").logoutSuccessUrl("/auth/login");

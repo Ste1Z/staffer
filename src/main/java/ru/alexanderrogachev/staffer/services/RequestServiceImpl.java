@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.alexanderrogachev.staffer.models.Request;
 import ru.alexanderrogachev.staffer.repositories.RequestRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,5 +42,10 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public List<Request> findRequestByShopName(String shopName) {
         return requestRepository.findByShopName(shopName);
+    }
+
+    public void autoSetDateOfRequest(Request request) {
+        Date now = new Date();
+        request.setDateOfRequest(now);
     }
 }
