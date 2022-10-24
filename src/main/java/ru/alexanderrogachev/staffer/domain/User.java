@@ -7,6 +7,7 @@ import ru.alexanderrogachev.staffer.models.Staffer;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 //Класс пользователя
 
@@ -17,21 +18,23 @@ import javax.validation.constraints.Size;
 public class User {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotEmpty(message = "Имя не должно быть пустым")
     @Size(min = 2, max = 30, message = "Имя должно быть длиной не менее 2 и не более 30 символов")
-    @Column(name = "staffer_username")
+    @Column(name = "user_username")
     private String username;
 
     @NotEmpty(message = "Пароль не должен быть пустым")
     @Size(min = 2, message = "Имя должно быть длиной не менее 2 символов")
-    @Column(name = "staffer_password")
+    @Column(name = "user_password")
     private String password;
 
-    @Column(name = "roles")
-    private String role;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> userRole;
 
     @Column(name = "enabled")
     private boolean enabled;
@@ -42,10 +45,9 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String role, boolean enabled) {
+    public User(String username, String password, boolean enabled) {
         this.username = username;
         this.password = password;
-        this.role = role;
         this.enabled = enabled;
     }
 }

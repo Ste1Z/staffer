@@ -17,13 +17,13 @@ import javax.persistence.Table;
 public class Shop {
 
     @Id
-    @Column(name = "name")
+    @Column(name = "shop_name")
     private String name;
 
-    @Column(name = "code")
+    @Column(name = "shop_code")
     private int code;
 
-    @Column(name = "branch")
+    @Column(name = "shop_branch")
     private String branch;
 
     public Shop() {

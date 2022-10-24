@@ -15,7 +15,7 @@
                 <@t.formInput id="f2" name = "surname" label = "Фамилия"/><br/>
                 <@t.formInput id="f3" name = "patronymic" label = "Отчество"/><br/>
                 <@t.formInput type="date"  id="f4" name = "dateOfBirth" label = "Дата рождения"/><br/>
-                <@t.formInput id="f5" name = "homeShop" label = "Родной магазин"/><br/>
+                <@t.formInput id="f5" name = "homeShopName" label = "Родной магазин"/><br/>
                 <@t.formInput id="f6" name = "phoneNumber" label = "Телефонный номер"/><br/>
                 <#--TODO Добавить выбор роли-->
                 <@t.formInput id="f8" name = "username" label = "Логин"/><br/>

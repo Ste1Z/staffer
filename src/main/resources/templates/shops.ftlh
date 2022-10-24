@@ -49,19 +49,12 @@
         <th>Название</th>
         <th>Код</th>
         <th>Филиал</th>
-        <th>Удаление</th>
             <#list filterShops![] as shop>
                 <tr>
                     <td>${shop?index + 1}</td>
-                    <td>${shop.name}</td>
-                    <td>${shop.code}</td>
-                    <td>${shop.branch}</td>
-                    <td>
-                        <form action="/shops/${shop.name}" method="post">
-                            <input type="hidden" value="${shop.name}"/>
-                            <button type="submit">Удалить</button>
-                        </form>
-                    </td>
+                    <td>${shop.getName()}</td>
+                    <td>${shop.getCode()}</td>
+                    <td>${shop.getCode()}</td>
                 </tr>
             <#else>
                 Ничего не найдено

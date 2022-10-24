@@ -46,4 +46,5 @@ public class StafferServiceImpl implements StafferService {
     public Staffer findStafferById(int id) {
         return stafferRepository.findByStafferId(id);
     }
+
 }

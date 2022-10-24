@@ -23,13 +23,10 @@ public class RegistrationController {
 
     private final UserValidatorImpl userValidator;
 
-    private final StafferServiceImpl stafferService;
-
     @Autowired
-    public RegistrationController(RegistrationService registrationService, UserValidatorImpl userValidator, StafferServiceImpl stafferService) {
+    public RegistrationController(RegistrationService registrationService, UserValidatorImpl userValidator) {
         this.registrationService = registrationService;
         this.userValidator = userValidator;
-        this.stafferService = stafferService;
     }
 
     @GetMapping("/registration")
@@ -43,7 +40,6 @@ public class RegistrationController {
     public String performRegistration(@ModelAttribute("staffer") Staffer staffer, @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         staffer.setUsersStaffer(user);
         user.setStaffer(staffer);
-
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) return "/auth/registration";
         registrationService.register(user);

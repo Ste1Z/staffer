@@ -49,23 +49,19 @@
 <#--Отфильтрованный список заявок. Отображение всего списка без введенного значения -->
     <table border="1px" cellspacing="2" border="1" cellpadding="5">
         <th>№</th>
-        <th>ID сотрудника</th>
         <th>Название ММ</th>
         <th>Дата запроса</th>
         <th>Дата работы</th>
         <th>Время начала</th>
         <th>Время окончания</th>
-        <th>Подтверждение</th>
         <#list filterRequests![] as request>
             <tr>
                 <td>${request?index + 1}</td>
-                <td>${request.stafferId}</td>
-                <td>${request.shopName}</td>
-                <td>${request.dateOfRequest}</td>
-                <td>${request.dateOfWork}</td>
-                <td>${request.startTime}</td>
-                <td>${request.endTime}</td>
-                <td>${request.confirmation}</td>
+                <td>${request.getShopName()}</td>
+                <td>${request.getDateOfRequest()}</td>
+                <td>${request.getDateOfWork()}</td>
+                <td>${request.getStartTime()}</td>
+                <td>${request.getEndTime()}</td>
             </tr>
         <#else>
             Ничего не найдено

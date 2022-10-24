@@ -28,5 +28,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user.isEmpty()) throw new UsernameNotFoundException("Пользователь с таким именем не найден");
         return new UserDetailsImpl(user.get());
     }
+     public Optional<User> findUserByUsername(String username){
+         return userRepository.findByUsername(username);
+     }
 
 }

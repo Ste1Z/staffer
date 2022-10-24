@@ -25,7 +25,7 @@
                 <@t.formInput id="f2" name = "surname" label = "Фамилия"/><br/>
                 <@t.formInput id="f3" name = "patronymic" label = "Отчество"/><br/>
                 <@t.formInput type="date"  id="f4" name = "dateOfBirth" label = "Дата рождения"/><br/>
-                <@t.formInput id="f5" name = "homeShop" label = "Родной магазин"/><br/>
+                <@t.formInput id="f5" name = "homeShopName" label = "Родной магазин"/><br/>
                 <@t.formInput id="f6" name = "phoneNumber" label = "Номер телефона"/><br/>
                 <input type="submit" value="Добавить"/>
             </form>
@@ -38,7 +38,7 @@
         <fieldset>
             <legend>Фильтр списка:</legend>
             <form name="filter_shop" method="get" action="/staffers">
-                <@t.formInput id = "f6" name = "filter" label = "Фильтр"/><br/>
+                <@t.formInput id = "f7" name = "filter" label = "Фильтр"/><br/>
                 <input type="submit" value="Найти"/>
             </form>
         </fieldset>
@@ -53,14 +53,16 @@
         <th>Отчество</th>
         <th>Дата рождения</th>
         <th>Родной магазин</th>
+        <th>Номер телефона</th>
         <#list filterStaffers![] as staffer>
             <tr>
                 <td>${staffer?index + 1}</td>
-                <td>${staffer.name}</td>
-                <td>${staffer.surname}</td>
-                <td>${staffer.patronymic}</td>
-                <td>${staffer.dateOfBirth}</td>
-                <td>${staffer.homeShop}</td>
+                <td>${staffer.getName()}</td>
+                <td>${staffer.getSurname()}</td>
+                <td>${staffer.getPatronymic()}</td>
+                <td>${staffer.getDateOfBirth()}</td>
+                <td>${staffer.getHomeShopName()}</td>
+                <td>${staffer.getPhoneNumber()}</td>
             </tr>
         <#else>
             Ничего не найдено

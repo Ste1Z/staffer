@@ -40,11 +40,4 @@ public class ShopController {
         return "shops";
     }
 
-    //Удаление магазина
-    @PostMapping("/shops/{name}")
-    public String deleteShop(@PathVariable String name) {
-        shopService.deleteShopByName(name);
-        return "shops";
-    }
-
 }

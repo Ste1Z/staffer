@@ -1,7 +1,9 @@
 package ru.alexanderrogachev.staffer.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+
 //Список ролей на сайте
-public enum Role {
+public enum Role  implements GrantedAuthority {
 
     //Неавторизованный пользователь
     ROLE_GUEST,
@@ -11,6 +13,10 @@ public enum Role {
     //Добавление и редактирование своих заявок
     ROLE_SHOP_ADMIN,
     //Абсолютная власть
-    ROLE_PRIME_ADMIN
+    ROLE_PRIME_ADMIN;
 
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

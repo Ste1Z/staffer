@@ -16,7 +16,7 @@ import java.util.List;
 public class Request {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "request_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int requestId;
 
