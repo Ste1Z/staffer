@@ -3,10 +3,7 @@ package ru.alexanderrogachev.staffer.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.alexanderrogachev.staffer.models.Request;
 import ru.alexanderrogachev.staffer.services.RequestServiceImpl;
 
@@ -22,8 +19,12 @@ public class RequestController {
         this.requestService = requestService;
     }
 
+    //________________________________________
+    //Страница добавления и отображения заявок
+    //________________________________________
+
     //Отображение списка запросов и фильтрация
-    @GetMapping("/requests")
+    @GetMapping("/requests/add_request")
     public String requests(@RequestParam(required = false) String filter, Model model) {
         List<Request> requests = requestService.getAllRequests();
         List<Request> filterRequests;
@@ -33,14 +34,36 @@ public class RequestController {
             filterRequests = requests;
         }
         model.addAttribute("filterRequests", filterRequests);
-        return "requests";
+        return "requests/add_request";
     }
 
-    //Добавление нового запроса
-    @PostMapping("/requests")
-    public String add(@ModelAttribute("request") Request request) {
+    //Добавление новой заявки
+    @PostMapping("/requests/add_request")
+    public String addRequest(@ModelAttribute("request") Request request) {
         requestService.autoSetDateOfRequest(request);
         requestService.saveRequest(request);
-        return "requests";
+        return "requests/add_request";
+    }
+
+    //____________________________________
+    //Страница редактирования заявки по id
+    //____________________________________
+
+    //Отображение страницы с редактируемой заявкой
+    @GetMapping("/requests/edit_request/{requestId}")
+    public String editRequestPage(Model model, @PathVariable("requestId") int requestId) {
+        Request request = requestService.getRequest(requestId);
+        model.addAttribute("request", request);
+        return "requests/edit_request";
+    }
+
+    //Сохранение новых данных заявки
+    @PostMapping("/requests/edit_request/{requestId}")
+    public String editRequest(@ModelAttribute("request") Request request, @PathVariable("requestId") int requestId) {
+        Request oldVersionOfRequest = requestService.getRequest(requestId);
+        request.setDateOfRequest(oldVersionOfRequest.getDateOfRequest());
+        request.setRequestId(requestId);
+        requestService.saveRequest(request);
+        return "redirect:/requests/add_request";
     }
 }

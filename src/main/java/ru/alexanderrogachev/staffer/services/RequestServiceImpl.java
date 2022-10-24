@@ -44,6 +44,7 @@ public class RequestServiceImpl implements RequestService {
         return requestRepository.findByShopName(shopName);
     }
 
+    //Устанавливает текущую дату в дату запроса
     public void autoSetDateOfRequest(Request request) {
         Date now = new Date();
         request.setDateOfRequest(now);
