@@ -24,7 +24,7 @@
             <form name="add_request" method="post" action="/requests">
                 <@t.formInput id="f1" name="shopName" label="Название магазина"/><br/>
                 <@t.formInput id="f2" name="numberOfReqStaffers" label="Необходимое кол-во сотрудников"/><br/>
-                <@t.formInput id="f3" name="numberOfReqStaffers" label="Должность сотрудника(ов)"/><br/>
+                <#--TODO добавить выбор должности-->
                 <@t.formInput id="f4" type="date" name="dateOfWork" label="Дата работы"/><br/>
                 <@t.formInput id="f5" type="time" name="startTime" label="Время начала"/><br/>
                 <@t.formInput id="f6" type="time" name="endTime" label="Время окончания"/><br/>
@@ -50,6 +50,7 @@
     <table border="1px" cellspacing="2" border="1" cellpadding="5">
         <th>№</th>
         <th>Название ММ</th>
+        <th>Необ-ое кол-во сотрудников</th>
         <th>Дата запроса</th>
         <th>Дата работы</th>
         <th>Время начала</th>
@@ -58,10 +59,11 @@
             <tr>
                 <td>${request?index + 1}</td>
                 <td>${request.getShopName()}</td>
-                <td>${request.getDateOfRequest()}</td>
-                <td>${request.getDateOfWork()}</td>
-                <td>${request.getStartTime()}</td>
-                <td>${request.getEndTime()}</td>
+                <td>${request.getNumberOfReqStaffers()}</td>
+                <td>${request.getDateOfRequest()?string("dd.MM.yyyy")}</td>
+                <td>${request.getDateOfWork()?string("dd.MM.yyyy")}</td>
+                <td>${request.getStartTime()?string("HH:mm")}</td>
+                <td>${request.getEndTime()?string("HH:mm")}</td>
             </tr>
         <#else>
             Ничего не найдено

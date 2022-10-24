@@ -21,7 +21,7 @@
 
 <#--кнопка на страницу создания заявок -->
     <br>
-    <form method="get" action="/shops" name="to_create_a_request">
+    <form method="get" action="/requests" name="to_create_a_request">
         <button>Создать заявку</button>
     </form>
     <br>

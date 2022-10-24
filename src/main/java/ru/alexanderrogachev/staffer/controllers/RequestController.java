@@ -39,6 +39,7 @@ public class RequestController {
     //Добавление нового запроса
     @PostMapping("/requests")
     public String add(@ModelAttribute("request") Request request) {
+        requestService.autoSetDateOfRequest(request);
         requestService.saveRequest(request);
         return "requests";
     }

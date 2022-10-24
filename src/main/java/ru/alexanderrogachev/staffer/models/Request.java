@@ -38,12 +38,12 @@ public class Request {
 
     @Column(name = "start_time")
     @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "HH:mm:ss")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date startTime;
 
     @Column(name = "end_time")
     @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "HH:mm:ss")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date endTime;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
