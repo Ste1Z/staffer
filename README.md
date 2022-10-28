@@ -6,7 +6,7 @@
 сотрудник выходит на работу.
 
 <h2>Технологический стек:</h2>
-<li>Java + Spring Boot</li>
+<li>Java + Spring Boot + Hibernate</li>
 <li>Безопасность: Spring Security</li>
 <li>База данных: MySQL</li>
 <li>Логирование: Log4J</li>

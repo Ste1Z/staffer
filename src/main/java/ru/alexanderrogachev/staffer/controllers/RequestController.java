@@ -66,4 +66,16 @@ public class RequestController {
         requestService.saveRequest(request);
         return "redirect:/requests/add_request";
     }
+
+    //_______________________________________________
+    //Страница со списком сотрудников из заявки по id
+    //_______________________________________________
+
+    //Отображение страницы со списком сотрудников
+    @GetMapping("/requests/staffers_list/{requestId}")
+    public String staffersListPage(@ModelAttribute("request") Request request, @PathVariable("requestId") int requestId){
+
+        return "requests/staffers_list";
+    }
+
 }
