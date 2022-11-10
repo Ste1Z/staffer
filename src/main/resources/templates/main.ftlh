@@ -14,15 +14,15 @@
 
 <#--кнопка на страницу поиска заявок -->
     <br>
-    <form method="get" action="/requests/search_request" name="to_search_request">
+    <form method="get" action="/requests" name="to_requests">
         <button>Поиск заявок</button>
     </form>
     <br>
 
-<#--кнопка на страницу создания заявок -->
+<#--кнопка на страницу заявок пользователя -->
     <br>
     <form method="get" action="/requests/add_request" name="to_add_request">
-        <button>Создать заявку</button>
+        <button>Мои заявки WIP</button>
     </form>
     <br>
 

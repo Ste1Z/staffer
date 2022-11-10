@@ -17,6 +17,28 @@
     </form>
     <br><br>
 
-
+<#--Отфильтрованный список заявок. Отображение всего списка без введенного значения -->
+    <table border="1px" cellspacing="2" border="1" cellpadding="5">
+        <th>№</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Отчество</th>
+        <th>Дата рождения</th>
+        <th>Родной магазин</th>
+        <th>Номер телефона</th>
+        <#list staffers![] as staffer>
+            <tr>
+                <td>${staffer?index + 1}</td>
+                <td>${staffer.getName()}</td>
+                <td>${staffer.getSurname()}</td>
+                <td>${staffer.getPatronymic()}</td>
+                <td>${staffer.getDateOfBirth()}</td>
+                <td>${staffer.getHomeShopName()}</td>
+                <td>${staffer.getPhoneNumber()}</td>
+            </tr>
+        <#else>
+            Ничего не найдено
+        </#list>
+    </table>
 
 </@c.page>

@@ -1,5 +1,5 @@
-<#import "../parts/common.ftlh" as c>
-<#import "../parts/table.ftlh" as t>
+<#import "parts/common.ftlh" as c>
+<#import "parts/table.ftlh" as t>
 
 
 <@c.page>
@@ -17,11 +17,17 @@
     </form>
     <br><br>
 
+<#--кнопка добавления новой заявки -->
+    <form method="get" action="/requests/add_request" name="to_add_request">
+        <button>Новая заявка</button>
+    </form>
+    <br>
+
 <#--Фильтрация списка запросов-->
     <div>
         <fieldset>
             <legend>Фильтр списка:</legend>
-            <form name="filter_request" method="get" action="/requests/search_request">
+            <form name="filter_request" method="get" action="/requests">
                 <@t.formInput id = "f7" name = "filter" label = "Фильтр"/><br/>
                 <input type="submit" value="Найти"/>
             </form>
@@ -39,6 +45,7 @@
         <th>Время начала</th>
         <th>Время окончания</th>
         <th>Поданные заявки</th>
+        <th>Редактировать заявку</th>
         <th>Подать заявку</th>
         <#list filterRequests![] as request>
             <tr>
@@ -50,9 +57,16 @@
                 <td>${request.getStartTime()?string("HH:mm")}</td>
                 <td>${request.getEndTime()?string("HH:mm")}</td>
                 <#--TODO добавить ссылку на список сотрудников в заявке, счетчик заявок в значении ссылки-->
-                <td><a href="/requests/edit_request/${request.getRequestId()}">${request.getRequestStaffers().size()}</a></td>
                 <td>
-                    <form name="add_staffer_to_request" method="post" action="/requests/search_request">
+                    <a href="/requests/staffers_list/${request.getRequestId()}">кол-во заявок уже</a>
+                </td>
+                <td>
+                    <form name="edit_request" method="get" action="/requests/edit_request/${request.getRequestId()}">
+                        <input type="submit" value="Редактировать"/>
+                    </form>
+                </td>
+                <td>
+                    <form name="add_staffer_to_request" method="post" action="/requests/${request.getRequestId()}">
                         <input type="submit" value="Подать заявку"/>
                     </form>
                 </td>
