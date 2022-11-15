@@ -10,30 +10,22 @@
 
 <#--кнопка на страницу магазинов -->
     <br>
-    <form method="get" action="/shops" name="to_shops">
+    <form method="get" action="/admin/shops" name="to_shops">
         <button>Магазины</button>
     </form>
     <br>
 
 <#--кнопка на страницу работников -->
-    <form method="get" action="/staffers" name="to_staffers">
+    <form method="get" action="/admin/staffers" name="to_staffers">
         <button>Работники</button>
     </form>
     <br>
 
 <#--кнопка на страницу заявок -->
-    <form method="get" action="/requests" name="to_requests">
+    <form method="get" action="/admin/all_requests" name="to_requests">
         <button>Заявки</button>
     </form>
     <br>
-
-<#--кнопка входа в профиль -->
-    <form method="get" action="/auth/login" name="to_login">
-        <button>Войти в профиль</button>
-    </form>
-    <br>
-
-
 
 <#--кнопка на страницу регистрации -->
     <form method="get" action="/auth/registration" name="to_registration">

@@ -10,9 +10,9 @@
     </form>
     <br>
 
-<#--Кнопка на главную -->
+<#--Кнопка на панель администратора -->
     <br>
-    <form method="get" action="http://localhost:8080/main" name="to_main">
+    <form method="get" action="http://localhost:8080/admin/panel" name="to_admin_panel">
         <button>Главная</button>
     </form>
     <br><br>
@@ -56,7 +56,6 @@
         <th>Время начала</th>
         <th>Время окончания</th>
         <th>Поданные заявки</th>
-        <th>Подать заявку</th>
         <#list filterRequests![] as request>
             <tr>
                 <td>${request?index + 1}</td>
@@ -66,8 +65,7 @@
                 <td>${request.getDateOfWork()?string("dd.MM.yyyy")}</td>
                 <td>${request.getStartTime()?string("HH:mm")}</td>
                 <td>${request.getEndTime()?string("HH:mm")}</td>
-                <td><a href="/admin/all_requests">${request.getRequestStaffers().size()}</a></td>
-                <td>${request.getRequestStaffers().size()}</td>
+                <td><a href="/admin/all_requests">кол-во сотрудников</a></td>
             </tr>
         <#else>
             Ничего не найдено

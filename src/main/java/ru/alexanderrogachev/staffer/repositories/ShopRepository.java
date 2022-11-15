@@ -11,5 +11,7 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     void deleteShopByName(String name);
 
+    List<Shop> findAll();
+
 
 }

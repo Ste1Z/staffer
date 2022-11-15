@@ -54,7 +54,7 @@
                     <td>${shop?index + 1}</td>
                     <td>${shop.getName()}</td>
                     <td>${shop.getCode()}</td>
-                    <td>${shop.getCode()}</td>
+                    <td>${shop.getBranch()}</td>
                 </tr>
             <#else>
                 Ничего не найдено

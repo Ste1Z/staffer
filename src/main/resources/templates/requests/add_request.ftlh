@@ -21,10 +21,15 @@
 <#--TODO перенести форму в админку-->
     <div>
         <fieldset>
-            <legend>Добавить новый запрос:</legend>
+            <legend>Добавить новый запрос для магазина <b>${shopName}</b>:</legend>
             <form name="add_request" method="post" action="/requests/add_request">
-                <@t.formInput id="f1" name="shopName" label="Название магазина"/><br/>
-                <@t.formInput id="f2" name="numberOfReqStaffers" label="Необ-ое кол-во сотрудников"/><br/>
+                <label>Необ-ое кол-во сотрудников
+                    <select name="numberOfReqStaffers" class="form-control" required>
+                        <#list numberOfStaffers! as number>
+                            <option value="${number}">${number}</option>
+                        </#list>
+                    </select>
+                </label><br/>
                 <#--TODO добавить выбор должности-->
                 <@t.formInput id="f4" type="date" name="dateOfWork" label="Дата работы"/><br/>
                 <@t.formInput id="f5" type="time" name="startTime" label="Время начала"/><br/>

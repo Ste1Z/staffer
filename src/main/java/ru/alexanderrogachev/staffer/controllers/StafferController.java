@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.services.StafferServiceImpl;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -38,7 +39,7 @@ public class StafferController {
 
     //Добавление нового сотрудника
     @PostMapping("/staffers")
-    public String add(@ModelAttribute("staffer") Staffer staffer) {
+    public String add(@ModelAttribute("staffer") @Valid Staffer staffer) {
         stafferService.saveStaffer(staffer);
         return "staffers";
     }

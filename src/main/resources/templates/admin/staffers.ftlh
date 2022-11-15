@@ -9,9 +9,9 @@
     </form>
     <br>
 
-<#--Кнопка на главную -->
+<#--Кнопка на панель администратора -->
     <br>
-    <form method="get" action="http://localhost:8080" name="to_main">
+    <form method="get" action="http://localhost:8080/admin/panel" name="to_admin_panel">
         <button>Главная</button>
     </form>
     <br><br>

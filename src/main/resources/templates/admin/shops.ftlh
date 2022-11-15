@@ -10,9 +10,9 @@
     </form>
     <br>
 
-<#--Кнопка на главную -->
+<#--Кнопка на панель администратора -->
     <br>
-    <form method="get" action="http://localhost:8080" name="to_main">
+    <form method="get" action="http://localhost:8080/admin/panel" name="to_admin_panel">
         <button>Главная</button>
     </form>
     <br><br>
@@ -54,7 +54,7 @@
                     <td>${shop?index + 1}</td>
                     <td>${shop.getName()}</td>
                     <td>${shop.getCode()}</td>
-                    <td>${shop.getCode()}</td>
+                    <td>${shop.getBranch()}</td>
                 </tr>
             <#else>
                 Ничего не найдено

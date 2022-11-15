@@ -6,10 +6,16 @@
 <#--Форма редактирования запроса по id -->
     <div>
         <fieldset>
-            <legend>Редактировать запрос:</legend>
+            <legend>Редактировать запрос для магазина <b>${request.getShopName()}</b>:</legend>
             <form name="edit_request" method="post" action="/requests/edit_request/${request.getRequestId()}">
-                <@t.formInput id="f1" name="shopName" value="${request.getShopName()}" label="Название магазина"/><br/>
-                <@t.formInput id="f2" name="numberOfReqStaffers" value="${request.getNumberOfReqStaffers()}" label="Необ-ое кол-во сотрудников"/><br/>
+                <label>Необ-ое кол-во сотрудников
+                    <select name="numberOfReqStaffers" class="form-control" required>
+                        <option disabled selected value="${request.getNumberOfReqStaffers()}">${request.getNumberOfReqStaffers()}</option>
+                        <#list numberOfStaffers! as number>
+                            <option value="${number}">${number}</option>
+                        </#list>
+                    </select>
+                </label><br/>
                 <#--TODO добавить выбор должности-->
                 <@t.formInput id="f4" type="date" name="dateOfWork" value="${request.getDateOfWork()?string.iso}" label="Дата работы"/><br/>
                 <@t.formInput id="f5" type="time" name="startTime" value="${request.getStartTime()}" label="Время начала"/><br/>

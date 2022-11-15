@@ -49,7 +49,7 @@
                 <td>${request.getStartTime()?string("HH:mm")}</td>
                 <td>${request.getEndTime()?string("HH:mm")}</td>
                 <td>
-                    <a href="/requests/staffers_list/${request.getRequestId()}">кол-во заявок уже</a>
+                    <a href="/requests/staffers_list/${request.getRequestId()}">${request.getCountOfStaffersInRequest()}</a>
                 </td>
             </tr>
         <#else>

@@ -21,14 +21,15 @@ public class User {
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotEmpty(message = "Имя не должно быть пустым")
-    @Size(min = 2, max = 30, message = "Имя должно быть длиной не менее 2 и не более 30 символов")
+
     @Column(name = "user_username")
+    @NotEmpty(message = "Укажите логин")
+    @Size(min = 2, max = 30, message = "Имя должно быть длиной не менее 2 и не более 30 символов")
     private String username;
 
-    @NotEmpty(message = "Пароль не должен быть пустым")
-    @Size(min = 2, message = "Имя должно быть длиной не менее 2 символов")
     @Column(name = "user_password")
+    @NotEmpty(message = "Укажите пароль")
+    @Size(min = 2, message = "Имя должно быть длиной не менее 2 символов")
     private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

@@ -58,7 +58,7 @@
                 <td>${request.getEndTime()?string("HH:mm")}</td>
                 <#--TODO добавить ссылку на список сотрудников в заявке, счетчик заявок в значении ссылки-->
                 <td>
-                    <a href="/requests/staffers_list/${request.getRequestId()}">кол-во заявок уже</a>
+                    <a href="/requests/staffers_list/${request.getRequestId()}">${request.getCountOfStaffersInRequest()}</a>
                 </td>
                 <td>
                     <form name="edit_request" method="get" action="/requests/edit_request/${request.getRequestId()}">

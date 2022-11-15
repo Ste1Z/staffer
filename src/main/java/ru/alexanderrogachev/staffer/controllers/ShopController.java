@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.services.ShopServiceImpl;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -35,7 +36,7 @@ public class ShopController {
 
     //Добавление нового магазина
     @PostMapping("/shops")
-    public String addShop(@ModelAttribute("shop") Shop shop) {
+    public String addShop(@ModelAttribute("shop") @Valid Shop shop) {
         shopService.saveShop(shop);
         return "shops";
     }
