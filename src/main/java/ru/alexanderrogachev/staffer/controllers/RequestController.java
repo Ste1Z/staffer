@@ -117,4 +117,25 @@ public class RequestController {
         return "requests/staffers_list";
     }
 
+    //_______________________________________________
+    //Страница со списком сотрудников из заявки по id
+    //_______________________________________________
+
+    //Отображение страницы со списком заявок пользователя
+    @GetMapping("/requests/my_requests")
+    public String myRequestsPage(@RequestParam(required = false) String filter, Model model, HttpServletRequest http) {
+        Principal principal = http.getUserPrincipal();
+        User user = userDetailsService.findUserByUsername(principal.getName()).get();
+        Staffer staffer = user.getStaffer();
+        List<Request> requests = staffer.getStafferRequests();
+        List<Request> filterRequests;
+        if (filter != null && !filter.isEmpty()) {
+            filterRequests = requestService.findRequestByShopName(filter);
+        } else {
+            filterRequests = requests;
+        }
+        model.addAttribute("filterRequests", filterRequests);
+        return "requests/my_requests";
+    }
+
 }

@@ -21,8 +21,8 @@
 
 <#--кнопка на страницу заявок пользователя -->
     <br>
-    <form method="get" action="/requests/add_request" name="to_add_request">
-        <button>Мои заявки WIP</button>
+    <form method="get" action="/requests/my_requests" name="to_my_requests">
+        <button>Мои заявки</button>
     </form>
     <br>
 
