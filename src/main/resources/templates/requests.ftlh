@@ -40,6 +40,7 @@
         <th>№</th>
         <th>Название ММ</th>
         <th>Необ-ое кол-во сотрудников</th>
+        <th>Необ-ая должность</th>
         <th>Дата запроса</th>
         <th>Дата работы</th>
         <th>Время начала</th>
@@ -52,11 +53,11 @@
                 <td>${request?index + 1}</td>
                 <td>${request.getShopName()}</td>
                 <td>${request.getNumberOfReqStaffers()}</td>
+                <td>${request.getReqPosition()}</td>
                 <td>${request.getDateOfRequest()?string("dd.MM.yyyy")}</td>
                 <td>${request.getDateOfWork()?string("dd.MM.yyyy")}</td>
                 <td>${request.getStartTime()?string("HH:mm")}</td>
                 <td>${request.getEndTime()?string("HH:mm")}</td>
-                <#--TODO добавить ссылку на список сотрудников в заявке, счетчик заявок в значении ссылки-->
                 <td>
                     <a href="/requests/staffers_list/${request.getRequestId()}">${request.getCountOfStaffersInRequest()}</a>
                 </td>

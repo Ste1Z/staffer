@@ -27,8 +27,8 @@ public class RegistrationService {
     public void register(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        //TODO поменять установку ролей
-        user.setUserRole(Collections.singleton(Role.ROLE_STAFFER));
+//        //TODO поменять установку ролей
+//        user.setUserRole(Collections.singleton(Role.ROLE_STAFFER));
         user.setEnabled(true);
         userRepository.save(user);
     }

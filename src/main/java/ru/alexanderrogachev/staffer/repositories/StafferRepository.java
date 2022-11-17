@@ -10,4 +10,5 @@ public interface StafferRepository extends JpaRepository<Staffer, Integer> {
 
     Staffer findByStafferId(int id);
 
+
 }

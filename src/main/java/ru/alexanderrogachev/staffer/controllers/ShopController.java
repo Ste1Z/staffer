@@ -26,7 +26,7 @@ public class ShopController {
         List<Shop> shops = shopService.getAllShops();
         List<Shop> filterShops;
         if (filter != null && !filter.isEmpty()) {
-            filterShops = shopService.findShopByName(filter);
+            filterShops = shopService.findShopsByName(filter);
         } else {
             filterShops = shops;
         }

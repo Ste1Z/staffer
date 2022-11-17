@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +33,9 @@ public class Request {
     @Min(value = 0, message = "Кол-во требуемого персонала не может быть отрицательным")
     private int numberOfReqStaffers;
 
+    @Column(name = "req_position")
+    private String reqPosition;
+
     @Column(name = "date_of_request")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -59,14 +61,20 @@ public class Request {
     private Date endTime;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "staffer_requests", joinColumns = @JoinColumn(name = "request_id"), inverseJoinColumns = @JoinColumn(name = "staffer_id"))
-    private List<Staffer> requestStaffers;
+    @JoinTable(name = "not_approved_staffers", joinColumns = @JoinColumn(name = "request_id"), inverseJoinColumns = @JoinColumn(name = "staffer_id"))
+    private List<Staffer> notApprovedStaffersList;
+
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "approved_staffers", joinColumns = @JoinColumn(name = "request_id"), inverseJoinColumns = @JoinColumn(name = "staffer_id"))
+    private List<Staffer> approvedStaffersList;
 
     public Request() {
     }
 
-    public Request(String shopName, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime) {
+    public Request(String shopName, int numberOfReqStaffers, String reqPosition, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime) {
         this.shopName = shopName;
+        this.numberOfReqStaffers = numberOfReqStaffers;
+        this.reqPosition = reqPosition;
         this.dateOfRequest = dateOfRequest;
         this.dateOfWork = dateOfWork;
         this.startTime = startTime;
@@ -74,7 +82,7 @@ public class Request {
     }
 
     public int getCountOfStaffersInRequest() {
-        return requestStaffers.size();
+        return notApprovedStaffersList.size();
     }
 
 }

@@ -41,7 +41,12 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public List<Shop> findShopByName(String name) {
+    public List<Shop> findShopsByName(String name) {
         return shopRepository.findByName(name);
+    }
+
+    @Override
+    public Shop findShopByName(String name) {
+        return shopRepository.findShopByName(name);
     }
 }

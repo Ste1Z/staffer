@@ -13,5 +13,6 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     List<Shop> findAll();
 
+    Shop findShopByName(String name);
 
 }

@@ -22,15 +22,28 @@
                 <@t.formInput id="f1" name="name" value="${staffer.getName()}" label="Имя"/><br/>
                 <@t.formInput id="f2" name="surname" value="${staffer.getSurname()}" label="Фамилия"/><br/>
                 <@t.formInput id="f3" name="patronymic" value="${staffer.getPatronymic()}" label="Отчество"/><br/>
-                <@t.formInput type="date"  id="f4" name="dateOfBirth" value="${staffer.getDateOfBirth()?string.iso}" label="Дата рождения"/><br/>
+                <@t.formInput type="date"  id="f4" name="dateOfBirth" value="${staffer.getDateOfBirth()?string.iso}" label="Дата рождения"/>
+                <br/>
                 <label>Название ММ
-                    <select name="shop_names" class="form-control" required>
+                    <select name="homeShopName" class="form-control" required>
+                        <option selected disabled value="${stafferHomeShop}">${stafferHomeShop}</option>
                         <#list shopNames! as shopName>
                             <option value="${shopName.getName()}">${shopName.getName()}</option>
                         </#list>
                     </select>
                 </label><br/>
-                <@t.formInput id="f6" name="phoneNumber" value="${staffer.getPhoneNumber()}" label="Номер телефона"/><br/>
+                <label>Должность
+                    <select id="position" name="position" class="form-control" required>
+                        <option selected disabled value="${stafferPosition}">${stafferPosition}</option>
+                        <option value="Продавец">Продавец</option>
+                        <option value="Старший продавец">Старший продавец</option>
+                        <option value="Товаровед">Товаровед</option>
+                        <option value="Директор">Директор</option>
+                        <option value="Заместитель директора">Заместитель директора</option>
+                    </select>
+                </label><br/>
+                <@t.formInput id="f6" name="phoneNumber" value="${staffer.getPhoneNumber()}" label="Номер телефона"/>
+                <br/>
                 <input type="submit" value="Сохранить"/>
             </form>
         </fieldset>

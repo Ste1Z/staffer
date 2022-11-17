@@ -16,7 +16,16 @@
                         </#list>
                     </select>
                 </label><br/>
-                <#--TODO добавить выбор должности-->
+                <label>Необ-ая должность
+                    <select name="reqPosition" class="form-control" required>
+                        <option selected disabled value="${reqPosition}">${reqPosition}</option>
+                        <option value="Продавец">Продавец</option>
+                        <option value="Старший продавец">Старший продавец</option>
+                        <option value="Товаровед">Товаровед</option>
+                        <option value="Директор">Директор</option>
+                        <option value="Заместитель директора">Заместитель директора</option>
+                    </select><br/>
+                </label>
                 <@t.formInput id="f4" type="date" name="dateOfWork" value="${request.getDateOfWork()?string.iso}" label="Дата работы"/><br/>
                 <@t.formInput id="f5" type="time" name="startTime" value="${request.getStartTime()}" label="Время начала"/><br/>
                 <@t.formInput id="f6" type="time" name="endTime" value="${request.getEndTime()}" label="Время окончания"/><br/>

@@ -44,6 +44,10 @@ public class MyProfileController {
         model.addAttribute("staffer", staffer);
         List<Shop> shopNames = shopService.getAllShops();
         model.addAttribute("shopNames", shopNames);
+        String stafferHomeShop = staffer.getHomeShopName();
+        model.addAttribute("stafferHomeShop", stafferHomeShop);
+        String stafferPosition = staffer.getPosition();
+        model.addAttribute("stafferPosition", stafferPosition);
         return "my_profile";
     }
 
@@ -54,6 +58,17 @@ public class MyProfileController {
         User user = userDetailsService.findUserByUsername(principal.getName()).get();
         staffer.setStafferId(user.getStaffer().getStafferId());
         staffer.setUsersStaffer(user);
+        //Получаем версию работника на основе залогиненного пользователя и выставляем старые значения, если ничего не выбрано в полях
+        Staffer oldVersionOfStaffer = user.getStaffer();
+        if (staffer.getHomeShopName() == null || staffer.getHomeShopName().isEmpty()) {
+            staffer.setHomeShopName(oldVersionOfStaffer.getHomeShopName());
+        }
+        if (staffer.getBranch() == null || staffer.getBranch().isEmpty()) {
+            staffer.setBranch(oldVersionOfStaffer.getBranch());
+        }
+        if (staffer.getPosition() == null || staffer.getPosition().isEmpty()) {
+            staffer.setPosition(oldVersionOfStaffer.getPosition());
+        }
         stafferService.saveStaffer(staffer);
         return "redirect:/main";
     }

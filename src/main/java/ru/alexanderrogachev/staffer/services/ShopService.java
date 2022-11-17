@@ -13,6 +13,7 @@ public interface ShopService {
 
     void deleteShopByName(String name);
 
-    List<Shop> findShopByName(String name);
+    List<Shop> findShopsByName(String name);
 
+    Shop findShopByName(String name);
 }

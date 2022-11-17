@@ -47,6 +47,12 @@ public class Staffer {
 //    @NotEmpty(message = "Укажите название вашего родного ММ")
     private String homeShopName;
 
+    @Column(name = "shop_branch")
+    private String branch;
+
+    @Column(name = "staffer_position")
+    private String position;
+
     @Column(name = "staffer_phone_number")
 //    @NotEmpty(message = "Укажите номер вашего телефона")
     @Size(min = 10, max = 11, message = "Длина номера должна быть 10 или 11 символов")
@@ -57,18 +63,26 @@ public class Staffer {
     private User usersStaffer;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "staffer_requests", joinColumns = @JoinColumn(name = "staffer_id"), inverseJoinColumns = @JoinColumn(name = "request_id"))
-    private List<Request> stafferRequests;
+    @JoinTable(name = "not_approved_staffers", joinColumns = @JoinColumn(name = "staffer_id"), inverseJoinColumns = @JoinColumn(name = "request_id"))
+    private List<Request> notApprovedStaffersRequests;
+
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "approved_staffers", joinColumns = @JoinColumn(name = "staffer_id"), inverseJoinColumns = @JoinColumn(name = "request_id"))
+    private List<Request> approvedStaffersRequests;
 
     public Staffer() {
     }
 
-    public Staffer(String name, String surname, String patronymic, Date dateOfBirth, String homeShopName, String phoneNumber) {
+    public Staffer(String name, String surname, String patronymic, Date dateOfBirth, String homeShopName, String branch, String position, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
         this.dateOfBirth = dateOfBirth;
         this.homeShopName = homeShopName;
+        this.branch = branch;
+        this.position = position;
         this.phoneNumber = phoneNumber;
     }
+
 }
+
