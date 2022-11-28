@@ -2,22 +2,29 @@
 
 <@c.page>
 
-<#--Форма ввода логина и пароля-->
-    <form name="login_form" method="post" action="/process_login">
-<#--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
-        <label for="username">Введите имя пользователя:</label>
-        <input type="text" name="username" id="username"/>
-        <br/>
-        <label for="password">Введите пароль:</label>
-        <input type="password" name="password" id="password"/>
-        <br/>
-        <input type="submit" value="Вход">
-    </form>
-    <br>
+    <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
+        <div class="row bg-light shadow-lg">
+            <div class="col border rounded p-4">
+                <h3 class="text-center mb-4">Вход</h3>
+                <form name="login_form" method="post" action="/process_login">
+                    <div class="mb-3">
+                        <label for="usernameInput" class="form-label">Имя пользователя:</label>
+                        <input type="text" class="form-control" name="username" id="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Пароль:</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    <div class="row m-0 mb-3 text-start">
+                        <button type="submit" class="btn btn-primary">Вход</button>
+                    </div>
+                    <div class="row m-0 mb-3 text-end">
+                        <a href="/auth/registration" class="btn btn-primary">Регистрация</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-<#--Кнопка регистрации-->
-    <form method="get" action="http://localhost:8080/auth/registration" name="to_registration">
-        <button>Регистрация</button>
-    </form>
 
 </@c.page>

@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/auth/login").loginProcessingUrl("/process_login")
-                .defaultSuccessUrl("/main", true)
+                .defaultSuccessUrl("/main", true)//TODO сделать нормальный редирект на главную
                 .failureUrl("/auth/login?error")
                 .and()
                 .logout().logoutUrl("/auth/logout").logoutSuccessUrl("/auth/login");
