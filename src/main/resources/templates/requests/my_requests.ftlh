@@ -1,62 +1,58 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/table.ftlh" as t>
 
 
 <@c.page>
 
-<#--кнопка выхода из профиля -->
-    <form method="get" action="auth/logout" name="to_logout" style="position: absolute; top:5px; right: 5px">
-        <button>Выйти из профиля</button>
-    </form>
-    <br>
-
-<#--Кнопка на главную -->
-    <br>
-    <form method="get" action="http://localhost:8080/main" name="to_main">
-        <button>Главная</button>
-    </form>
-    <br><br>
-
-<#--Фильтрация списка запросов-->
-    <div>
-        <fieldset>
-            <legend>Фильтр списка:</legend>
-            <form name="filter_request" method="get" action="/requests/my_requests">
-                <@t.formInput id = "f7" name = "filter" label = "Фильтр"/><br/>
-                <input type="submit" value="Найти"/>
-            </form>
-        </fieldset>
+    <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0 mb-4">
+        <div class="row bg-light shadow-lg">
+            <div class="col border rounded p-4">
+                <h5 class="text-center mb-3">Поиск по названию ММ</h5>
+                <form name="filter_request" method="get" action="/requests/my_requests">
+                    <input type="text" class="form-control mb-2" name="filter" id="filter">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Найти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <br><br>
 
-<#--Отфильтрованный список заявок. Отображение всего списка без введенного значения -->
-    <table border="1px" cellspacing="2" border="1" cellpadding="5">
-        <th>№</th>
-        <th>Название ММ</th>
-        <th>Необ-ое кол-во сотрудников</th>
-        <th>Необ-ая должность</th>
-        <th>Дата запроса</th>
-        <th>Дата работы</th>
-        <th>Время начала</th>
-        <th>Время окончания</th>
-        <th>Поданные заявки</th>
-        <#list filterRequests![] as request>
-            <tr>
-                <td>${request?index + 1}</td>
-                <td>${request.getShopName()}</td>
-                <td>${request.getNumberOfReqStaffers()}</td>
-                <td>${request.getReqPosition()}</td>
-                <td>${request.getDateOfRequest()?string("dd.MM.yyyy")}</td>
-                <td>${request.getDateOfWork()?string("dd.MM.yyyy")}</td>
-                <td>${request.getStartTime()?string("HH:mm")}</td>
-                <td>${request.getEndTime()?string("HH:mm")}</td>
-                <td>
-                    <a href="/requests/staffers_list/${request.getRequestId()}">${request.getCountOfStaffersInRequest()}</a>
-                </td>
-            </tr>
-        <#else>
-            Ничего не найдено
-        </#list>
-    </table>
+    <#list filterRequests![] as request>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col ">
+            <div class="card h-100 shadow-lg container-fluid d-flex justify-content-center p-0">
+                <div class="card-header bg-transparent text-center">
+                    <h5>${request.getShopName()}</h5>
+                    <h5>${request.getDateOfWork()?string("dd.MM.yyyy")}</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h6>Необ-мо чел.:</h6> ${request.getNumberOfReqStaffers()}
+                    <h6>Необ-мая дол-ть.:</h6> ${request.getReqPosition()}
+                    <h6>Время работы:</h6> ${request.getStartTime()?string("HH:mm")}
+                    - ${request.getEndTime()?string("HH:mm")}
+                    <h6>Поданные заявки:</h6>
+                    <a href="/requests/staffers_list/${request.getRequestId()}">${request.getCountOfNotApprovedStaffersInRequest()}</a>
+                </div>
+                <div class="card-footer">
+                    <form name="add_staffer_to_request" method="post" action="/requests/${request.getRequestId()}">
+                        <div class="col-md-12 mb-2 text-center">
+                            <button type="submit" class="btn btn-primary">Подать заявку</button>
+                        </div>
+                    </form>
+                    <form name="edit_request" method="get" action="/requests/edit_request/${request.getRequestId()}">
+                        <div class="col-md-12 mb-2 text-center">
+                            <button type="submit" class="btn btn-primary">Редактировать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <#else>
+        Ничего не найдено
+    <#--TODO добавить обработку пустого фильтра-->
+    </#list>
+
+    </div>
+
 
 </@c.page>

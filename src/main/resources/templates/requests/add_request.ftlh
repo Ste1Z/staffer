@@ -1,51 +1,52 @@
 <#import "../parts/common.ftlh" as c>
-<#import "../parts/table.ftlh" as t>
 
 
 <@c.page>
 
-<#--кнопка выхода из профиля -->
-    <form method="get" action="auth/logout" name="to_logout" style="position: absolute; top:5px; right: 5px">
-        <button>Выйти из профиля</button>
-    </form>
-    <br>
-
-<#--Кнопка на главную -->
-    <br>
-    <form method="get" action="http://localhost:8080/main" name="to_main">
-        <button>Главная</button>
-    </form>
-    <br><br>
-
-<#--Форма добавления нового запроса -->
-<#--TODO перенести форму в админку-->
-    <div>
-        <fieldset>
-            <legend>Добавить новый запрос для магазина <b>${shopName}</b>:</legend>
-            <form name="add_request" method="post" action="/requests/add_request">
-                <label>Необ-ое кол-во сотрудников
-                    <select name="numberOfReqStaffers" class="form-control" required>
-                        <#list numberOfStaffers! as number>
-                            <option value="${number}">${number}</option>
-                        </#list>
-                    </select>
-                </label><br/>
-                <label>Необ-ая должность
-                    <select name="reqPosition" class="form-control" required>
-                        <option value="Продавец">Продавец</option>
-                        <option value="Старший продавец">Старший продавец</option>
-                        <option value="Товаровед">Товаровед</option>
-                        <option value="Директор">Директор</option>
-                        <option value="Заместитель директора">Заместитель директора</option>
-                    </select><br/>
-                </label>
-                <@t.formInput id="f4" type="date" name="dateOfWork" label="Дата работы"/><br/>
-                <@t.formInput id="f5" type="time" name="startTime" label="Время начала"/><br/>
-                <@t.formInput id="f6" type="time" name="endTime" label="Время окончания"/><br/>
-                <input type="submit" value="Добавить"/>
-            </form>
-        </fieldset>
+    <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
+        <div class="row bg-light shadow-lg">
+            <div class="col border rounded p-4">
+                <h3 class="text-center mb-2">Добавить новый запрос для магазина</h3>
+                <h3 class="text-center mb-4"><b>${shopName}</b></h3>
+                <form name="add_request" method="post" action="/requests/add_request">
+                    <div>
+                        <label for="numberOfReqStaffers" class="form-label">Необ-мо чел.:</label>
+                        <select class="form-select mb-2" aria-required="true" id="numberOfReqStaffers"
+                                name="numberOfReqStaffers">
+                            <#list numberOfStaffers! as number>
+                                <option value="${number}">${number}</option>
+                            </#list>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="reqPosition" class="form-label">Необ-мая дол-ть.:</label>
+                        <select class="form-select mb-2" aria-required="true" id="reqPosition" name="reqPosition">
+                            <option value="Продавец">Продавец</option>
+                            <option value="Ст. продавец">Ст. продавец</option>
+                            <option value="Товаровед">Товаровед</option>
+                            <option value="Зам. директора">Зам. директора</option>
+                            <option value="Директор">Директор</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="dateOfWork" class="form-label">Дата работы:</label>
+                        <input type="date" class="form-control" name="dateOfWork" id="dateOfWork">
+                    </div>
+                    <div class="mb-2">
+                        <label for="startTime" class="form-label">Время начала:</label>
+                        <input type="time" class="form-control" name="startTime" id="startTime">
+                    </div>
+                    <div class="mb-2">
+                        <label for="endTime" class="form-label">Время окончания:</label>
+                        <input type="time" class="form-control" name="endTime" id="endTime">
+                    </div>
+                    <div class="row m-0 mb-3 text-xl-center">
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <br><br>
+
 
 </@c.page>

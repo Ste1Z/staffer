@@ -1,4 +1,4 @@
-<#import "../parts/common.ftlh" as c>
+<#import "parts/common.ftlh" as c>
 
 <@c.page>
 
@@ -8,11 +8,11 @@
                 <h3 class="text-center mb-4">Вход</h3>
                 <form name="login_form" method="post" action="/process_login">
                     <div class="mb-3">
-                        <label for="usernameInput" class="form-label">Имя пользователя:</label>
+                        <label for="username" class="form-label">Имя пользователя:</label>
                         <input type="text" class="form-control" name="username" id="username">
                     </div>
                     <div class="mb-3">
-                        <label for="passwordInput" class="form-label">Пароль:</label>
+                        <label for="password" class="form-label">Пароль:</label>
                         <input type="password" class="form-control" name="password" id="password">
                     </div>
                     <div class="row m-0 mb-3 text-start">

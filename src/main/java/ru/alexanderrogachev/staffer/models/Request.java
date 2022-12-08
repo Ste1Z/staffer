@@ -7,7 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
@@ -81,8 +80,10 @@ public class Request {
         this.endTime = endTime;
     }
 
-    public int getCountOfStaffersInRequest() {
+    public int getCountOfNotApprovedStaffersInRequest() {
         return notApprovedStaffersList.size();
     }
-
+    public int getCountOfApprovedStaffersInRequest() {
+        return approvedStaffersList.size();
+    }
 }

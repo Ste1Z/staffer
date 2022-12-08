@@ -1,80 +1,109 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/table.ftlh" as t>
-
 
 <@c.page>
 
-<#--кнопка выхода из профиля -->
-    <form method="get" action="auth/logout" name="to_logout" style="position: absolute; top:5px; right: 5px">
-        <button>Выйти из профиля</button>
-    </form>
-    <br>
-
-<#--Кнопка на главную -->
-    <br>
-    <form method="get" action="http://localhost:8080/main" name="to_main">
-        <button>Главная</button>
-    </form>
-    <br><br>
-
-<#--кнопка добавления новой заявки -->
-    <form method="get" action="/requests/add_request" name="to_add_request">
-        <button>Новая заявка</button>
-    </form>
-    <br>
-
-<#--Фильтрация списка запросов-->
-    <div>
-        <fieldset>
-            <legend>Фильтр списка:</legend>
-            <form name="filter_request" method="get" action="/requests">
-                <@t.formInput id = "f7" name = "filter" label = "Фильтр"/><br/>
-                <input type="submit" value="Найти"/>
-            </form>
-        </fieldset>
+<#--форма фильтра-->
+    <div class="container-fluid mb-3">
+        <div class="bg-light shadow">
+            <div class="col border rounded p-3">
+                <h5 class="text-start mb-2">Фильтрация</h5>
+                <form class="row g-2 mb-2" name="filter_request" method="get" action="/requests">
+                    <label for="filter">Поиск по названию ММ</label>
+                    <div class="col-auto">
+                        <input type="text" class="form-control" name="filter" id="filter">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Найти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <br><br>
 
-<#--Отфильтрованный список заявок. Отображение всего списка без введенного значения -->
-    <table border="1px" cellspacing="2" border="1" cellpadding="5">
-        <th>№</th>
-        <th>Название ММ</th>
-        <th>Необ-ое кол-во сотрудников</th>
-        <th>Необ-ая должность</th>
-        <th>Дата запроса</th>
-        <th>Дата работы</th>
-        <th>Время начала</th>
-        <th>Время окончания</th>
-        <th>Поданные заявки</th>
-        <th>Редактировать заявку</th>
-        <th>Подать заявку</th>
-        <#list filterRequests![] as request>
-            <tr>
-                <td>${request?index + 1}</td>
-                <td>${request.getShopName()}</td>
-                <td>${request.getNumberOfReqStaffers()}</td>
-                <td>${request.getReqPosition()}</td>
-                <td>${request.getDateOfRequest()?string("dd.MM.yyyy")}</td>
-                <td>${request.getDateOfWork()?string("dd.MM.yyyy")}</td>
-                <td>${request.getStartTime()?string("HH:mm")}</td>
-                <td>${request.getEndTime()?string("HH:mm")}</td>
-                <td>
-                    <a href="/requests/staffers_list/${request.getRequestId()}">${request.getCountOfStaffersInRequest()}</a>
-                </td>
-                <td>
-                    <form name="edit_request" method="get" action="/requests/edit_request/${request.getRequestId()}">
-                        <input type="submit" value="Редактировать"/>
-                    </form>
-                </td>
-                <td>
-                    <form name="add_staffer_to_request" method="post" action="/requests/${request.getRequestId()}">
-                        <input type="submit" value="Подать заявку"/>
-                    </form>
-                </td>
-            </tr>
-        <#else>
-            Ничего не найдено
-        </#list>
-    </table>
+    <div class="container-fluid mb-3 d-flex">
+        <div class="bg-light shadow border rounded">
+            <div class="row flex-row  p-2">
+                <#--карточка с добавлением заявки-->
+                <div class="col">
+                    <div class="card shadow mb-2 justify-content-center text-center"
+                         style="width: 20rem; height: 20rem">
+                        <a class="stretched-link" href="requests/add_request"></a>
+                        <i class="bi bi-file-plus opacity-50" style="font-size: 17rem;"></i>
+                    </div>
+                </div>
+
+                <#list filterRequests![] as request>
+                    <div class="col">
+                        <#--карточка с заявкой-->
+                        <div class="card shadow mb-2" style="width: 20rem; height: 20rem">
+                            <div class="card-header bg-transparent text-center">
+                                <h4><b>${request.getShopName()}</b></h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <#--<a class="stretched-link" href="/requests/staffers_list/${request.getRequestId()}"></a>-->
+                                <div class="mb-3">
+                                    <h5>
+                                        <a href="/requests/staffers_list/${request.getRequestId()}"
+                                           style="color: #f9d403">
+                                            <img src="images/staffer_search_min.png"
+                                                 alt="staffer_search_min">${request.getNumberOfReqStaffers()}
+                                        </a>
+                                        <a href="/requests/staffers_list/${request.getRequestId()}"
+                                           style="color: #7f7f7f">
+                                            <img src="images/staffer_not_approved_min.png"
+                                                 alt="staffer_not_approved_min">
+                                            ${request.getCountOfNotApprovedStaffersInRequest()}
+                                        </a>
+                                        <a href="/requests/staffers_list/${request.getRequestId()}"
+                                           style="color: #07c967">
+                                            <img src="images/staffer_approved_min.png"
+                                                 alt="staffer_approved_min">
+                                            ${request.getCountOfApprovedStaffersInRequest()}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div class="mb-3">
+                                    <h5><i class="bi bi-search p-1"></i>${request.getReqPosition()}</h5>
+                                </div>
+                                <div class="mb-3">
+                                    <h5>
+                                        <i class="bi bi-calendar2-date-fill p-1"></i>${request.getDateOfWork()?string("dd.MM.yyyy")}
+                                    </h5>
+                                </div>
+                                <div class="mb-3">
+                                    <h5>
+                                        <i class="bi bi-clock-fill p-1"></i>
+                                        ${request.getStartTime()?string("HH:mm")}
+                                        - ${request.getEndTime()?string("HH:mm")}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row justify-content-end">
+                                    <div class="col-auto">
+                                        <form name="add_staffer_to_request" method="post"
+                                              action="/requests/${request.getRequestId()}">
+                                            <button type="submit" class="btn btn-primary">Подать заявку</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-auto">
+                                        <form name="edit_request" method="get"
+                                              action="/requests/edit_request/${request.getRequestId()}">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <#else>
+                    Ничего не найдено
+                <#--TODO добавить обработку пустого фильтра-->
+                </#list>
+            </div>
+        </div>
+    </div>
 
 </@c.page>

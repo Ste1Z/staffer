@@ -26,12 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity//TODO включить защиту
                 .csrf().disable()// TODO включить csrf
-                .authorizeRequests()
-                .antMatchers("/admin").hasRole("PRIME_ADMIN")
-                .antMatchers("/auth/login", "/auth/registration", "/process_login", "/error").permitAll()
-                .anyRequest().hasAnyRole("STAFFER", "SHOP_ADMIN", "PRIME_ADMIN")//TODO поменять доступ ролей
-//                .anyRequest().authenticated()//TODO отключить строку
-                .and()
+//                .authorizeRequests()
+//                .antMatchers("/admin").hasRole("PRIME_ADMIN")
+//                .antMatchers("/auth/login", "/auth/registration", "/process_login", "/error").permitAll()
+//                .anyRequest().hasAnyRole("STAFFER", "SHOP_ADMIN", "PRIME_ADMIN")//TODO поменять доступ ролей
+////                .anyRequest().authenticated()//TODO отключить строку
+//                .and()
                 .formLogin()
                 .loginPage("/auth/login").loginProcessingUrl("/process_login")
                 .defaultSuccessUrl("/main", true)//TODO сделать нормальный редирект на главную
