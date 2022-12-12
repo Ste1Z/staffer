@@ -3,73 +3,121 @@
 
 <@c.page>
 
+<#--навигация по страницам-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb m-3">
+            <li class="breadcrumb-item"><a href="/requests">Заявки</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Список сотрудников</li>
+        </ol>
+    </nav>
+
 <#--Общий список сотрудников, готовых выйти на работу -->
-    <div>
-    <#list notApprovedStaffers![] as staffer>
-    <h2>Список сотрудников, готовых выйти на работу</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col ">
-            <div class="card h-100 shadow-lg container-fluid d-flex justify-content-center p-0 text-bg-secondary">
-                <div class="card-header bg-transparent text-center">
-                    <h5>${staffer.getSurname()}</h5>
-                    <h5>${staffer.getName()}</h5>
-                    <h5>${staffer.getPatronymic()}</h5>
-                </div>
-                <div class="card-body text-center">
-                    <h6>Дата рождения:</h6> ${staffer.getDateOfBirth()}
-                    <h6>Родной магазин:</h6> ${staffer.getHomeShopName()}
-                    <h6>Филиал:</h6> ${staffer.getBranch()}
-                    <h6>Должность:</h6> ${staffer.getPosition()}
-                    <h6>Номер телефона:</h6> ${staffer.getPhoneNumber()}
-                </div>
-                <div class="card-footer">
-                    <form name="approve_staffer" method="post"
-                          action="/requests/staffers_list/${requestId}/${staffer.getStafferId()}">
-                        <div class="col-md-12 mb-2 text-center">
-                            <button type="submit" class="btn btn-primary">Одобрить</button>
+    <div class="m-3">
+        <h2>Список сотрудников, готовых выйти на работу</h2>
+    </div>
+    <div class="container-fluid mb-2 d-flex">
+        <div class=" shadow border rounded" style="background-color: #fcff7f">
+            <div class="row flex-row  p-2">
+                <#list notApprovedStaffers![] as staffer>
+                    <div class="col">
+                        <#--карточка с сотрудником-->
+                        <div class="card shadow mb-2" style="width: 20rem; height: 22rem">
+                            <div class="card-header bg-transparent text-center">
+                                <h4>${staffer.getFullName()}</h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <div>
+                                    <h5><img class="mb-3" src="/images/dateOfBirth_min.png" width="20" height="20"
+                                             alt="dateOfBirth_min">${staffer.getDateOfBirth()?string["dd.MM.yyyy"]}</h5>
+                                </div>
+                                <div>
+                                    <h5><img class="mb-3" src="/images/homeShop_min.png" width="20" height="20"
+                                             alt="homeShop_min">${staffer.getHomeShopName()}</h5>
+                                </div>
+                                <div>
+                                    <h5><img class="mb-3" src="/images/branch_min.png" width="20" height="20"
+                                             alt="branch_min">${staffer.getBranch()}</h5>
+                                </div>
+                                <div>
+                                    <h5><img class="mb-3" src="/images/position_min.png" width="20" height="20"
+                                             alt="position_min">${staffer.getPosition()}</h5>
+                                </div>
+                                <div>
+                                    <h5><img src="/images/phoneNumber_min.png" width="20" height="20"
+                                             alt="phoneNumber_min">${staffer.getPhoneNumber()}</h5>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <form name="approve_staffer" method="post"
+                                      action="/requests/staffers_list/${requestId}/${staffer.getStafferId()}">
+                                    <div class="col-md-12 mb-2 text-center">
+                                        <button type="submit" class="btn btn-primary">Одобрить</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                <#else>
+
+                <#--TODO добавить обработку пустого фильтра-->
+                </#list>
             </div>
         </div>
-        <#else>
-            Ничего не найдено
-        </#list>
     </div>
 
 
-    <#--Список одобренных к выходу сотрудников-->
-    <div>
-        <#list approvedStaffers![] as staffer>
+<#--Список одобренных к выходу сотрудников-->
+    <div class="m-3">
         <h2>Список одобренных к выходу сотрудников</h2>
-
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col ">
-                <div class="card h-100 shadow-lg container-fluid d-flex justify-content-center p-0 text-bg-success">
-                    <div class="card-header bg-transparent text-center">
-                        <h5>${staffer.getSurname()}</h5>
-                        <h5>${staffer.getName()}</h5>
-                        <h5>${staffer.getPatronymic()}</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <h6>Дата рождения:</h6> ${staffer.getDateOfBirth()}
-                        <h6>Родной магазин:</h6> ${staffer.getHomeShopName()}
-                        <h6>Филиал:</h6> ${staffer.getBranch()}
-                        <h6>Должность:</h6> ${staffer.getPosition()}
-                        <h6>Номер телефона:</h6> ${staffer.getPhoneNumber()}
-                    </div>
-                    <div class="card-footer">
-                        <form name="approve_staffer" method="post"
-                              action="/requests/staffers_list/${requestId}/${staffer.getStafferId()}">
-                            <div class="col-md-12 mb-2 text-center">
-                                <button type="submit" class="btn btn-primary">Отменить выход</button>
+    </div>
+    <div class="container-fluid mb-2 d-flex">
+        <div class=" shadow border rounded" style="background-color: #b0f7a6">
+            <div class="row flex-row  p-2">
+                <#list approvedStaffers![] as staffer>
+                    <div class="col">
+                        <#--карточка с сотрудником-->
+                        <div class="card shadow mb-2" style="width: 20rem; height: 22rem">
+                            <div class="card-header bg-transparent text-center">
+                                <h5>${staffer.getFullName()}</h5>
                             </div>
-                        </form>
+                            <div class="card-body text-center">
+                                <div>
+                                    <h5><img class="mb-3" src="/images/dateOfBirth_min.png" width="20" height="20"
+                                             alt="dateOfBirth_min">${staffer.getDateOfBirth()?string["dd.MM.yyyy"]}</h5>
+                                </div>
+                                <div>
+                                    <h5><img class="mb-3" src="/images/homeShop_min.png" width="20" height="20"
+                                             alt="homeShop_min">${staffer.getHomeShopName()}</h5>
+                                </div>
+                                <div>
+                                    <h5><img class="mb-3" src="/images/branch_min.png" width="20" height="20"
+                                             alt="branch_min">${staffer.getBranch()}</h5>
+                                </div>
+                                <div>
+                                    <h5><img class="mb-3" src="/images/position_min.png" width="20" height="20"
+                                             alt="position_min">${staffer.getPosition()}</h5>
+                                </div>
+                                <div>
+                                    <h5><img src="/images/phoneNumber_min.png" width="20" height="20"
+                                             alt="phoneNumber_min">${staffer.getPhoneNumber()}</h5>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <form name="approve_staffer" method="post"
+                                      action="/requests/staffers_list/${requestId}/${staffer.getStafferId()}">
+                                    <div class="col-md-12 mb-2 text-center">
+                                        <button type="submit" class="btn btn-primary">Отменить выход</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                <#else>
+
+                <#--TODO добавить обработку пустого фильтра-->
+                </#list>
             </div>
-            <#else>
-                Ничего не найдено
-            </#list>
         </div>
+    </div>
+
 </@c.page>

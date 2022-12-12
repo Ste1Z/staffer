@@ -20,12 +20,14 @@ public class StafferApplication extends SpringBootServletInitializer {
         return super.configure(builder);
     }
 
+    //Конфигурация для подгрузки папки статик для использования картинок и тд
     @Configuration
     public static class WebConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/**")
-                    .addResourceLocations("classpath:/static/").setCachePeriod(0);
+                    .addResourceLocations("classpath:/static/")
+                    .setCachePeriod(0);
         }
     }
 }

@@ -84,5 +84,9 @@ public class Staffer {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getFullName() {
+        return this.surname + " " + this.name.charAt(0) + ". " + this.patronymic.charAt(0) + ".";
+    }
+
 }
 

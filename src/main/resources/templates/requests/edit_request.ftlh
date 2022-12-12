@@ -2,6 +2,14 @@
 
 <@c.page>
 
+<#--навигация по страницам-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb m-3">
+            <li class="breadcrumb-item"><a href="/requests">Заявки</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Редактирование заявки</li>
+        </ol>
+    </nav>
+
     <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
         <div class="row bg-light shadow-lg">
             <div class="col border rounded p-4">

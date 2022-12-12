@@ -1,6 +1,12 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
+<#--навигация по страницам-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb m-3">
+            <li class="breadcrumb-item active" aria-current="page">Заявки</li>
+        </ol>
+    </nav>
 
 <#--форма фильтра-->
     <div class="container-fluid mb-3">
@@ -19,8 +25,8 @@
             </div>
         </div>
     </div>
-
-    <div class="container-fluid mb-3 d-flex">
+<#--список заявок-->
+    <div class="container-fluid mb-2 d-flex">
         <div class="bg-light shadow border rounded">
             <div class="row flex-row  p-2">
                 <#--карточка с добавлением заявки-->
@@ -41,6 +47,8 @@
                             </div>
                             <div class="card-body text-center">
                                 <#--<a class="stretched-link" href="/requests/staffers_list/${request.getRequestId()}"></a>-->
+
+                                <#--отображение необходимого кол-ва сотрудников, поданных заявок и одобренных заявок-->
                                 <div class="mb-3">
                                     <h5>
                                         <a href="/requests/staffers_list/${request.getRequestId()}"
@@ -62,14 +70,17 @@
                                         </a>
                                     </h5>
                                 </div>
+                                <#--требуемая должность-->
                                 <div class="mb-3">
                                     <h5><i class="bi bi-search p-1"></i>${request.getReqPosition()}</h5>
                                 </div>
+                                <#--требуемая дата выхода на работу-->
                                 <div class="mb-3">
                                     <h5>
                                         <i class="bi bi-calendar2-date-fill p-1"></i>${request.getDateOfWork()?string("dd.MM.yyyy")}
                                     </h5>
                                 </div>
+                                <#--требуемое время работы-->
                                 <div class="mb-3">
                                     <h5>
                                         <i class="bi bi-clock-fill p-1"></i>
@@ -80,16 +91,18 @@
                             </div>
                             <div class="card-footer">
                                 <div class="row justify-content-end">
+                                    <#--кнопка добавления залогиненного пользователя в заявку-->
                                     <div class="col-auto">
                                         <form name="add_staffer_to_request" method="post"
                                               action="/requests/${request.getRequestId()}">
                                             <button type="submit" class="btn btn-primary">Подать заявку</button>
                                         </form>
                                     </div>
+                                    <#--кнопка редактирования заявки-->
                                     <div class="col-auto">
                                         <form name="edit_request" method="get"
                                               action="/requests/edit_request/${request.getRequestId()}">
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
                                         </form>
@@ -99,7 +112,7 @@
                         </div>
                     </div>
                 <#else>
-                    Ничего не найдено
+
                 <#--TODO добавить обработку пустого фильтра-->
                 </#list>
             </div>
