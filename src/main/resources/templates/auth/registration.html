@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<!--TODO подтверждение двух паролей для проверки-->
+
+<head>
+    <div th:insert="~{auth/parts/common :: head}"></div>
+</head>
+<body>
+<div th:insert="~{auth/parts/common :: body}"></div>
+<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-3">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3">
+            <h3 class="text-center mb-2">Регистрация</h3>
+            <form th:method="POST" th:action="@{/auth/registration}" th:object="${staffer}">
+
+                <!--Имя-->
+                <div class="mb-0">
+                    <label class="text-muted" for="name">Имя</label>
+                    <input type="text" class="form-control" name="name" id="name"
+                           th:value="*{name}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                         class="invalid-feedback"></div>
+                </div>
+                <!--Фамилия-->
+                <div class="mb-0">
+                    <label class="text-muted" for="surname">Фамилия</label>
+                    <input type="text" class="form-control" name="surname" id="surname"
+                           th:value="*{surname}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"
+                         class="invalid-feedback"></div>
+                </div>
+                <!--Отчество-->
+                <div class="mb-0">
+                    <label class="text-muted" for="patronymic">Отчество</label>
+                    <input type="text" class="form-control" name="patronymic" id="patronymic"
+                           th:value="*{patronymic}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"
+                         class="invalid-feedback"></div>
+                </div>
+                <!--Дата рождения-->
+                <div class="mb-0">
+                    <label class="text-muted" for="dateOfBirth">Дата рождения</label>
+                    <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth"
+                           th:value="*{dateOfBirth}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"
+                         class="invalid-feedback"></div>
+                </div>
+                <!--Магазин-->
+                <div>
+                    <label class="text-muted" for="homeShopName">Ваш магазин</label>
+                    <select class="form-select mb-0" name="homeShopName" id="homeShopName" th:errorclass="is-invalid"
+                            aria-describedby="homeShopNameHelper">
+                        <option selected disabled>Выберите из списка</option>
+                        <option th:each="shopName : ${shopNames}" th:value="${shopName.getName()}"
+                                th:text="${shopName.getName()}">
+                        </option>
+                    </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('homeShopName')}" th:errors="*{homeShopName}"
+                         class="invalid-feedback"></div>
+                    <!--TODO поправить ссылку на создание магазина-->
+                    <div id="homeShopNameHelper" class="form-text text-center mb-0">
+                        Не нашли свой магазин? Нажмите <a href="#"> здесь</a>
+                    </div>
+                </div>
+                <!--Должность-->
+                <div>
+                    <label class="text-muted" for="position">Должность</label>
+                    <select class="form-select mb-0" name="position" id="position" th:value="*{position}"
+                            th:errorclass="is-invalid">
+                        <option selected disabled>Выберите из списка</option>
+                        <option value="СВП">СВП</option>
+                        <option value="Продавец">Продавец</option>
+                        <option value="Ст. продавец">Ст. продавец</option>
+                        <option value="Товаровед">Товаровед</option>
+                        <option value="Зам. директора">Зам. директора</option>
+                        <option value="Директор">Директор</option>
+                    </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"
+                         class="invalid-feedback"></div>
+                </div>
+                <!--Номер телефона-->
+                <div class="mb-0">
+                    <label class="text-muted" for="phoneNumber">Номер телефона</label>
+                    <input type="number" class="form-control" name="phoneNumber" id="phoneNumber"
+                           th:value="*{phoneNumber}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                         class="invalid-feedback"></div>
+                </div>
+
+                <div th:object="${user}">
+                    <!--Имя пользователя-->
+                    <div class="mb-0">
+                        <label class="text-muted" for="email">Почтовый ящик</label>
+                        <input type="text" class="form-control" name="email" id="email"
+                               th:value="*{email}" th:errorclass="is-invalid">
+                        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                             class="invalid-feedback"></div>
+                    </div>
+                    <!--Пароль-->
+                    <div class="mb-0">
+                        <label class="text-muted" for="password">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="password"
+                               th:value="*{password}" th:errorclass="is-invalid">
+                        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                             class="invalid-feedback"></div>
+                    </div>
+                    <!--Повтор пароля-->
+                    <div class="mb-2">
+                        <label class="text-muted" for="confirmPassword">Повторный ввод пароля</label>
+                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+                               th:value="*{confirmPassword}" th:errorclass="is-invalid" aria-describedby="rptPwdHelper">
+                        <div style="color: red" th:if="${#fields.hasErrors('confirmPassword')}"
+                             th:errors="*{confirmPassword}" class="invalid-feedback"></div>
+                        <!--TODO поправить ссылку на политику конфиденциальности-->
+                        <div id="rptPwdHelper" class="form-text text-center">
+                            <div>Создавая учетную запись, вы соглашаетесь</div>
+                            <div>с нашей <a href="#">Политикой конфиденциальности</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center d-grid">
+                    <button type="submit" class="btn btn-outline-danger" aria-describedby="regBtnHelper">
+                        Зарегистрироваться
+                    </button>
+                    <div id="regBtnHelper" class="form-text">
+                        Уже зарегистрированы? Можете <a href="/auth/login">войти</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

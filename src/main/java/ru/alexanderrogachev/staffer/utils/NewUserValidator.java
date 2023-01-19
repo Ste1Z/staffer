@@ -8,12 +8,12 @@ import ru.alexanderrogachev.staffer.domains.User;
 import ru.alexanderrogachev.staffer.services.UserDetailsServiceImpl;
 
 @Component
-public class UserValidatorImpl implements Validator {
+public class NewUserValidator implements Validator {
 
     private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public UserValidatorImpl(UserDetailsServiceImpl userDetailsService) {
+    public NewUserValidator(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 

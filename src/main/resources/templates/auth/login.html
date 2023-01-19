@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="~{auth/parts/common :: head}"></div>
+</head>
+<body>
+<div th:insert="~{auth/parts/common :: body}"></div>
+<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-3">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3">
+            <h3 class="text-center mb-2">Вход</h3>
+            <form name="login_form" method="post" action="/process_login">
+                <div class="mb-0">
+                    <label for="email" class="form-label text-muted">Почтовый ящик:</label>
+                    <input type="text" class="form-control" name="email" id="email">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label text-muted">Пароль:</label>
+                    <input type="password" class="form-control" name="password" id="password">
+                </div>
+                <div class="col-md-12 text-center d-grid">
+                    <button type="submit" class="btn btn-outline-danger" aria-describedby="loginBtnHelper">Вход</button>
+                    <div id="loginBtnHelper" class="form-text text-center">
+                        <div>Вы можете <a href="/auth/registration">зарегистрироваться</a>,</div>
+                        <div>если ещё не сделали этого</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

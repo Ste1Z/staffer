@@ -1,4 +1,4 @@
-package ru.alexanderrogachev.staffer.domain;
+package ru.alexanderrogachev.staffer.domains;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +26,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        return this.user.getEmail();
     }
 
     @Override

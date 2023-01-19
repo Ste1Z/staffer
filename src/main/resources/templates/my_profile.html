@@ -1,42 +1,45 @@
-<#import "parts/common.ftlh" as c>
+<#import "parts/common.html" as c>
 
 <@c.page>
-
-<#--TODO поменять тип пароля на пароль и подтверждение двух паролей для проверки -->
 
     <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
         <div class="row bg-light shadow-lg">
             <div class="col border rounded p-4">
-                <h3 class="text-center mb-3">Регистрация</h3>
-                <form name="registration_form" method="post" action="/auth/registration">
+                <h3 class="text-center mb-4">Редактирование профиля</h3>
+                <form name="my_profile" method="post" action="/my_profile">
                     <div class="mb-2">
                         <label for="name" class="form-label">Имя:</label>
-                        <input type="text" class="form-control" name="name" id="name">
+                        <input type="text" class="form-control" name="name" id="name" value="${staffer.getName()}">
                     </div>
                     <div class="mb-2">
                         <label for="surname" class="form-label">Фамилия:</label>
-                        <input type="text" class="form-control" name="surname" id="surname">
+                        <input type="text" class="form-control" name="surname" id="surname"
+                               value="${staffer.getSurname()}">
                     </div>
                     <div class="mb-2">
                         <label for="patronymic" class="form-label">Отчество:</label>
-                        <input type="text" class="form-control" name="patronymic" id="patronymic">
+                        <input type="text" class="form-control" name="patronymic" id="patronymic"
+                               value="${staffer.getPatronymic()}">
                     </div>
                     <div class="mb-2">
                         <label for="dateOfBirth" class="form-label">Дата рождения:</label>
-                        <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth">
+                        <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth"
+                               value="${staffer.getDateOfBirth()?string.iso}">
                     </div>
                     <div>
                         <label for="homeShopName" class="form-label">Ваш магазин:</label>
                         <select class="form-select mb-2" aria-required="true" id="homeShopName" name="homeShopName">
+                            <option selected disabled value="${stafferHomeShop}">${stafferHomeShop}</option>
                             <#list shopNames! as shopName>
                                 <option value="${shopName.getName()}">${shopName.getName()}</option>
                             </#list>
                         </select>
                     </div>
-                    <#--TODO если вашего магазина нету в списке, нажмите здесь-->
                     <div>
                         <label for="position" class="form-label">Ваша должность:</label>
                         <select class="form-select mb-2" aria-required="true" id="position" name="position">
+                            <option selected disabled value="${stafferPosition}">${stafferPosition}</option>
+                            <option value="СВП">СВП</option>
                             <option value="Продавец">Продавец</option>
                             <option value="Ст. продавец">Ст. продавец</option>
                             <option value="Товаровед">Товаровед</option>
@@ -46,21 +49,12 @@
                     </div>
                     <div class="mb-2">
                         <label for="phoneNumber" class="form-label">Номер телефона:</label>
-                        <input type="number" class="form-control" name="phoneNumber" id="phoneNumber">
+                        <input type="number" class="form-control" name="phoneNumber" id="phoneNumber"
+                               value="${staffer.getPhoneNumber()}">
                     </div>
-                    <div class="mb-2">
-                        <label for="username" class="form-label">Логин:</label>
-                        <input type="text" class="form-control" name="username" id="username">
-                    </div>
-                    <div class="mb-2">
-                        <label for="password" class="form-label">Пароль:</label>
-                        <input type="text" class="form-control" name="password" id="password">
-                    </div>
-
                     <div class="col-md-12 mb-2 text-center">
-                        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
                     </div>
-                    <#--TODO уже зарегистрированы? Можете войти в аккаунт-->
                 </form>
             </div>
         </div>

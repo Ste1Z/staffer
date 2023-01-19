@@ -1,4 +1,4 @@
-package ru.alexanderrogachev.staffer.domain;
+package ru.alexanderrogachev.staffer.domains;
 
 import org.springframework.security.core.GrantedAuthority;
 

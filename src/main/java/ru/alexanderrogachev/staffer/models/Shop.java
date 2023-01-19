@@ -3,12 +3,8 @@ package ru.alexanderrogachev.staffer.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 
@@ -30,17 +26,15 @@ public class Shop {
     @Size(max = 10, message = "Код магазина не может быть длиннее 10 символов")
     private int code;
 
-    @Column(name = "shop_branch")
-//    @NotEmpty(message = "Укажите филиал ММ")
-    @Size(min = 5, max = 100, message = "Название не может быть короче 5 и длиннее 100 символов")
-    private String branch;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "shop_branch_id")
+    private Branch branch;
 
     public Shop() {
     }
 
-    public Shop(String name, int code, String branch) {
+    public Shop(String name, int code) {
         this.name = name;
         this.code = code;
-        this.branch = branch;
     }
 }

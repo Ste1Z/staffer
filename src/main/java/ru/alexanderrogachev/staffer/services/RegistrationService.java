@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.alexanderrogachev.staffer.domain.Role;
-import ru.alexanderrogachev.staffer.domain.User;
+import ru.alexanderrogachev.staffer.domains.User;
 import ru.alexanderrogachev.staffer.repositories.UserRepository;
-
-import java.util.Collections;
 
 @Service
 public class RegistrationService {

@@ -1,12 +1,12 @@
 package ru.alexanderrogachev.staffer.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.alexanderrogachev.staffer.domain.Role;
-import ru.alexanderrogachev.staffer.domain.User;
+import ru.alexanderrogachev.staffer.domains.User;
 import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.services.RegistrationService;
@@ -14,18 +14,19 @@ import ru.alexanderrogachev.staffer.services.ShopServiceImpl;
 import ru.alexanderrogachev.staffer.utils.UserValidatorImpl;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/auth")
 public class RegistrationController {
 
+    private static final Logger logger = Logger.getLogger(Staffer.class);
+
     private final RegistrationService registrationService;
-
     private final UserValidatorImpl userValidator;
-
     private final ShopServiceImpl shopService;
+
 
     @Autowired
     public RegistrationController(RegistrationService registrationService, UserValidatorImpl userValidator, ShopServiceImpl shopService) {
@@ -36,38 +37,40 @@ public class RegistrationController {
 
     //Отображение страницы регистрации
     @GetMapping("/registration")
-    public String registrationPage(Model model, @ModelAttribute("shopName") Shop shopName) {
+    public String registrationPage(@ModelAttribute("staffer") Staffer staffer, @ModelAttribute("user") User user,
+                                   @ModelAttribute("shopName") Shop shopName, Model model) {
         List<Shop> shopNames = shopService.getAllShops();
         model.addAttribute("shopNames", shopNames);
+        logger.info("[" + this.getClass().getSimpleName() + "]" + " Отображение страницы регистрации");
         return "auth/registration";
     }
 
     //Регистрация
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("staffer") @Valid Staffer staffer, @ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                                      @RequestParam("position") String position) {
+    public String performRegistration(@Valid Staffer staffer, BindingResult bindingResult, @Valid User user) {
+        logger.info("[" + this.getClass().getSimpleName() + "]" + " Начало регистрации");
+        if (bindingResult.hasErrors()) return "auth/registration";
+
+        //TODO переделать на выпадающий список филиалов, а затем выпадающий список его магазинов
+
+
         //Устанавливаем филиал пользователя на основе филиала выбранного магазина
         Shop shop = shopService.findShopByName(staffer.getHomeShopName());
         staffer.setBranch(shop.getBranch());
 
-        //Выставляем роль в правах доступа для пользователя на основе выбранной должности
-        switch (position) {
-            case "Продавец":
-            case "Старший продавец":
-                user.setUserRole(Collections.singleton(Role.ROLE_STAFFER));
-                break;
-            case "Товаровед":
-            case "Заместитель директора":
-            case "Директор":
-                user.setUserRole(Collections.singleton(Role.ROLE_SHOP_ADMIN));
-                break;
-        }
-
+        user.setRoleByPosition(staffer.getPosition());
         staffer.setUsersStaffer(user);
         user.setStaffer(staffer);
-        userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()) return "/auth/registration";
-        registrationService.register(user);
+        //Проверяем введенные пароли перед регистрацией
+        if (user.getPassword().equals(user.getConfirmPassword())) {
+            userValidator.validate(user, bindingResult);
+            registrationService.register(user);
+            logger.info("[" + this.getClass().getSimpleName() + "]" + " Регистрация пройдена");
+        } else {
+            logger.info("[" + this.getClass().getSimpleName() + "]" + " Регистрация не пройдена");
+            bindingResult.rejectValue("confirmPassword", "Пароли не совпадают");
+            return "auth/registration";
+        }
         return "redirect:/auth/login";
     }
 }

@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.alexanderrogachev.staffer.domain.User;
+import ru.alexanderrogachev.staffer.domains.User;
 import ru.alexanderrogachev.staffer.models.Request;
-import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.services.RequestServiceImpl;
 import ru.alexanderrogachev.staffer.services.ShopServiceImpl;
@@ -59,7 +58,7 @@ public class RequestController {
     @PostMapping("/requests/{requestId}")
     public String addStafferToRequest(HttpServletRequest http, @PathVariable("requestId") int requestId) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByUsername(principal.getName()).get();
+        User user = userDetailsService.findUserByEmail(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         Request request = requestService.getRequest(requestId);
         List<Staffer> staffers = request.getNotApprovedStaffersList();
@@ -78,7 +77,7 @@ public class RequestController {
     @GetMapping("/requests/add_request")
     public String addRequestPage(Model model, HttpServletRequest http) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByUsername(principal.getName()).get();
+        User user = userDetailsService.findUserByEmail(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         String shopName = staffer.getHomeShopName();
         model.addAttribute("shopName", shopName);
@@ -91,7 +90,7 @@ public class RequestController {
     @PostMapping("/requests/add_request")
     public String addRequest(@ModelAttribute("request") @Valid Request request, HttpServletRequest http) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByUsername(principal.getName()).get();
+        User user = userDetailsService.findUserByEmail(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         request.setShopName(staffer.getHomeShopName());
         requestService.autoSetDateOfRequest(request);
@@ -154,19 +153,7 @@ public class RequestController {
         //Перемещение сотрудника из списка неодобренных сотрудников к одобренным и обратно в случае отсутствия его в оном
         Request request = requestService.getRequest(requestId);
         Staffer staffer = stafferService.findStafferById(stafferId);
-        List<Staffer> notApprovedStaffers = request.getNotApprovedStaffersList();
-        List<Staffer> approvedStaffers = request.getApprovedStaffersList();
-        if (notApprovedStaffers.contains(staffer)) {
-            notApprovedStaffers.remove(staffer);
-            request.setNotApprovedStaffersList(notApprovedStaffers);
-            approvedStaffers.add(staffer);
-            request.setApprovedStaffersList(approvedStaffers);
-        } else {
-            approvedStaffers.remove(staffer);
-            request.setApprovedStaffersList(approvedStaffers);
-            notApprovedStaffers.add(staffer);
-            request.setNotApprovedStaffersList(notApprovedStaffers);
-        }
+        request.switchStafferInRequest(staffer);
         requestService.saveRequest(request);
         stafferService.saveStaffer(staffer);
         return "redirect:/requests/staffers_list/{requestId}";
@@ -180,7 +167,7 @@ public class RequestController {
     @GetMapping("/requests/my_requests")
     public String myRequestsPage(@RequestParam(required = false) String filter, Model model, HttpServletRequest http) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByUsername(principal.getName()).get();
+        User user = userDetailsService.findUserByEmail(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         List<Request> requests = staffer.getNotApprovedStaffersRequests();
         List<Request> filterRequests;

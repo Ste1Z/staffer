@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Request {
     @Id
     @Column(name = "request_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int requestId;
+    private long requestId;
 
     @Column(name = "shop_name")
 //    @NotEmpty(message = "Укажите название ММ")
@@ -59,6 +60,10 @@ public class Request {
 //    @NotEmpty(message = "Укажите необходимое время окончания работы")
     private Date endTime;
 
+    @Column(name = "request_comment")
+    @Size(max = 255, message = "Максимальная длина комментария 255 символов")
+    private String comment;
+
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "not_approved_staffers", joinColumns = @JoinColumn(name = "request_id"), inverseJoinColumns = @JoinColumn(name = "staffer_id"))
     private List<Staffer> notApprovedStaffersList;
@@ -70,7 +75,7 @@ public class Request {
     public Request() {
     }
 
-    public Request(String shopName, int numberOfReqStaffers, String reqPosition, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime) {
+    public Request(String shopName, int numberOfReqStaffers, String reqPosition, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime, String comment) {
         this.shopName = shopName;
         this.numberOfReqStaffers = numberOfReqStaffers;
         this.reqPosition = reqPosition;
@@ -78,12 +83,31 @@ public class Request {
         this.dateOfWork = dateOfWork;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.comment = comment;
     }
 
+    //Получение кол-ва сотрудников в списке готовых к выходу
     public int getCountOfNotApprovedStaffersInRequest() {
         return notApprovedStaffersList.size();
     }
+
+    //Получение кол-ва сотрудников в списке одобренных к выходу
     public int getCountOfApprovedStaffersInRequest() {
         return approvedStaffersList.size();
+    }
+
+//Смена списка готовых к выходу на одобренных и обратно
+    public void switchStafferInRequest(Staffer staffer) {
+        if (notApprovedStaffersList.contains(staffer)) {
+            notApprovedStaffersList.remove(staffer);
+            this.setNotApprovedStaffersList(notApprovedStaffersList);
+            approvedStaffersList.add(staffer);
+            this.setApprovedStaffersList(approvedStaffersList);
+        } else {
+            approvedStaffersList.remove(staffer);
+            this.setApprovedStaffersList(approvedStaffersList);
+            notApprovedStaffersList.add(staffer);
+            this.setNotApprovedStaffersList(notApprovedStaffersList);
+        }
     }
 }

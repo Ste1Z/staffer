@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.alexanderrogachev.staffer.domain.User;
-import ru.alexanderrogachev.staffer.domain.UserDetailsImpl;
+import ru.alexanderrogachev.staffer.domains.User;
+import ru.alexanderrogachev.staffer.domains.UserDetailsImpl;
 import ru.alexanderrogachev.staffer.repositories.UserRepository;
 
 import java.util.Optional;
@@ -24,12 +24,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByEmail(username);
         if (user.isEmpty()) throw new UsernameNotFoundException("Пользователь с таким именем не найден");
         return new UserDetailsImpl(user.get());
     }
-     public Optional<User> findUserByUsername(String username){
-         return userRepository.findByUsername(username);
+     public Optional<User> findUserByEmail(String email){
+         return userRepository.findByEmail(email);
      }
 
 }
