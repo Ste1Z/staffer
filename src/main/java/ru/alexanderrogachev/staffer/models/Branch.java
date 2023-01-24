@@ -18,15 +18,15 @@ public class Branch {
     private long id;
 
     @Column(name = "branch_name")
-    private String branch;
+    private String branchName;
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "shop")
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "branch")
     private List<Shop> shopsOfBranch;
 
     public Branch() {
     }
 
-    public Branch(String branch) {
-        this.branch = branch;
+    public Branch(String branchName) {
+        this.branchName = branchName;
     }
 }

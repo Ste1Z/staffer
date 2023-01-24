@@ -2,7 +2,7 @@ package ru.alexanderrogachev.staffer.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ru.alexanderrogachev.staffer.models.Branch;
 import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.repositories.ShopRepository;
 
@@ -31,7 +31,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public Shop getShop(int id) {
+    public Shop getShop(long id) {
         return shopRepository.findById(id).orElse(null);
     }
 
@@ -48,5 +48,10 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Shop findShopByName(String name) {
         return shopRepository.findShopByName(name);
+    }
+
+    @Override
+    public List<Shop> findShopsByBranch(Branch branch) {
+        return shopRepository.findShopsByBranch(branch);
     }
 }

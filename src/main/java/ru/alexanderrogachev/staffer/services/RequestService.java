@@ -9,9 +9,9 @@ public interface RequestService {
 
     void saveRequest(Request request);
 
-    Request getRequest(int id);
+    Request getRequest(long id);
 
-    void deleteRequest(int id);
+    void deleteRequest(long id);
 
     List<Request> findRequestByShopName(String name);
 

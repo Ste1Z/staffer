@@ -5,10 +5,10 @@ import ru.alexanderrogachev.staffer.models.Staffer;
 
 import java.util.List;
 
-public interface StafferRepository extends JpaRepository<Staffer, Integer> {
+public interface StafferRepository extends JpaRepository<Staffer, Long> {
     List<Staffer> findByName(String name);
 
-    Staffer findByStafferId(int id);
+    Staffer findByStafferId(long id);
 
 
 }

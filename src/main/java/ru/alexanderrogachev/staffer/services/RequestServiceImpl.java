@@ -30,12 +30,12 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request getRequest(int id) {
+    public Request getRequest(long id) {
         return requestRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteRequest(int id) {
+    public void deleteRequest(long id) {
         requestRepository.deleteById(id);
     }
 

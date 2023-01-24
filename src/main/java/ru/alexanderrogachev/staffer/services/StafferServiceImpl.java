@@ -28,12 +28,12 @@ public class StafferServiceImpl implements StafferService {
     }
 
     @Override
-    public Staffer getStaffer(int id) {
+    public Staffer getStaffer(long id) {
         return stafferRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteStaffer(int id) {
+    public void deleteStaffer(long id) {
         stafferRepository.deleteById(id);
     }
 
@@ -43,7 +43,7 @@ public class StafferServiceImpl implements StafferService {
     }
 
     @Override
-    public Staffer findStafferById(int id) {
+    public Staffer findStafferById(long id) {
         return stafferRepository.findByStafferId(id);
     }
 
