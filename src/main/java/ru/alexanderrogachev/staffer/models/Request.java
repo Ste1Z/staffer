@@ -11,8 +11,6 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
-//TODO проверить CascadeType.DELETE
-
 @Getter
 @Setter
 @Entity

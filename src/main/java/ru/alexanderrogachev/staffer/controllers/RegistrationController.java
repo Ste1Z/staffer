@@ -42,7 +42,7 @@ public class RegistrationController {
     //Отображение страницы регистрации
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("staffer") Staffer staffer, @ModelAttribute("user") User user,
-                                   @ModelAttribute("shopName") Shop shopName, @ModelAttribute("branch") Branch branch, Model model) {
+                                   @ModelAttribute("branch") Branch branch, Model model) {
         List<Branch> branches = branchService.getAllBranches();
         model.addAttribute("branches", branches);
         List<Shop> shops = shopService.getAllShops();
@@ -56,13 +56,6 @@ public class RegistrationController {
     public String performRegistration(@Valid Staffer staffer, BindingResult bindingResult, @Valid User user) {
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Начало регистрации");
         if (bindingResult.hasErrors()) return "auth/registration";
-
-        //TODO переделать на выпадающий список филиалов, а затем выпадающий список его магазинов
-
-
-        //Устанавливаем филиал пользователя на основе филиала выбранного магазина
-        Shop shop = shopService.findShopByName(staffer.getHomeShopName());
-        staffer.setBranch(shop.getBranch().getBranchName());
 
         user.setRoleByPosition(staffer.getPosition());
         staffer.setUsersStaffer(user);

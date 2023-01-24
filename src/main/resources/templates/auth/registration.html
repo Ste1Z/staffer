@@ -50,8 +50,8 @@
                 <div>
                     <label class="text-muted" for="branch">Ваш филиал</label>
                     <select class="form-select mb-0" name="branch" id="branch" th:errorclass="is-invalid">
-                        <option selected disabled>Выберите из списка</option>
-                        <option th:each="branch : ${branches}" th:value="${branch.getBranchName()}"
+                        <option th:value="${null}">Выберите из списка</option>
+                        <option th:each="branch : ${branches}" th:value="${branch.getId()}"
                                 th:text="${branch.getBranchName()}">
                         </option>
                     </select>
@@ -63,7 +63,7 @@
                     <label class="text-muted" for="homeShopName">Ваш магазин</label>
                     <select class="form-select mb-0" name="homeShopName" id="homeShopName" th:errorclass="is-invalid"
                             aria-describedby="homeShopNameHelper">
-                        <option selected disabled>Выберите из списка</option>
+                        <option th:value="${null}">Выберите из списка</option>
                         <option th:each="shop : ${shops}" th:value="${shop.getName()}"
                                 th:text="${shop.getName()}">
                         </option>
@@ -75,6 +75,22 @@
                         Не нашли свой магазин? Нажмите <a href="#"> здесь</a>
                     </div>
                 </div>
+                <!--Скрипт для отображения списка магазинов в зависимости от выбранного филиала-->
+                <script>
+                    $('document').ready(function () {
+                        $('#branch').on('change', function () {
+                            $('#homeShopName').empty().append('<option value="null">Выберите из списка</option>');
+                            var branchId = $(this).val();
+                            var href = "http://localhost:8080/branch/" + branchId
+                            $.get(href, function (branch, status) {
+                                var shops = branch.shopsOfBranch;
+                                for (var i = 0; i <= shops.length - 1; i++) {
+                                    $('#homeShopName').append('<option value="' + shops[i].name + '">' + shops[i].name + '</option>');
+                                }
+                            })
+                        })
+                    })
+                </script>
                 <!--Должность-->
                 <div>
                     <label class="text-muted" for="position">Должность</label>

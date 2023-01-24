@@ -1,5 +1,6 @@
 package ru.alexanderrogachev.staffer.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,10 @@ import javax.validation.constraints.Size;
 public class Shop {
 
     @Id
+    @Column(name = "shop_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @Column(name = "shop_name")
 //    @NotEmpty(message = "Укажите название ММ")
     @Size(min = 2, max = 30, message = "Название не может быть короче 2 и длиннее 30 символов")
