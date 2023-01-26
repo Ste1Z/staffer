@@ -11,7 +11,7 @@
 <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-3">
     <div class="row bg-light shadow-lg">
         <div class="col border rounded p-3">
-            <h3 class="text-center mb-2">Регистрация</h3>
+            <h3 class="text-center mb-3">Регистрация</h3>
             <form th:method="POST" th:action="@{/auth/registration}" th:object="${staffer}">
 
                 <!--Имя-->
@@ -82,7 +82,7 @@
                             $('#homeShopName').empty().append('<option value="null">Выберите из списка</option>');
                             var branchId = $(this).val();
                             var href = "http://localhost:8080/branch/" + branchId
-                            $.get(href, function (branch, status) {
+                            $.get(href, function (branch) {
                                 var shops = branch.shopsOfBranch;
                                 for (var i = 0; i <= shops.length - 1; i++) {
                                     $('#homeShopName').append('<option value="' + shops[i].name + '">' + shops[i].name + '</option>');
@@ -110,19 +110,21 @@
                 <!--Номер телефона-->
                 <div class="mb-0">
                     <label class="text-muted" for="phoneNumber">Номер телефона</label>
-                    <input type="number" class="form-control" name="phoneNumber" id="phoneNumber"
+                    <input type="text" class="form-control" name="phoneNumber" id="phoneNumber"
                            th:value="*{phoneNumber}" th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
                          class="invalid-feedback"></div>
                 </div>
-
+                <script>
+                    $("#phoneNumber").mask("+7 (999) 999-9999");
+                </script>
                 <div th:object="${user}">
                     <!--Имя пользователя-->
                     <div class="mb-0">
-                        <label class="text-muted" for="email">Почтовый ящик</label>
-                        <input type="text" class="form-control" name="email" id="email"
-                               th:value="*{email}" th:errorclass="is-invalid">
-                        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                        <label class="text-muted" for="username">Почтовый ящик</label>
+                        <input type="text" class="form-control" name="username" id="username"
+                               th:value="*{getUsername}" th:errorclass="is-invalid">
+                        <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{getUsername}"
                              class="invalid-feedback"></div>
                     </div>
                     <!--Пароль-->
@@ -147,6 +149,7 @@
                         </div>
                     </div>
                 </div>
+                <!--Кнопка регистрации-->
                 <div class="col-md-12 text-center d-grid">
                     <button type="submit" class="btn btn-outline-danger" aria-describedby="regBtnHelper">
                         Зарегистрироваться
@@ -155,7 +158,6 @@
                         Уже зарегистрированы? Можете <a href="/auth/login">войти</a>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>

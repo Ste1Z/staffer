@@ -39,7 +39,7 @@ public class MyProfileController {
     @GetMapping("/my_profile")
     public String myProfilePage(HttpServletRequest http, Model model) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByEmail(principal.getName()).get();
+        User user = userDetailsService.findUserByUsername(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         model.addAttribute("staffer", staffer);
         List<Shop> shopNames = shopService.getAllShops();
@@ -55,7 +55,7 @@ public class MyProfileController {
     @PostMapping("/my_profile")
     public String saveProfileChanges(HttpServletRequest http, @ModelAttribute("staffer") @Valid Staffer staffer) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByEmail(principal.getName()).get();
+        User user = userDetailsService.findUserByUsername(principal.getName()).get();
         staffer.setStafferId(user.getStaffer().getStafferId());
         staffer.setUsersStaffer(user);
         //Получаем версию работника на основе залогиненного пользователя и выставляем старые значения, если ничего не выбрано в полях

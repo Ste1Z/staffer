@@ -9,16 +9,25 @@
 <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-3">
     <div class="row bg-light shadow-lg">
         <div class="col border rounded p-3">
-            <h3 class="text-center mb-2">Вход</h3>
-            <form name="login_form" method="post" action="/process_login">
+            <h3 class="text-center mb-3">Вход</h3>
+            <form th:method="POST" th:action="@{/process_login}" th:object="${user}">
+                <!--Логин-->
                 <div class="mb-0">
-                    <label for="email" class="form-label text-muted">Почтовый ящик:</label>
-                    <input type="text" class="form-control" name="email" id="email">
+                    <label class="text-muted" for="username">Почтовый ящик:</label>
+                    <input type="text" class="form-control" name="username" id="username"
+                           th:value="*{getUsername}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{getUsername}"
+                         class="invalid-feedback"></div>
                 </div>
+                <!--Пароль-->
                 <div class="mb-3">
-                    <label for="password" class="form-label text-muted">Пароль:</label>
-                    <input type="password" class="form-control" name="password" id="password">
+                    <label class="text-muted" for="password">Пароль:</label>
+                    <input type="password" class="form-control" name="password" id="password"
+                           th:value="*{password}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                         class="invalid-feedback"></div>
                 </div>
+                <!--Кнопка входа-->
                 <div class="col-md-12 text-center d-grid">
                     <button type="submit" class="btn btn-outline-danger" aria-describedby="loginBtnHelper">Вход</button>
                     <div id="loginBtnHelper" class="form-text text-center">
@@ -30,6 +39,7 @@
         </div>
     </div>
 </div>
+
 </body>
 
 </html>

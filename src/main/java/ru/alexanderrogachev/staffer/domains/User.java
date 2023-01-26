@@ -6,7 +6,7 @@ import ru.alexanderrogachev.staffer.models.Staffer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collections;
 import java.util.Set;
@@ -26,16 +26,17 @@ public class User {
 
     @Column(name = "user_email")
     @Email(message = "Проверьте корректность почтового ящика (пример: example@mail.com)")
-    @NotEmpty(message = "Укажите почтовый ящик")
-    @Size(min = 6, max = 50, message = "Длина почтового ящика должна быть не менее 6 и не более 50 символов")
-    private String email;
+    @NotBlank(message = "Укажите почтовый ящик")
+    @Size(min = 6, max = 50, message = "Почтовый ящик не может быть короче 6 и длиннее 50 символов")
+    private String username;
 
     @Column(name = "user_password")
-    @NotEmpty(message = "Укажите пароль")
-    @Size(min = 4, message = "Длина пароля должна быть не менее 4 символов")
+    @NotBlank(message = "Укажите пароль")
+    @Size(min = 4, message = "Пароль не может быть короче 4 символов")
     private String password;
 
     @Transient
+    @NotBlank(message = "Укажите пароль ещё раз")
     private String confirmPassword;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -52,8 +53,8 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, boolean enabled) {
-        this.email = email;
+    public User(String username, String password, boolean enabled) {
+        this.username = username;
         this.password = password;
         this.enabled = enabled;
     }

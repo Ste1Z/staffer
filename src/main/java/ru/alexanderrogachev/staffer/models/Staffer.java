@@ -51,10 +51,11 @@ public class Staffer {
 
     //TODO дописать аннотации после внедрения скрипта на выбор списков
     @Column(name = "shop_branch")
+    @NotBlank(message = "Укажите ваш филиал")
     private String branch;
 
     @Column(name = "home_shop_name")
-    @NotBlank(message = "Укажите название вашего ММ")
+    @NotBlank(message = "Укажите ваш магазин")
     private String homeShopName;
 
     @Column(name = "staffer_position")
@@ -63,7 +64,6 @@ public class Staffer {
 
     @Column(name = "staffer_phone_number")
     @NotBlank(message = "Укажите номер вашего телефона")
-    @Size(min = 10, max = 11, message = "Длина номера должна быть 10 или 11 символов")
     private String phoneNumber;
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})

@@ -1,9 +1,14 @@
-<#import "../parts/common.html" as c>
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <div th:insert="~{requests/parts/common :: head}"></div>
+</head>
+<body>
+<div th:insert="~{requests/parts/common :: body}"></div>
+<div th:insert="~{parts/navbar :: navbar}"></div>
 
-<@c.page>
-
-<#--навигация по страницам-->
+<!--навигация по страницам-->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb m-3">
             <li class="breadcrumb-item"><a href="/requests">Заявки</a></li>
@@ -11,7 +16,7 @@
         </ol>
     </nav>
 
-<#--Общий список сотрудников, готовых выйти на работу -->
+<!--Общий список сотрудников, готовых выйти на работу -->
     <div class="m-3">
         <h2>Список сотрудников, готовых выйти на работу</h2>
     </div>
@@ -20,7 +25,7 @@
             <div class="row flex-row  p-2">
                 <#list notApprovedStaffers![] as staffer>
                     <div class="col">
-                        <#--карточка с сотрудником-->
+                        <!--карточка с сотрудником-->
                         <div class="card shadow mb-2" style="width: 20rem; height: 22rem">
                             <div class="card-header bg-transparent text-center">
                                 <h4>${staffer.getFullName()}</h4>
@@ -59,14 +64,14 @@
                     </div>
                 <#else>
 
-                <#--TODO добавить обработку пустого фильтра-->
+                <!--TODO добавить обработку пустого фильтра-->
                 </#list>
             </div>
         </div>
     </div>
 
 
-<#--Список одобренных к выходу сотрудников-->
+<!--Список одобренных к выходу сотрудников-->
     <div class="m-3">
         <h2>Список одобренных к выходу сотрудников</h2>
     </div>
@@ -75,7 +80,7 @@
             <div class="row flex-row  p-2">
                 <#list approvedStaffers![] as staffer>
                     <div class="col">
-                        <#--карточка с сотрудником-->
+                        <!--карточка с сотрудником-->
                         <div class="card shadow mb-2" style="width: 20rem; height: 22rem">
                             <div class="card-header bg-transparent text-center">
                                 <h5>${staffer.getFullName()}</h5>
@@ -114,10 +119,12 @@
                     </div>
                 <#else>
 
-                <#--TODO добавить обработку пустого фильтра-->
+                <!--TODO добавить обработку пустого фильтра-->
                 </#list>
             </div>
         </div>
     </div>
 
-</@c.page>
+</body>
+
+</html>

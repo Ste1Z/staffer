@@ -53,23 +53,17 @@ public class RegistrationController {
 
     //Регистрация
     @PostMapping("/registration")
-    public String performRegistration(@Valid Staffer staffer, BindingResult bindingResult, @Valid User user) {
+    public String performRegistration(@Valid Staffer staffer, BindingResult stafferBindingResult,
+                                      @Valid User user, BindingResult userBindingResult) {
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Начало регистрации");
-        if (bindingResult.hasErrors()) return "auth/registration";
+        if (stafferBindingResult.hasErrors() || userBindingResult.hasErrors()) return "auth/registration";
 
         user.setRoleByPosition(staffer.getPosition());
         staffer.setUsersStaffer(user);
         user.setStaffer(staffer);
-        //Проверяем введенные пароли перед регистрацией
-        if (user.getPassword().equals(user.getConfirmPassword())) {
-            userValidator.validate(user, bindingResult);
-            registrationService.register(user);
-            logger.info("[" + this.getClass().getSimpleName() + "]" + " Регистрация пройдена");
-        } else {
-            logger.info("[" + this.getClass().getSimpleName() + "]" + " Регистрация не пройдена");
-            bindingResult.rejectValue("confirmPassword", "Пароли не совпадают");
-            return "auth/registration";
-        }
+        userValidator.validate(user, userBindingResult);
+        registrationService.register(user);
+        logger.info("[" + this.getClass().getSimpleName() + "]" + " Регистрация пройдена");
         return "redirect:/auth/login";
     }
 }

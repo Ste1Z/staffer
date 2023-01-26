@@ -58,7 +58,7 @@ public class RequestController {
     @PostMapping("/requests/{requestId}")
     public String addStafferToRequest(HttpServletRequest http, @PathVariable("requestId") int requestId) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByEmail(principal.getName()).get();
+        User user = userDetailsService.findUserByUsername(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         Request request = requestService.getRequest(requestId);
         List<Staffer> staffers = request.getNotApprovedStaffersList();
@@ -77,7 +77,7 @@ public class RequestController {
     @GetMapping("/requests/add_request")
     public String addRequestPage(Model model, HttpServletRequest http) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByEmail(principal.getName()).get();
+        User user = userDetailsService.findUserByUsername(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         String shopName = staffer.getHomeShopName();
         model.addAttribute("shopName", shopName);
@@ -90,7 +90,7 @@ public class RequestController {
     @PostMapping("/requests/add_request")
     public String addRequest(@ModelAttribute("request") @Valid Request request, HttpServletRequest http) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByEmail(principal.getName()).get();
+        User user = userDetailsService.findUserByUsername(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         request.setShopName(staffer.getHomeShopName());
         requestService.autoSetDateOfRequest(request);
@@ -167,7 +167,7 @@ public class RequestController {
     @GetMapping("/requests/my_requests")
     public String myRequestsPage(@RequestParam(required = false) String filter, Model model, HttpServletRequest http) {
         Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByEmail(principal.getName()).get();
+        User user = userDetailsService.findUserByUsername(principal.getName()).get();
         Staffer staffer = user.getStaffer();
         List<Request> requests = staffer.getNotApprovedStaffersRequests();
         List<Request> filterRequests;
