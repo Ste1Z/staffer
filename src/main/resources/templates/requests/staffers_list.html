@@ -9,121 +9,139 @@
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
 <!--навигация по страницам-->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb m-3">
-            <li class="breadcrumb-item"><a href="/requests">Заявки</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Список сотрудников</li>
-        </ol>
-    </nav>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-3">
+        <li class="breadcrumb-item"><a href="/requests">Заявки</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Список сотрудников</li>
+    </ol>
+</nav>
 
 <!--Общий список сотрудников, готовых выйти на работу -->
-    <div class="m-3">
-        <h2>Список сотрудников, готовых выйти на работу</h2>
-    </div>
-    <div class="container-fluid mb-2 d-flex">
-        <div class=" shadow border rounded" style="background-color: #fcff7f">
-            <div class="row flex-row  p-2">
-                <#list notApprovedStaffers![] as staffer>
-                    <div class="col">
-                        <!--карточка с сотрудником-->
-                        <div class="card shadow mb-2" style="width: 20rem; height: 22rem">
-                            <div class="card-header bg-transparent text-center">
-                                <h4>${staffer.getFullName()}</h4>
-                            </div>
-                            <div class="card-body text-center">
-                                <div>
-                                    <h5><img class="mb-3" src="/images/dateOfBirth_min.png" width="20" height="20"
-                                             alt="dateOfBirth_min">${staffer.getDateOfBirth()?string["dd.MM.yyyy"]}</h5>
-                                </div>
-                                <div>
-                                    <h5><img class="mb-3" src="/images/homeShop_min.png" width="20" height="20"
-                                             alt="homeShop_min">${staffer.getHomeShopName()}</h5>
-                                </div>
-                                <div>
-                                    <h5><img class="mb-3" src="/images/branch_min.png" width="20" height="20"
-                                             alt="branch_min">${staffer.getBranch()}</h5>
-                                </div>
-                                <div>
-                                    <h5><img class="mb-3" src="/images/position_min.png" width="20" height="20"
-                                             alt="position_min">${staffer.getPosition()}</h5>
-                                </div>
-                                <div>
-                                    <h5><img src="/images/phoneNumber_min.png" width="20" height="20"
-                                             alt="phoneNumber_min">${staffer.getPhoneNumber()}</h5>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <form name="approve_staffer" method="post"
-                                      action="/requests/staffers_list/${requestId}/${staffer.getStafferId()}">
-                                    <div class="col-md-12 mb-2 text-center">
-                                        <button type="submit" class="btn btn-primary">Одобрить</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                <#else>
-
-                <!--TODO добавить обработку пустого фильтра-->
-                </#list>
-            </div>
+<div class="container-fluid mb-1">
+    <div class="bg-light shadow">
+        <div class="col border rounded p-2" style="background-color: #fcff7f">
+            <h4>Список сотрудников, готовых выйти на работу</h4>
         </div>
     </div>
+</div>
+<div class="container-fluid mb-3">
+    <div class=" shadow border rounded" style="background-color: #fcff7f">
+        <div class="row flex-row  p-2">
+            <!--Проверка на наличие сотрудников в списке-->
+            <div th:if="${#lists.size(notApprovedStaffers) == 0}">
+                <h6>Желающих поработать у вас пока нет</h6>
+            </div>
+
+            <th:block th:each="staffer : ${notApprovedStaffers}">
+                <div class="col">
+                    <!--карточка с сотрудником-->
+                    <div class="card shadow" style="width: 20rem; height: 22rem">
+                        <div class="card-header bg-transparent text-center">
+                            <h4 th:text="${staffer.getFullName()}"></h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/dateOfBirth_min.png}" width="20" height="20"
+                                         alt="dateOfBirth_min"
+                                         th:text="${#dates.format(staffer.getDateOfBirth(), 'dd.MM.yyyy')}">
+                                </h5>
+                            </div>
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/homeShop_min.png}" width="20" height="20"
+                                         alt="homeShop_min" th:text="${staffer.getHomeShopName()}"></h5>
+                            </div>
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/branch_min.png}" width="20" height="20"
+                                         alt="branch_min" th:text="${staffer.getBranch()}"></h5>
+                            </div>
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/position_min.png}" width="20" height="20"
+                                         alt="position_min" th:text="${staffer.getPosition()}"></h5>
+                            </div>
+                            <div>
+                                <h5><img class="mb-0" th:src="@{/images/phoneNumber_min.png}" width="20" height="20"
+                                         alt="phoneNumber_min" th:text="${staffer.getPhoneNumber()}"></h5>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <form name="approve_staffer" method="post"
+                                  th:action="@{/requests/staffers_list/{requestId}/{stafferId} (requestId = ${requestId},stafferId = ${staffer.getStafferId()})}">
+                                <div class="col-md-12 mb-2 text-center">
+                                    <button type="submit" class="btn btn-outline-danger">Одобрить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--TODO добавить обработку пустого фильтра-->
+            </th:block>
+        </div>
+    </div>
+</div>
 
 
 <!--Список одобренных к выходу сотрудников-->
-    <div class="m-3">
-        <h2>Список одобренных к выходу сотрудников</h2>
-    </div>
-    <div class="container-fluid mb-2 d-flex">
-        <div class=" shadow border rounded" style="background-color: #b0f7a6">
-            <div class="row flex-row  p-2">
-                <#list approvedStaffers![] as staffer>
-                    <div class="col">
-                        <!--карточка с сотрудником-->
-                        <div class="card shadow mb-2" style="width: 20rem; height: 22rem">
-                            <div class="card-header bg-transparent text-center">
-                                <h5>${staffer.getFullName()}</h5>
-                            </div>
-                            <div class="card-body text-center">
-                                <div>
-                                    <h5><img class="mb-3" src="/images/dateOfBirth_min.png" width="20" height="20"
-                                             alt="dateOfBirth_min">${staffer.getDateOfBirth()?string["dd.MM.yyyy"]}</h5>
-                                </div>
-                                <div>
-                                    <h5><img class="mb-3" src="/images/homeShop_min.png" width="20" height="20"
-                                             alt="homeShop_min">${staffer.getHomeShopName()}</h5>
-                                </div>
-                                <div>
-                                    <h5><img class="mb-3" src="/images/branch_min.png" width="20" height="20"
-                                             alt="branch_min">${staffer.getBranch()}</h5>
-                                </div>
-                                <div>
-                                    <h5><img class="mb-3" src="/images/position_min.png" width="20" height="20"
-                                             alt="position_min">${staffer.getPosition()}</h5>
-                                </div>
-                                <div>
-                                    <h5><img src="/images/phoneNumber_min.png" width="20" height="20"
-                                             alt="phoneNumber_min">${staffer.getPhoneNumber()}</h5>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <form name="approve_staffer" method="post"
-                                      action="/requests/staffers_list/${requestId}/${staffer.getStafferId()}">
-                                    <div class="col-md-12 mb-2 text-center">
-                                        <button type="submit" class="btn btn-primary">Отменить выход</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                <#else>
-
-                <!--TODO добавить обработку пустого фильтра-->
-                </#list>
-            </div>
+<div class="container-fluid mb-1">
+    <div class="bg-light shadow">
+        <div class="col border rounded p-2" style="background-color: #b0f7a6">
+            <h4>Список одобренных к выходу сотрудников</h4>
         </div>
     </div>
+</div>
+<div class="container-fluid">
+    <div class="shadow border rounded" style="background-color: #b0f7a6">
+        <div class="row flex-row p-2">
+            <!--Проверка на наличие сотрудников в списке-->
+            <div th:if="${#lists.size(approvedStaffers) == 0}">
+                <h6>Вы пока не одобрили ни одного сотрудника</h6>
+            </div>
+
+            <th:block th:each="staffer : ${approvedStaffers}">
+                <div class="col">
+                    <!--карточка с сотрудником-->
+                    <div class="card shadow mb-2" style="width: 20rem; height: 22rem">
+                        <div class="card-header bg-transparent text-center">
+                            <h5 th:text="${staffer.getFullName()}"></h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/dateOfBirth_min.png}" width="20" height="20"
+                                         alt="dateOfBirth_min"
+                                         th:text="${#dates.format(staffer.getDateOfBirth(), 'dd.MM.yyyy')}"></h5>
+                            </div>
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/homeShop_min.png}" width="20" height="20"
+                                         alt="homeShop_min" th:text="${staffer.getHomeShopName()}"></h5>
+                            </div>
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/branch_min.png}" width="20" height="20"
+                                         alt="branch_min" th:text="${staffer.getBranch()}"></h5>
+                            </div>
+                            <div>
+                                <h5><img class="mb-3" th:src="@{/images/position_min.png}" width="20" height="20"
+                                         alt="position_min" th:text="${staffer.getPosition()}"></h5>
+                            </div>
+                            <div>
+                                <h5><img th:src="@{/images/phoneNumber_min.png}" width="20" height="20"
+                                         alt="phoneNumber_min" th:text="${staffer.getPhoneNumber()}"></h5>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <form name="approve_staffer" method="post"
+                                  th:action="@{/requests/staffers_list/{requestId}/{stafferId} (requestId = ${requestId},stafferId = ${staffer.getStafferId()})}">
+                                <div class="col-md-12 mb-2 text-center">
+                                    <button type="submit" class="btn btn-outline-danger">Отменить выход</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!--TODO добавить обработку пустого фильтра-->
+            </th:block>
+        </div>
+    </div>
+</div>
 
 </body>
 

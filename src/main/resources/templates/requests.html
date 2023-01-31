@@ -16,17 +16,17 @@
 </nav>
 
 <!--форма фильтра-->
-<div class="container-fluid mb-3">
+<div class="container-fluid mb-1">
     <div class="bg-light shadow">
         <div class="col border rounded p-3">
-            <h5 class="text-start mb-2">Фильтрация</h5>
-            <form class="row g-2 mb-2" name="filter_request" method="get" action="/requests">
+            <h5 class="text-start">Фильтрация</h5>
+            <form class="row g-2" name="filter_request" method="get" action="/requests">
                 <label for="filter">Поиск по названию ММ</label>
                 <div class="col-auto">
                     <input type="text" class="form-control" name="filter" id="filter">
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Найти</button>
+                    <button type="submit" class="btn btn-outline-danger">Найти</button>
                 </div>
             </form>
         </div>
@@ -107,7 +107,7 @@
                                 <div class="col-auto">
                                     <form name="edit_request" method="get"
                                           th:action="@{/requests/edit_request/{id}(id = ${request.getRequestId()})}">
-                                        <button type="submit" class="btn">
+                                        <button type="submit" class="btn btn-outline-danger">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                     </form>
