@@ -1,5 +1,7 @@
 package ru.alexanderrogachev.staffer.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.Getter;
 import lombok.Setter;
 import ru.alexanderrogachev.staffer.models.Staffer;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "credentials")
+@JsonIgnoreType
 public class User {
 
     @Id

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.alexanderrogachev.staffer.domains.User;
+import ru.alexanderrogachev.staffer.models.Position;
 import ru.alexanderrogachev.staffer.models.Request;
 import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.services.RequestServiceImpl;
@@ -79,7 +80,7 @@ public class RequestController {
         Principal principal = http.getUserPrincipal();
         User user = userDetailsService.findUserByUsername(principal.getName()).get();
         Staffer staffer = user.getStaffer();
-        String shopName = staffer.getHomeShopName();
+        String shopName = staffer.getHomeShop().getName();
         model.addAttribute("shopName", shopName);
         List<Integer> numberOfStaffers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         model.addAttribute("numberOfStaffers", numberOfStaffers);
@@ -92,7 +93,7 @@ public class RequestController {
         Principal principal = http.getUserPrincipal();
         User user = userDetailsService.findUserByUsername(principal.getName()).get();
         Staffer staffer = user.getStaffer();
-        request.setShopName(staffer.getHomeShopName());
+        request.setShopName(staffer.getHomeShop());
         requestService.autoSetDateOfRequest(request);
         requestService.saveRequest(request);
         return "redirect:/requests";
@@ -110,7 +111,7 @@ public class RequestController {
         model.addAttribute("request", request);
         List<Integer> numberOfStaffers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         model.addAttribute("numberOfStaffers", numberOfStaffers);
-        String reqPosition = request.getReqPosition();
+        Position reqPosition = request.getReqPosition();
         model.addAttribute("reqPosition", reqPosition);
         return "requests/edit_request";
     }
@@ -125,7 +126,7 @@ public class RequestController {
         if (request.getNumberOfReqStaffers() == 0) {
             request.setNumberOfReqStaffers(oldVersionOfRequest.getNumberOfReqStaffers());
         }
-        if (request.getReqPosition() == null || request.getReqPosition().isEmpty()) {
+        if (request.getReqPosition() == null) {
             request.setReqPosition(oldVersionOfRequest.getReqPosition());
         }
         requestService.saveRequest(request);

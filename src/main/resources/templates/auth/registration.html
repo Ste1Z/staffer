@@ -60,18 +60,18 @@
                 </div>
                 <!--Магазин-->
                 <div>
-                    <label class="text-muted" for="homeShopName">Ваш магазин</label>
-                    <select class="form-select mb-0" name="homeShopName" id="homeShopName" th:errorclass="is-invalid"
-                            aria-describedby="homeShopNameHelper">
+                    <label class="text-muted" for="homeShop">Ваш магазин</label>
+                    <select class="form-select mb-0" name="homeShop" id="homeShop" th:errorclass="is-invalid"
+                            aria-describedby="homeShopHelper">
                         <option th:value="${null}">Выберите из списка</option>
-                        <option th:each="shop : ${shops}" th:value="${shop.getName()}"
+                        <option th:each="shop : ${shops}" th:value="${shop.getId()}"
                                 th:text="${shop.getName()}">
                         </option>
                     </select>
-                    <div style="color: red" th:if="${#fields.hasErrors('homeShopName')}" th:errors="*{homeShopName}"
+                    <div style="color: red" th:if="${#fields.hasErrors('homeShop')}" th:errors="*{homeShop}"
                          class="invalid-feedback"></div>
                     <!--TODO поправить ссылку на создание магазина-->
-                    <div id="homeShopNameHelper" class="form-text text-center mb-0">
+                    <div id="homeShopHelper" class="form-text text-center mb-0">
                         Не нашли свой магазин? Нажмите <a href="#"> здесь</a>
                     </div>
                 </div>
@@ -79,13 +79,13 @@
                 <script>
                     $('document').ready(function () {
                         $('#branch').on('change', function () {
-                            $('#homeShopName').empty().append('<option value="null">Выберите из списка</option>');
+                            $('#homeShop').empty().append('<option value="null">Выберите из списка</option>');
                             var branchId = $(this).val();
                             var href = "http://localhost:8080/branch/" + branchId
                             $.get(href, function (branch) {
                                 var shops = branch.shopsOfBranch;
                                 for (var i = 0; i <= shops.length - 1; i++) {
-                                    $('#homeShopName').append('<option value="' + shops[i].name + '">' + shops[i].name + '</option>');
+                                    $('#homeShop').append('<option value="' + shops[i].id + '">' + shops[i].name + '</option>');
                                 }
                             })
                         })
@@ -96,13 +96,10 @@
                     <label class="text-muted" for="position">Должность</label>
                     <select class="form-select mb-0" name="position" id="position" th:value="*{position}"
                             th:errorclass="is-invalid">
-                        <option selected disabled>Выберите из списка</option>
-                        <option value="СВП">СВП</option>
-                        <option value="Продавец">Продавец</option>
-                        <option value="Ст. продавец">Ст. продавец</option>
-                        <option value="Товаровед">Товаровед</option>
-                        <option value="Зам. директора">Зам. директора</option>
-                        <option value="Директор">Директор</option>
+                        <option th:value="${null}">Выберите из списка</option>
+                        <option th:each="position : ${positions}" th:value="${position.getPositionId()}"
+                                th:text="${position.getPositionName()}">
+                        </option>
                     </select>
                     <div style="color: red" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"
                          class="invalid-feedback"></div>

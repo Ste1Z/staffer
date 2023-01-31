@@ -1,5 +1,7 @@
 package ru.alexanderrogachev.staffer.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +22,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "staffers")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "stafferId")
 public class Staffer {
 
     @Id
@@ -49,18 +52,20 @@ public class Staffer {
     @NotNull(message = "Укажите дату вашего рождения")
     private Date dateOfBirth;
 
-    //TODO дописать аннотации после внедрения скрипта на выбор списков
-    @Column(name = "shop_branch")
-    @NotBlank(message = "Укажите ваш филиал")
-    private String branch;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "staffer_branch_id")
+    @NotNull(message = "Укажите ваш филиал")
+    private Branch branch;
 
-    @Column(name = "home_shop_name")
-    @NotBlank(message = "Укажите ваш магазин")
-    private String homeShopName;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "home_shop_id")
+    @NotNull(message = "Укажите ваш магазин")
+    private Shop homeShop;
 
-    @Column(name = "staffer_position")
-    @NotBlank(message = "Укажите вашу должность")
-    private String position;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "staffer_position_id")
+    @NotNull(message = "Укажите ваш филиал")
+    private Position position;
 
     @Column(name = "staffer_phone_number")
     @NotBlank(message = "Укажите номер вашего телефона")
@@ -81,13 +86,13 @@ public class Staffer {
     public Staffer() {
     }
 
-    public Staffer(String name, String surname, String patronymic, Date dateOfBirth, String branch, String homeShopName, String position, String phoneNumber) {
+    public Staffer(String name, String surname, String patronymic, Date dateOfBirth, Branch branch, Shop homeShop, Position position, String phoneNumber) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
         this.dateOfBirth = dateOfBirth;
         this.branch = branch;
-        this.homeShopName = homeShopName;
+        this.homeShop = homeShop;
         this.position = position;
         this.phoneNumber = phoneNumber;
     }

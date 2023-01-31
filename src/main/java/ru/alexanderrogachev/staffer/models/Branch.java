@@ -23,8 +23,13 @@ public class Branch {
     @Column(name = "branch_name")
     private String branchName;
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "branch")
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            mappedBy = "branch")
     private List<Shop> shopsOfBranch;
+
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            mappedBy = "branch")
+    private List<Staffer> staffersOfBranch;
 
     public Branch() {
     }

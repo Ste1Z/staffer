@@ -1,5 +1,7 @@
 package ru.alexanderrogachev.staffer.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "requests")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "requestId")
 public class Request {
 
     @Id
@@ -22,17 +26,20 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long requestId;
 
-    @Column(name = "shop_name")
-//    @NotEmpty(message = "Укажите название ММ")
-    private String shopName;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "shop_id")
+    @NotNull(message = "Укажите магазин")
+    private Shop shopName;
 
     @Column(name = "number_of_req_staffers")
 //    @NotEmpty(message = "Укажите кол-во требуемого персонала")
     @Min(value = 0, message = "Кол-во требуемого персонала не может быть отрицательным")
     private int numberOfReqStaffers;
 
-    @Column(name = "req_position")
-    private String reqPosition;
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "req_position_id")
+    @NotNull(message = "Укажите требуемую должность")
+    private Position reqPosition;
 
     @Column(name = "date_of_request")
     @Temporal(TemporalType.DATE)
@@ -73,7 +80,7 @@ public class Request {
     public Request() {
     }
 
-    public Request(String shopName, int numberOfReqStaffers, String reqPosition, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime, String comment) {
+    public Request(Shop shopName, int numberOfReqStaffers, Position reqPosition, Date dateOfRequest, Date dateOfWork, Date startTime, Date endTime, String comment) {
         this.shopName = shopName;
         this.numberOfReqStaffers = numberOfReqStaffers;
         this.reqPosition = reqPosition;
