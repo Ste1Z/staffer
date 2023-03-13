@@ -10,8 +10,8 @@ public interface BranchService {
 
     void saveBranch(Branch branch);
 
-    Branch getBranch(long id);
+    Branch getBranch(Long branchId);
 
-    void deleteBranch(long id);
+    void deleteBranch(Long branchId);
 
 }

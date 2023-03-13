@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <div th:insert="~{parts/common :: head}"></div>
+</head>
+<body>
+<div th:insert="~{parts/common :: body}"></div>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+
+<!--навигация по страницам-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-3">
+        <li class="breadcrumb-item"><a href="/requests/allRequests">Заявки</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Создание заявки</li>
+    </ol>
+</nav>
+
+<div class="container-fluid h-100 justify-content-center align-items-center p-3" style="width: 20rem">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3">
+            <h3 class="text-center mb-3">Новая заявка</h3>
+            <form th:method="POST" th:action="@{/requests/addRequest}" th:object="${request}">
+
+                <!--Необходимо человек-->
+                <div>
+                    <label class="text-muted" th:text="'Необходимо человек'"/>
+                        <select class="form-select mb-0" th:field="*{requestNumOfReqStaffers}"
+                                th:errorclass="is-invalid">
+                            <option th:each="num : ${#numbers.sequence(1, 10)}" th:value="${num}"
+                                    th:text="${num}">
+                            </option>
+                        </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('requestNumOfReqStaffers')}"
+                         th:errors="*{requestNumOfReqStaffers}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Необходимая должность-->
+                <div>
+                    <label class="text-muted" th:text="'Необходимая должность'"/>
+                        <select class="form-select mb-0" th:field="*{requestReqPosition}"
+                                th:errorclass="is-invalid">
+                            <option th:each="p : ${allPositions}" th:value="${p.positionId}"
+                                    th:text="${p.positionName}">
+                            </option>
+                        </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('requestReqPosition')}"
+                         th:errors="*{requestReqPosition}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Дата работы-->
+                <div>
+                    <label class="text-muted" th:text="'Дата работы'"/>
+                        <input type="date" class="form-control" th:field="*{requestDateOfWork}"
+                               th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('requestDateOfWork')}"
+                         th:errors="*{requestDateOfWork}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Время начала-->
+                <div>
+                    <label class="text-muted" th:text="'Время начала'"/>
+                        <input type="time" class="form-control" th:field="*{requestStartTime}"
+                               th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('requestStartTime')}"
+                         th:errors="*{requestStartTime}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Время окончания-->
+                <div>
+                    <label class="text-muted" th:text="'Время окончания'"/>
+                    <input type="time" class="form-control" th:field="*{requestEndTime}"
+                           th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('requestEndTime')}"
+                         th:errors="*{requestEndTime}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Комментарий-->
+                <div>
+                    <label class="text-muted" th:text="'Комментарий(необязательно)'"/>
+                    <textarea class="form-control mb-3" th:field="*{requestComment}"
+                              th:errorclass="is-invalid" rows="6"></textarea>
+
+                    <div style="color: red" th:if="${#fields.hasErrors('requestComment')}"
+                         th:errors="*{requestComment}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Кнопка создания-->
+                <div class="col-md-12 text-center d-grid">
+                    <button type="submit" class="btn btn-outline-danger">Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="~{parts/common :: head}"></div>
+</head>
+
+<body>
+<div th:insert="~{parts/common :: body}"></div>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+
+<!--навигация по страницам-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-3">
+        <li class="breadcrumb-item active" aria-current="page">Главная админка</li>
+    </ol>
+</nav>
+
+<div class="container-fluid h-100 justify-content-center align-items-center p-3" style="width: 20rem">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3 text-center">
+            <h3 class="text-center mb-3">Меню</h3>
+            <div class="accordion" id="adminMainAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="branchesHeading">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#branchesCollapse" aria-expanded="true"
+                                aria-controls="branchesCollapse">
+                            Филиалы
+                        </button>
+                    </h2>
+                    <div id="branchesCollapse" class="accordion-collapse collapse show"
+                         aria-labelledby="branchesHeading" data-bs-parent="#adminMainAccordion">
+                        <div class="accordion-body">
+                            <a href="/admin/createBranch" class="mb-2 btn btn-outline-danger container">
+                                Создать новый</a>
+                            <a href="#" class=" btn btn-outline-danger container">Все филиалы</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="shopsHeading">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#shopsCollapse" aria-expanded="false" aria-controls="shopsCollapse">
+                            Магазины
+                        </button>
+                    </h2>
+                    <div id="shopsCollapse" class="accordion-collapse collapse" aria-labelledby="shopsHeading"
+                         data-bs-parent="#adminMainAccordion">
+                        <div class="accordion-body">
+                            <a href="/admin/createShop" class="mb-2 btn btn-outline-danger container">Создать новый</a>
+                            <a href="#" class=" btn btn-outline-danger container">Все магазины</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

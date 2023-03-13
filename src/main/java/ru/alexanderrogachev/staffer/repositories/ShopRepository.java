@@ -8,13 +8,11 @@ import java.util.List;
 
 public interface ShopRepository extends JpaRepository<Shop, Long> {
 
-    List<Shop> findByName(String name);
+    List<Shop> findByShopName(String shopName);
 
-    void deleteShopByName(String name);
+    void deleteShopByShopName(String shopName);
 
-    List<Shop> findAll();
+    Shop findShopByShopName(String shopName);
 
-    Shop findShopByName(String name);
-
-    List<Shop> findShopsByBranch(Branch branch);
+    List<Shop> findShopsByShopBranch(Branch branch);
 }

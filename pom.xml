@@ -16,7 +16,10 @@
     <properties>
         <java.version>11</java.version>
     </properties>
+
+
     <dependencies>
+
         <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,13 +50,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--Log4j-->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-
 
         <!--Security-->
         <dependency>
@@ -71,13 +67,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-    </dependencies>
+        <!--Spring Boot DevTools-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
 
+
+    </dependencies>
 
     <build>
         <plugins>

@@ -1,6 +1,7 @@
 package ru.alexanderrogachev.staffer.services;
 
 import ru.alexanderrogachev.staffer.models.Request;
+import ru.alexanderrogachev.staffer.models.Shop;
 
 import java.util.List;
 
@@ -9,10 +10,10 @@ public interface RequestService {
 
     void saveRequest(Request request);
 
-    Request getRequest(long id);
+    Request getRequest(Long requestId);
 
-    void deleteRequest(long id);
+    void deleteRequest(Long requestId);
 
-    List<Request> findRequestByShopName(String name);
+    List<Request> findRequestsByShop(Shop shop);
 
 }

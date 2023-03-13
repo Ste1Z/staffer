@@ -28,12 +28,12 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
-    public Position getPosition(long id) {
-        return positionRepository.findById(id).orElse(null);
+    public Position getPosition(Long positionId) {
+        return positionRepository.findById(positionId).get();
     }
 
     @Override
-    public void deletePosition(long id) {
-        positionRepository.deleteById(id);
+    public void deletePosition(Long positionId) {
+        positionRepository.deleteById(positionId);
     }
 }

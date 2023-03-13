@@ -3,6 +3,7 @@ package ru.alexanderrogachev.staffer.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.alexanderrogachev.staffer.models.Request;
+import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.repositories.RequestRepository;
 
 import java.util.Date;
@@ -30,24 +31,24 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request getRequest(long id) {
-        return requestRepository.findById(id).orElse(null);
+    public Request getRequest(Long requestId) {
+        return requestRepository.findById(requestId).get();
     }
 
     @Override
-    public void deleteRequest(long id) {
-        requestRepository.deleteById(id);
+    public void deleteRequest(Long requestId) {
+        requestRepository.deleteById(requestId);
     }
 
     @Override
-    public List<Request> findRequestByShopName(String shopName) {
-        return requestRepository.findByShopName(shopName);
+    public List<Request> findRequestsByShop(Shop shop) {
+        return requestRepository.findRequestsByRequestShop(shop);
     }
 
     //Устанавливает текущую дату в дату запроса
     public void autoSetDateOfRequest(Request request) {
         Date now = new Date();
-        request.setDateOfRequest(now);
+        request.setRequestCreationDate(now);
     }
 
 }

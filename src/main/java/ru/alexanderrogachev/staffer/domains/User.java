@@ -1,8 +1,8 @@
 package ru.alexanderrogachev.staffer.domains;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.alexanderrogachev.staffer.models.Staffer;
 
@@ -17,6 +17,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "credentials")
 @JsonIgnoreType
@@ -25,7 +26,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "user_email")
     @Email(message = "Проверьте корректность почтового ящика (пример: example@mail.com)")
@@ -52,15 +53,6 @@ public class User {
 
     @OneToOne(mappedBy = "usersStaffer", cascade = CascadeType.ALL)
     private Staffer staffer;
-
-    public User() {
-    }
-
-    public User(String username, String password, boolean enabled) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
 
     //Выставляем роль в правах доступа для пользователя на основе выбранной должности
     public void setRoleByPosition(String position) {

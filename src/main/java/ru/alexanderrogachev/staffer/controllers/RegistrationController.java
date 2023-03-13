@@ -1,6 +1,7 @@
 package ru.alexanderrogachev.staffer.controllers;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping("/auth")
 public class RegistrationController {
 
-    private static final Logger logger = Logger.getLogger(Staffer.class);
+    private static final Logger logger = LogManager.getLogger(RegistrationController.class);
 
     private final RegistrationService registrationService;
     private final UserValidatorImpl userValidator;
@@ -45,15 +46,10 @@ public class RegistrationController {
 
     //Отображение страницы регистрации
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("staffer") Staffer staffer, @ModelAttribute("user") User user,
-                                   @ModelAttribute("branch") Branch branch, @ModelAttribute("position") Position position,
-                                   Model model) {
-        List<Branch> branches = branchService.getAllBranches();
-        model.addAttribute("branches", branches);
-        List<Shop> shops = shopService.getAllShops();
-        model.addAttribute("shops", shops);
-        List<Position> positions = positionService.getAllPositions();
-        model.addAttribute("positions", positions);
+    public String registrationPage(@ModelAttribute("staffer") Staffer staffer, @ModelAttribute("user") User user, Model model) {
+        model.addAttribute("allBranches", branchService.getAllBranches());
+        model.addAttribute("allShops", shopService.getAllShops());
+        model.addAttribute("allPositions", positionService.getAllPositions());
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Отображение страницы регистрации");
         return "auth/registration";
     }
@@ -61,11 +57,15 @@ public class RegistrationController {
     //Регистрация
     @PostMapping("/registration")
     public String performRegistration(@Valid Staffer staffer, BindingResult stafferBindingResult,
-                                      @Valid User user, BindingResult userBindingResult) {
-        logger.info("[" + this.getClass().getSimpleName() + "]" + " Начало регистрации");
-        if (stafferBindingResult.hasErrors() || userBindingResult.hasErrors()) return "auth/registration";
-
-        user.setRoleByPosition(staffer.getPosition().getPositionName());
+                                      @Valid User user, BindingResult userBindingResult,
+                                      Model model) {
+        if (stafferBindingResult.hasErrors() || userBindingResult.hasErrors()) {
+            model.addAttribute("allBranches", branchService.getAllBranches());
+            model.addAttribute("allShops", shopService.getAllShops());
+            model.addAttribute("allPositions", positionService.getAllPositions());
+            return "auth/registration";
+        }
+        user.setRoleByPosition(staffer.getStafferPosition().getPositionName());
         staffer.setUsersStaffer(user);
         user.setStaffer(staffer);
         userValidator.validate(user, userBindingResult);

@@ -28,12 +28,12 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public Branch getBranch(long id) {
-        return branchRepository.findById(id).orElse(null);
+    public Branch getBranch(Long branchId) {
+        return branchRepository.findById(branchId).get();
     }
 
     @Override
-    public void deleteBranch(long id) {
-        branchRepository.deleteById(id);
+    public void deleteBranch(Long branchId) {
+        branchRepository.deleteById(branchId);
     }
 }

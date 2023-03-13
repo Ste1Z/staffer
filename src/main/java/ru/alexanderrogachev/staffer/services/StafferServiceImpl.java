@@ -28,23 +28,23 @@ public class StafferServiceImpl implements StafferService {
     }
 
     @Override
-    public Staffer getStaffer(long id) {
-        return stafferRepository.findById(id).orElse(null);
+    public Staffer getStaffer(Long stafferId) {
+        return stafferRepository.findById(stafferId).get();
     }
 
     @Override
-    public void deleteStaffer(long id) {
-        stafferRepository.deleteById(id);
+    public void deleteStaffer(Long stafferId) {
+        stafferRepository.deleteById(stafferId);
     }
 
     @Override
-    public List<Staffer> findStafferByName(String name) {
-        return stafferRepository.findByName(name);
+    public List<Staffer> findStafferByStafferName(String stafferName) {
+        return stafferRepository.findByStafferName(stafferName);
     }
 
     @Override
-    public Staffer findStafferById(long id) {
-        return stafferRepository.findByStafferId(id);
+    public Staffer findStafferById(Long stafferId) {
+        return stafferRepository.findByStafferId(stafferId);
     }
 
 }

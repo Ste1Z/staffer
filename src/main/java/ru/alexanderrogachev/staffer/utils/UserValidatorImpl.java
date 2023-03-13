@@ -1,6 +1,7 @@
 package ru.alexanderrogachev.staffer.utils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -12,7 +13,7 @@ import ru.alexanderrogachev.staffer.services.UserDetailsServiceImpl;
 @Component
 public class UserValidatorImpl implements Validator {
 
-    private static final Logger logger = Logger.getLogger(Staffer.class);
+    private static final Logger logger = LogManager.getLogger(UserValidatorImpl.class);
 
     private final UserDetailsServiceImpl userDetailsService;
 

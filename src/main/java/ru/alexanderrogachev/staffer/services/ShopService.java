@@ -10,13 +10,11 @@ public interface ShopService {
 
     void saveShop(Shop shop);
 
-    Shop getShop(long id);
+    Shop getShop(Long shopId);
 
-    void deleteShopByName(String name);
+    void deleteShopByShopName(String shopName);
 
-    List<Shop> findShopsByName(String name);
+    List<Shop> findShopsByShopName(String shopName);
 
-    Shop findShopByName(String name);
-
-    List<Shop> findShopsByBranch(Branch branch);
+    List<Shop> findShopsByShopBranch(Branch branch);
 }

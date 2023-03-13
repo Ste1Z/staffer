@@ -9,12 +9,12 @@ public interface StafferService {
 
     void saveStaffer(Staffer staffer);
 
-    Staffer getStaffer(long id);
+    Staffer getStaffer(Long stafferId);
 
-    void deleteStaffer(long id);
+    void deleteStaffer(Long stafferId);
 
-    List<Staffer> findStafferByName(String name);
+    List<Staffer> findStafferByStafferName(String stafferName);
 
-    Staffer findStafferById(long id);
+    Staffer findStafferById(Long stafferId);
 
 }

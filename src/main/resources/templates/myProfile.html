@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <div th:insert="~{parts/common :: head}"></div>
+</head>
+<body>
+<div th:insert="~{parts/common :: body}"></div>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+
+<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-3">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3">
+            <h3 class="text-center mb-3">
+                <div>Редактирование</div>
+                <div>профиля</div>
+            </h3>
+            <form th:method="post" th:action="@{/myProfile}">
+                <div class="mb-0">
+                    <label class="text-muted" for="stafferName">Имя</label>
+                    <input type="text" class="form-control" name="stafferName" id="stafferName"
+                           th:value="${staffer.getStafferName()}">
+                </div>
+                <div class="mb-0">
+                    <label class="text-muted" for="stafferSurname">Фамилия</label>
+                    <input type="text" class="form-control" name="stafferSurname" id="stafferSurname"
+                           th:value="${staffer.getStafferSurname()}">
+                </div>
+                <div class="mb-0">
+                    <label class="text-muted" for="stafferPatronymic">Отчество</label>
+                    <input type="text" class="form-control" name="stafferPatronymic" id="stafferPatronymic"
+                           th:value="${staffer.getStafferPatronymic()}">
+                </div>
+                <div class="mb-0">
+                    <label class="text-muted" for="stafferDateOfBirth">Дата рождения</label>
+                    <input type="date" class="form-control" name="stafferDateOfBirth" id="stafferDateOfBirth"
+                           th:value="${{staffer.getStafferDateOfBirth()}}">
+                </div>
+                <div>
+                    <label class="text-muted" for="stafferBranch">Ваш филиал</label>
+                    <select class="form-select mb-0" name="stafferBranch" id="stafferBranch">
+                        <option selected disabled th:value="${staffer.getStafferBranch().getBranchId()}"
+                                th:text="${staffer.getStafferBranch().getBranchName()}">
+                        </option>
+                        <option th:each="b : ${branches}" th:value="${b.getBranchId()}"
+                                th:text="${b.getBranchName()}">
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-muted" for="stafferShop">Ваш магазин</label>
+                    <select class="form-select mb-0" name="stafferShop" id="stafferShop">
+                        <option th:value="${staffer.getStafferShop().getShopId()}"
+                                th:text="${staffer.getStafferShop().getShopName()}">
+                        </option>
+                        <option th:each="s : ${shops}" th:value="${s.getShopId()}"
+                                th:text="${s.getShopName()}">
+                        </option>
+                    </select>
+                </div>
+                <script>
+                    $(document).ready(function () {
+                        $('#stafferBranch').on('change', function () {
+                            $('#stafferShop').empty().append('<option th:value="null">Выберите из списка</option>');
+                            var branchId = $(this).val();
+                            var href = "http://192.168.0.106:8080/branch/" + branchId
+                            $.get(href, function (branchFromBranchesPage) {
+                                var shopsFromBranch = branchFromBranchesPage.shopsOfBranch;
+                                for (var i = 0; i <= branchShops.length - 1; i++) {
+                                    $('#stafferShop').append('<option value="' + shopsFromBranch[i].id + '">' + shopsFromBranch[i].name + '</option>');
+                                }
+                            })
+                        })
+                    })
+                </script>
+                <div>
+                    <label class="text-muted" for="stafferPosition">Ваша должность</label>
+                    <select class="form-select mb-0" id="stafferPosition" name="stafferPosition">
+                        <option selected disabled th:value="${staffer.getStafferPosition().getPositionId()}"
+                                th:text="${staffer.getStafferPosition().getPositionName()}"></option>
+                        <option th:each="position : ${positions}" th:value="${position.getPositionId()}"
+                                th:text="${position.getPositionName()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <label class="text-muted" for="stafferPhoneNumber">Номер телефона</label>
+                    <input type="text" class="form-control" name="stafferPhoneNumber" id="stafferPhoneNumber"
+                           th:value="${staffer.getStafferPhoneNumber()}">
+                </div>
+                <script>
+                    $("#stafferPhoneNumber").mask("+7 (999) 999-9999");
+                </script>
+                <div class="col-md-12 mb-0 text-center">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

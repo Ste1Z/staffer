@@ -10,8 +10,8 @@ public interface PositionService {
 
     void savePosition(Position position);
 
-    Position getPosition(long id);
+    Position getPosition(Long positionId);
 
-    void deletePosition(long id);
+    void deletePosition(Long positionId);
 
 }

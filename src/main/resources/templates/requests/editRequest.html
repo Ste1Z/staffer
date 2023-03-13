@@ -1,0 +1,72 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--    <div th:insert="~{parts/common :: head}"></div>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:insert="~{parts/common :: body}"></div>-->
+<!--<div th:insert="~{parts/navbar :: navbar}"></div>-->
+
+<!--&lt;!&ndash;навигация по страницам&ndash;&gt;-->
+<!--<nav aria-label="breadcrumb">-->
+<!--    <ol class="breadcrumb m-3">-->
+<!--        <li class="breadcrumb-item"><a href="/requests/allRequests">Заявки</a></li>-->
+<!--        <li class="breadcrumb-item active" aria-current="page">Редактирование заявки</li>-->
+<!--    </ol>-->
+<!--</nav>-->
+
+<!--<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">-->
+<!--    <div class="row bg-light shadow-lg">-->
+<!--        <div class="col border rounded p-3">-->
+<!--            <h3 class="text-center mb-3">-->
+<!--                <b th:text="${request.getRequestShop()}"></b>-->
+<!--            </h3>-->
+<!--            <form name="edit_request" th:method="post"-->
+<!--                  th:action="@{/requests/editRequest/{id}(id = ${request.getRequestId()})}">-->
+<!--                <div>-->
+<!--                    <label class="text-muted" for="requestNumOfReqStaffers">Необходимо человек</label>-->
+<!--                    <select class="form-select mb-0" id="requestNumOfReqStaffers" name="requestNumOfReqStaffers">-->
+<!--                        <option disabled selected th:value="${request.getRequestNumOfReqStaffers()}"-->
+<!--                                th:text="${request.getRequestNumOfReqStaffers()}">-->
+<!--                        </option>-->
+<!--                        <option th:each="num : ${#numbers.sequence(1, 10)}" th:value="${num}"-->
+<!--                                th:text="${num}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label class="text-muted" for="reqPosition">Необходимая должность</label>-->
+<!--                    <select class="form-select mb-0" aria-required="true" id="reqPosition" name="reqPosition">-->
+<!--                        <option selected disabled th:value="${reqPosition}" th:text="${reqPosition}"></option>-->
+<!--                        <option th:each="p : ${positions}" th:value="${p.getPositionId()}"-->
+<!--                                th:text="${p.getPositionName()}">-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="mb-0">-->
+<!--                    <label class="text-muted" for="dateOfWork">Дата работы</label>-->
+<!--                    <input type="date" class="form-control" name="dateOfWork" id="dateOfWork"-->
+<!--                           th:value="${{request.getRequestDateOfWork()}}">-->
+<!--                </div>-->
+<!--                <div class="mb-0">-->
+<!--                    <label class="text-muted" for="startTime">Время начала</label>-->
+<!--                    <input type="time" class="form-control" name="startTime" id="startTime"-->
+<!--                           th:value="${request.getRequestStartTime()}">-->
+<!--                </div>-->
+<!--                <div class="mb-3">-->
+<!--                    <label class="text-muted" for="endTime">Время окончания</label>-->
+<!--                    <input type="time" class="form-control" name="endTime" id="endTime"-->
+<!--                           th:value="${request.getRequestEndTime()}">-->
+<!--                </div>-->
+<!--                <div class="row m-0 mb-0 text-xl-center">-->
+<!--                    <button type="submit" class="btn btn-outline-danger">Сохранить</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--</body>-->
+
+<!--</html>-->

@@ -31,27 +31,22 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public Shop getShop(long id) {
-        return shopRepository.findById(id).orElse(null);
+    public Shop getShop(Long shopId) {
+        return shopRepository.findById(shopId).get();
     }
 
     @Override
-    public void deleteShopByName(String name) {
-        shopRepository.deleteShopByName(name);
+    public void deleteShopByShopName(String shopName) {
+        shopRepository.deleteShopByShopName(shopName);
     }
 
     @Override
-    public List<Shop> findShopsByName(String name) {
-        return shopRepository.findByName(name);
+    public List<Shop> findShopsByShopName(String shopName) {
+        return shopRepository.findByShopName(shopName);
     }
 
     @Override
-    public Shop findShopByName(String name) {
-        return shopRepository.findShopByName(name);
-    }
-
-    @Override
-    public List<Shop> findShopsByBranch(Branch branch) {
-        return shopRepository.findShopsByBranch(branch);
+    public List<Shop> findShopsByShopBranch(Branch branch) {
+        return shopRepository.findShopsByShopBranch(branch);
     }
 }

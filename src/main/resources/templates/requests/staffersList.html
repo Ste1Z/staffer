@@ -2,16 +2,16 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:insert="~{requests/parts/common :: head}"></div>
+    <div th:insert="~{parts/common :: head}"></div>
 </head>
 <body>
-<div th:insert="~{requests/parts/common :: body}"></div>
+<div th:insert="~{parts/common :: body}"></div>
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
 <!--навигация по страницам-->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb m-3">
-        <li class="breadcrumb-item"><a href="/requests">Заявки</a></li>
+        <li class="breadcrumb-item"><a href="/requests/allRequests">Заявки</a></li>
         <li class="breadcrumb-item active" aria-current="page">Список сотрудников</li>
     </ol>
 </nav>
@@ -43,29 +43,29 @@
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/dateOfBirth_min.png}" width="20" height="20"
                                          alt="dateOfBirth_min"
-                                         th:text="${#dates.format(staffer.getDateOfBirth(), 'dd.MM.yyyy')}">
+                                         th:text="${#dates.format(staffer.getStafferDateOfBirth(), 'dd.MM.yyyy')}">
                                 </h5>
                             </div>
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/homeShop_min.png}" width="20" height="20"
-                                         alt="homeShop_min" th:text="${staffer.getHomeShop()}"></h5>
+                                         alt="homeShop_min" th:text="${staffer.getStafferShop()}"></h5>
                             </div>
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/branch_min.png}" width="20" height="20"
-                                         alt="branch_min" th:text="${staffer.getBranch().getBranchName()}"></h5>
+                                         alt="branch_min" th:text="${staffer.getStafferBranch().getBranchName()}"></h5>
                             </div>
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/position_min.png}" width="20" height="20"
-                                         alt="position_min" th:text="${staffer.getPosition()}"></h5>
+                                         alt="position_min" th:text="${staffer.getStafferPosition()}"></h5>
                             </div>
                             <div>
                                 <h5><img class="mb-0" th:src="@{/images/phoneNumber_min.png}" width="20" height="20"
-                                         alt="phoneNumber_min" th:text="${staffer.getPhoneNumber()}"></h5>
+                                         alt="phoneNumber_min" th:text="${staffer.getStafferPhoneNumber()}"></h5>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <form name="approve_staffer" method="post"
-                                  th:action="@{/requests/staffers_list/{requestId}/{stafferId} (requestId = ${requestId},stafferId = ${staffer.getStafferId()})}">
+                            <form name="approve_staffer" th:method="post"
+                                  th:action="@{/requests/staffersList/{requestId}/{stafferId} (requestId = ${requestId},stafferId = ${staffer.getStafferId()})}">
                                 <div class="col-md-12 mb-2 text-center">
                                     <button type="submit" class="btn btn-outline-danger">Одобрить</button>
                                 </div>
@@ -73,7 +73,6 @@
                         </div>
                     </div>
                 </div>
-                <!--TODO добавить обработку пустого фильтра-->
             </th:block>
         </div>
     </div>
@@ -107,28 +106,28 @@
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/dateOfBirth_min.png}" width="20" height="20"
                                          alt="dateOfBirth_min"
-                                         th:text="${#dates.format(staffer.getDateOfBirth(), 'dd.MM.yyyy')}"></h5>
+                                         th:text="${#dates.format(staffer.getStafferDateOfBirth(), 'dd.MM.yyyy')}"></h5>
                             </div>
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/homeShop_min.png}" width="20" height="20"
-                                         alt="homeShop_min" th:text="${staffer.getHomeShop()}"></h5>
+                                         alt="homeShop_min" th:text="${staffer.getStafferShop()}"></h5>
                             </div>
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/branch_min.png}" width="20" height="20"
-                                         alt="branch_min" th:text="${staffer.getBranch().getBranchName()}"></h5>
+                                         alt="branch_min" th:text="${staffer.getStafferBranch().getBranchName()}"></h5>
                             </div>
                             <div>
                                 <h5><img class="mb-3" th:src="@{/images/position_min.png}" width="20" height="20"
-                                         alt="position_min" th:text="${staffer.getPosition()}"></h5>
+                                         alt="position_min" th:text="${staffer.getStafferPosition()}"></h5>
                             </div>
                             <div>
                                 <h5><img th:src="@{/images/phoneNumber_min.png}" width="20" height="20"
-                                         alt="phoneNumber_min" th:text="${staffer.getPhoneNumber()}"></h5>
+                                         alt="phoneNumber_min" th:text="${staffer.getStafferPhoneNumber()}"></h5>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <form name="approve_staffer" method="post"
-                                  th:action="@{/requests/staffers_list/{requestId}/{stafferId} (requestId = ${requestId},stafferId = ${staffer.getStafferId()})}">
+                            <form name="approve_staffer" th:method="post"
+                                  th:action="@{/requests/staffersList/{requestId}/{stafferId} (requestId = ${requestId},stafferId = ${staffer.getStafferId()})}">
                                 <div class="col-md-12 mb-2 text-center">
                                     <button type="submit" class="btn btn-outline-danger">Отменить выход</button>
                                 </div>
@@ -136,8 +135,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!--TODO добавить обработку пустого фильтра-->
             </th:block>
         </div>
     </div>
