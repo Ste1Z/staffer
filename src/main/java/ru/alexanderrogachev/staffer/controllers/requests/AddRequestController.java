@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.alexanderrogachev.staffer.models.*;
 import ru.alexanderrogachev.staffer.services.PositionServiceImpl;
 import ru.alexanderrogachev.staffer.services.RequestServiceImpl;
@@ -18,6 +15,7 @@ import ru.alexanderrogachev.staffer.services.UserDetailsServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Date;
 
 
 //Страница создания заявок
@@ -45,6 +43,7 @@ public class AddRequestController {
     public String addRequestPage(@ModelAttribute("request") Request request, Model model, HttpServletRequest http) {
         Staffer currentStaffer = userDetailsService.getStafferFromLoggedUser(http);
         request.setRequestShop(currentStaffer.getStafferShop());
+        request.setRequestCreationDate(new Date());
         model.addAttribute("allPositions", positionService.getAllPositions());
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Отображение страницы добавления заявки");
         return "requests/addRequest";
@@ -60,9 +59,8 @@ public class AddRequestController {
             model.addAttribute("allPositions", positionService.getAllPositions());
             return "requests/addRequest";
         }
-        requestService.autoSetDateOfRequest(request);
         requestService.saveRequest(request);
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Заявка успешно создана");
-        return "redirect:/requests/allRequest";
+        return "redirect:/requests/allRequests";
     }
 }

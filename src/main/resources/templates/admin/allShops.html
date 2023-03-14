@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="~{parts/common :: head}"></div>
+</head>
+
+<body>
+<div th:insert="~{parts/common :: body}"></div>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+
+<!--навигация по страницам-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-3">
+        <li class="breadcrumb-item"><a href="/admin/main">Главная админка</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Все магазины</li>
+    </ol>
+</nav>
+
+<div class="container-fluid h-100 justify-content-center align-items-center p-3" style="width: 40rem">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3 text-center">
+            <h3 class="text-center mb-3">Все магазины</h3>
+            <!--Таблица с магазинами-->
+            <table class="table table-sm table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Код</th>
+                    <th scope="col">Филиал</th>
+                </tr>
+                </thead>
+                <th:block th:each="s : ${allShops}">
+                        <tbody>
+                        <tr>
+                            <th scope="row" th:text="${allShops.indexOf(s) + 1}"></th>
+                            <td th:text="*{s.shopName}"></td>
+                            <td th:text="*{s.shopCode}"></td>
+                            <td th:text="*{s.shopBranch.branchName}"></td>
+                        </tr>
+                        </tbody>
+                </th:block>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

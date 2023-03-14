@@ -45,10 +45,4 @@ public class RequestServiceImpl implements RequestService {
         return requestRepository.findRequestsByRequestShop(shop);
     }
 
-    //Устанавливает текущую дату в дату запроса
-    public void autoSetDateOfRequest(Request request) {
-        Date now = new Date();
-        request.setRequestCreationDate(now);
-    }
-
 }

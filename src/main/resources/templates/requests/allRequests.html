@@ -50,7 +50,7 @@
                     <!--карточка с заявкой-->
                     <div class="card shadow" style="width: 20rem; height: 20rem">
                         <div class="card-header bg-transparent text-center">
-                            <h4><b th:text="${r.getRequestShop()}"></b></h4>
+                            <h4><b th:text="${r.requestShop.shopName}"></b></h4>
                         </div>
                         <div class="card-body text-center">
                             <!--<a class="stretched-link" th:href="/requests/staffers_list/${request.getRequestId()}"></a>-->
@@ -77,7 +77,7 @@
                             </div>
                             <!--требуемая должность-->
                             <div class="mb-3">
-                                <h5><b class="bi bi-search p-1" th:text=" ${r.getRequestReqPosition()}"></b></h5>
+                                <h5><b class="bi bi-search p-1" th:text=" ${r.requestReqPosition.positionName}"></b></h5>
                             </div>
                             <!--требуемая дата выхода на работу-->
                             <div class="mb-3">

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="~{parts/common :: head}"></div>
+</head>
+
+<body>
+<div th:insert="~{parts/common :: body}"></div>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+
+<!--навигация по страницам-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-3">
+        <li class="breadcrumb-item"><a href="/admin/main">Главная админка</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Создание магазина</li>
+    </ol>
+</nav>
+
+<div class="container-fluid h-100 justify-content-center align-items-center p-3" style="width: 20rem">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3">
+            <h3 class="text-center mb-3">Создание магазина</h3>
+            <form th:method="POST" th:action="@{/admin/createShop}" th:object="${shop}">
+                <!--Название-->
+                <div>
+                    <label class="text-muted">Название</label>
+                    <input type="text" class="form-control" th:field="*{shopName}"
+                           th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('shopName')}"
+                         th:errors="*{shopName}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Код-->
+                <div>
+                    <label class="text-muted">Код</label>
+                    <input type="number" class="form-control" th:field="*{shopCode}"
+                           th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('shopCode')}"
+                         th:errors="*{shopCode}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Филиал-->
+                <div class="mb-3">
+                    <label class="text-muted">Филиал</label>
+                    <select class="form-select" th:field="*{shopBranch}" th:errorclass="is-invalid">
+                        <option th:each="b : ${allBranches}" th:value="${b.branchId}"
+                                th:text="${b.branchName}">
+                        </option>
+                    </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('shopBranch')}"
+                         th:errors="*{shopBranch}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Кнопка создания-->
+                <div class="col-md-12 text-center d-grid">
+                    <button type="submit" class="btn btn-outline-danger">
+                        Создать
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

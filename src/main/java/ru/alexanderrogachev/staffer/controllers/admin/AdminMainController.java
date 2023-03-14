@@ -14,7 +14,7 @@ public class AdminMainController {
 
     @GetMapping("/main")
     public String adminMainPage() {
-        logger.info("[" + this.getClass().getSimpleName() + "]" + " Отображение страницы авторизации");
+        logger.info("[" + this.getClass().getSimpleName() + "]" + " Отображение страницы админки");
         return "admin/main";
     }
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="~{parts/common :: head}"></div>
+</head>
+
+<body>
+<div th:insert="~{parts/common :: body}"></div>
+<div th:insert="~{parts/navbar :: navbar}"></div>
+
+<!--навигация по страницам-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-3">
+        <li class="breadcrumb-item"><a href="/admin/main">Главная админка</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Создание филиала</li>
+    </ol>
+</nav>
+
+<div class="container-fluid h-100 justify-content-center align-items-center p-3" style="width: 20rem">
+    <div class="row bg-light shadow-lg">
+        <div class="col border rounded p-3 ">
+            <h3 class="text-center mb-3">Создание филиала</h3>
+            <form th:method="POST" th:action="@{/admin/createBranch}" th:object="${branch}">
+                <!--Название-->
+                <div class="mb-3">
+                    <label class="text-muted">Название</label>
+                    <input type="text" class="form-control" th:field="*{branchName}"
+                           th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('branchName')}"
+                         th:errors="*{branchName}" class="invalid-feedback text-break"></div>
+                </div>
+                <!--Кнопка создания-->
+                <div class="col-md-12 text-center d-grid">
+                    <button type="submit" class="btn btn-outline-danger">
+                        Создать
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

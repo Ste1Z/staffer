@@ -6,6 +6,7 @@ import ru.alexanderrogachev.staffer.models.Branch;
 import ru.alexanderrogachev.staffer.repositories.BranchRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BranchServiceImpl implements BranchService {
@@ -35,5 +36,10 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public void deleteBranch(Long branchId) {
         branchRepository.deleteById(branchId);
+    }
+
+    @Override
+    public Optional<Branch> findBranchByBranchName(String branchName) {
+        return branchRepository.findBranchByBranchName(branchName);
     }
 }

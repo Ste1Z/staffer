@@ -21,10 +21,21 @@
         <div class="col border rounded p-3">
             <h3 class="text-center mb-3">Новая заявка</h3>
             <form th:method="POST" th:action="@{/requests/addRequest}" th:object="${request}">
-
+                <!--Магазин-->
+                <div hidden>
+                    <label class="text-muted">Магазин</label>
+                    <select class="form-select mb-0" th:field="*{requestShop}"
+                            th:errorclass="is-invalid">
+                        <option th:value="${request.requestShop.shopId}"
+                                th:text="${request.requestShop.shopName}">
+                        </option>
+                    </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('requestShop')}"
+                         th:errors="*{requestShop}" class="invalid-feedback text-break"></div>
+                </div>
                 <!--Необходимо человек-->
                 <div>
-                    <label class="text-muted" th:text="'Необходимо человек'"/>
+                    <label class="text-muted">Необходимо человек</label>
                         <select class="form-select mb-0" th:field="*{requestNumOfReqStaffers}"
                                 th:errorclass="is-invalid">
                             <option th:each="num : ${#numbers.sequence(1, 10)}" th:value="${num}"
@@ -36,7 +47,7 @@
                 </div>
                 <!--Необходимая должность-->
                 <div>
-                    <label class="text-muted" th:text="'Необходимая должность'"/>
+                    <label class="text-muted">Необходимая должность</label>
                         <select class="form-select mb-0" th:field="*{requestReqPosition}"
                                 th:errorclass="is-invalid">
                             <option th:each="p : ${allPositions}" th:value="${p.positionId}"
@@ -46,9 +57,17 @@
                     <div style="color: red" th:if="${#fields.hasErrors('requestReqPosition')}"
                          th:errors="*{requestReqPosition}" class="invalid-feedback text-break"></div>
                 </div>
+                <!--Дата создания заявки-->
+                <div hidden>
+                    <label class="text-muted">Дата создания заявки</label>
+                    <input type="date" class="form-control" th:field="*{requestCreationDate}"
+                           th:value="*{requestCreationDate}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('requestCreationDate')}"
+                         th:errors="*{requestCreationDate}" class="invalid-feedback text-break"></div>
+                </div>
                 <!--Дата работы-->
                 <div>
-                    <label class="text-muted" th:text="'Дата работы'"/>
+                    <label class="text-muted">Дата работы</label>
                         <input type="date" class="form-control" th:field="*{requestDateOfWork}"
                                th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('requestDateOfWork')}"
@@ -56,7 +75,7 @@
                 </div>
                 <!--Время начала-->
                 <div>
-                    <label class="text-muted" th:text="'Время начала'"/>
+                    <label class="text-muted">Время начала</label>
                         <input type="time" class="form-control" th:field="*{requestStartTime}"
                                th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('requestStartTime')}"
@@ -64,7 +83,7 @@
                 </div>
                 <!--Время окончания-->
                 <div>
-                    <label class="text-muted" th:text="'Время окончания'"/>
+                    <label class="text-muted">Время окончания</label>
                     <input type="time" class="form-control" th:field="*{requestEndTime}"
                            th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('requestEndTime')}"
@@ -72,7 +91,7 @@
                 </div>
                 <!--Комментарий-->
                 <div>
-                    <label class="text-muted" th:text="'Комментарий(необязательно)'"/>
+                    <label class="text-muted">Комментарий(необязательно)</label>
                     <textarea class="form-control mb-3" th:field="*{requestComment}"
                               th:errorclass="is-invalid" rows="6"></textarea>
 

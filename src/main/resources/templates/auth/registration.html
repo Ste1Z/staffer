@@ -14,41 +14,41 @@
             <form th:method="POST" th:action="@{/auth/registration}" th:object="${staffer}">
                 <!--Имя-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferName">Имя</label>
-                    <input type="text" class="form-control" name="stafferName" id="stafferName"
-                           th:field="*{stafferName}" th:errorclass="is-invalid">
+                    <label class="text-muted">Имя</label>
+                    <input type="text" class="form-control" th:field="*{stafferName}"
+                           th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('stafferName')}"
                          th:errors="*{stafferName}" class="invalid-feedback text-break"></div>
                 </div>
                 <!--Фамилия-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferSurname">Фамилия</label>
-                    <input type="text" class="form-control" name="stafferSurname" id="stafferSurname"
-                           th:field="*{stafferSurname}" th:errorclass="is-invalid">
+                    <label class="text-muted">Фамилия</label>
+                    <input type="text" class="form-control" th:field="*{stafferSurname}"
+                           th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('stafferSurname')}"
                          th:errors="*{stafferSurname}" class="invalid-feedback text-break"></div>
                 </div>
                 <!--Отчество-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferPatronymic">Отчество</label>
-                    <input type="text" class="form-control" name="stafferPatronymic" id="stafferPatronymic"
-                           th:field="*{stafferPatronymic}" th:errorclass="is-invalid">
+                    <label class="text-muted">Отчество</label>
+                    <input type="text" class="form-control" th:field="*{stafferPatronymic}"
+                           th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('stafferPatronymic')}"
                          th:errors="*{stafferPatronymic}" class="invalid-feedback text-break"></div>
                 </div>
                 <!--Дата рождения-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferDateOfBirth">Дата рождения</label>
-                    <input type="date" class="form-control" name="stafferDateOfBirth" id="stafferDateOfBirth"
-                           th:field="*{stafferDateOfBirth}" th:errorclass="is-invalid">
+                    <label class="text-muted">Дата рождения</label>
+                    <input type="date" class="form-control" th:field="*{stafferDateOfBirth}"
+                           th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('stafferDateOfBirth')}"
                          th:errors="*{stafferDateOfBirth}" class="invalid-feedback text-break"></div>
                 </div>
                 <!--Филиал-->
                 <div>
-                    <label class="text-muted" for="stafferBranch">Ваш филиал</label>
-                    <select class="form-select mb-0" name="stafferBranch" id="stafferBranch"
-                            th:field="*{stafferBranch}" th:errorclass="is-invalid">
+                    <label class="text-muted">Ваш филиал</label>
+                    <select class="form-select mb-0" th:field="*{stafferBranch}"
+                            th:errorclass="is-invalid">
                         <option th:value="null">Выберите из списка</option>
                         <option th:each="b : ${allBranches}" th:value="${b.branchId}"
                                 th:text="${b.branchName}">
@@ -59,10 +59,9 @@
                 </div>
                 <!--Магазин-->
                 <div>
-                    <label class="text-muted" for="stafferShop">Ваш магазин</label>
-                    <select class="form-select mb-0" name="stafferShop" id="stafferShop"
-                            th:field="*{stafferShop}" th:errorclass="is-invalid"
-                            aria-describedby="stafferShopHelper">
+                    <label class="text-muted">Ваш магазин</label>
+                    <select class="form-select mb-0" th:field="*{stafferShop}"
+                            th:errorclass="is-invalid" aria-describedby="stafferShopHelper">
                         <option th:value="null">Сначала выберите филиал</option>
                     </select>
                     <div style="color: red" th:if="${#fields.hasErrors('stafferShop')}"
@@ -90,9 +89,9 @@
                 </script>
                 <!--Должность-->
                 <div>
-                    <label class="text-muted" for="stafferPosition">Должность</label>
-                    <select class="form-select mb-0" name="stafferPosition" id="stafferPosition"
-                            th:field="*{stafferPosition}" th:errorclass="is-invalid">
+                    <label class="text-muted">Должность</label>
+                    <select class="form-select mb-0" th:field="*{stafferPosition}"
+                            th:errorclass="is-invalid">
                         <option th:value="${null}">Выберите из списка</option>
                         <option th:each="p : ${allPositions}" th:value="${p.getPositionId()}"
                                 th:text="${p.getPositionName()}">
@@ -103,9 +102,9 @@
                 </div>
                 <!--Номер телефона-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferPhoneNumber">Номер телефона</label>
-                    <input type="text" class="form-control" name="stafferPhoneNumber" id="stafferPhoneNumber"
-                           th:field="*{stafferPhoneNumber}" th:errorclass="is-invalid">
+                    <label class="text-muted">Номер телефона</label>
+                    <input type="text" class="form-control" th:field="*{stafferPhoneNumber}"
+                           th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('stafferPhoneNumber')}"
                          th:errors="*{stafferPhoneNumber}" class="invalid-feedback text-break"></div>
                 </div>
@@ -116,26 +115,26 @@
                 <div th:object="${user}">
                     <!--Имя пользователя-->
                     <div class="mb-0">
-                        <label class="text-muted" for="username">Почтовый ящик</label>
+                        <label class="text-muted">Почтовый ящик</label>
                         <!--TODO сменить тип на емэйл-->
-                        <input type="text" class="form-control" name="username" id="username"
-                               th:value="*{username}" th:errorclass="is-invalid">
+                        <input type="text" class="form-control" th:field="*{username}"
+                               th:errorclass="is-invalid">
                         <div style="color: red" th:if="${#fields.hasErrors('username')}"
                              th:errors="*{username}" class="invalid-feedback text-break"></div>
                     </div>
                     <!--Пароль-->
                     <div class="mb-0">
-                        <label class="text-muted" for="password">Пароль</label>
-                        <input type="password" class="form-control" name="password" id="password"
-                               th:value="*{password}" th:errorclass="is-invalid">
+                        <label class="text-muted">Пароль</label>
+                        <input type="password" class="form-control" th:field="*{password}"
+                               th:errorclass="is-invalid">
                         <div style="color: red" th:if="${#fields.hasErrors('password')}"
                              th:errors="*{password}" class="invalid-feedback text-break"></div>
                     </div>
                     <!--Повтор пароля-->
                     <div class="mb-2">
-                        <label class="text-muted" for="confirmPassword">Повторный ввод пароля</label>
-                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
-                               th:value="*{confirmPassword}" th:errorclass="is-invalid" aria-describedby="rptPwdHelper">
+                        <label class="text-muted">Повторный ввод пароля</label>
+                        <input type="password" class="form-control" th:field="*{confirmPassword}"
+                               th:errorclass="is-invalid" aria-describedby="rptPwdHelper">
                         <div style="color: red" th:if="${#fields.hasErrors('confirmPassword')}"
                              th:errors="*{confirmPassword}" class="invalid-feedback text-break"></div>
                         <!--TODO поправить ссылку на политику конфиденциальности-->
