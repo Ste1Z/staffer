@@ -35,10 +35,10 @@
 <!--список заявок-->
 <div class="container-fluid mb-2 d-flex">
     <div class="bg-light shadow border rounded">
-        <div class="row flex-row  p-2">
+        <div class="row flex-row p-2">
             <!--карточка с добавлением заявки-->
             <div class="col">
-                <div class="card shadow mb-0 justify-content-center text-center"
+                <div class="card shadow justify-content-center text-center"
                      style="width: 20rem; height: 20rem">
                     <a class="stretched-link" th:href="@{/requests/addRequest}"></a>
                     <i class="bi bi-file-plus opacity-50" style="font-size: 17rem;"></i>
@@ -58,26 +58,31 @@
                             <!--отображение необходимого кол-ва сотрудников, поданных заявок и одобренных заявок-->
                             <div class="mb-3">
                                 <h5>
-                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"
-                                       style="color: #f9d403">
+                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.requestId})}"
+                                       class="btn btn-light bg-body border-white">
+                                        <!--                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"-->
+                                        <!--                                       style="color: #f9d403">-->
                                         <img th:src="@{/images/staffer_search_min.png}" alt="staffer_search_min"
                                              th:text="${r.getRequestNumOfReqStaffers()}">
-                                    </a>
-                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"
-                                       style="color: #7f7f7f">
-                                        <img th:src="@{/images/staffer_not_approved_min.png}" alt="staffer_not_approved_min"
+                                        <!--                                    </a>-->
+                                        <!--                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"-->
+                                        <!--                                       style="color: #7f7f7f">-->
+                                        <img th:src="@{/images/staffer_not_approved_min.png}"
+                                             alt="staffer_not_approved_min"
                                              th:text="${r.getCountOfNotApprovedStaffersInRequest()}">
-                                    </a>
-                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"
-                                       style="color: #07c967">
+                                        <!--                                    </a>-->
+                                        <!--                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"-->
+                                        <!--                                       style="color: #07c967">-->
                                         <img th:src="@{/images/staffer_approved_min.png}" alt="staffer_approved_min"
                                              th:text="${r.getCountOfApprovedStaffersInRequest()}">
+                                        <!--                                    </a>-->
                                     </a>
                                 </h5>
                             </div>
                             <!--требуемая должность-->
                             <div class="mb-3">
-                                <h5><b class="bi bi-search p-1" th:text=" ${r.requestReqPosition.positionName}"></b></h5>
+                                <h5><b class="bi bi-search p-1" th:text=" ${r.requestReqPosition.positionName}"></b>
+                                </h5>
                             </div>
                             <!--требуемая дата выхода на работу-->
                             <div class="mb-3">
@@ -98,14 +103,14 @@
                             <div class="row justify-content-end">
                                 <!--кнопка добавления залогиненного пользователя в заявку-->
                                 <div class="col-auto">
-                                    <form name="add_staffer_to_request" method="post"
-                                          th:action="@{/requests/allRequests/{id}(id = ${r.getRequestId()})}">
+                                    <form th:method="POST"
+                                          th:action="@{/requests/allRequests/{id}(id = ${r.requestId})}">
                                         <button type="submit" class="btn btn-outline-danger">Подать заявку</button>
                                     </form>
                                 </div>
                                 <!--кнопка редактирования заявки-->
                                 <div class="col-auto">
-                                    <form name="edit_request" method="get"
+                                    <form th:method="GET"
                                           th:action="@{/requests/editRequest/{id}(id = ${r.getRequestId()})}">
                                         <button type="submit" class="btn btn-outline-danger">
                                             <i class="bi bi-pencil-square"></i>

@@ -55,11 +55,9 @@ public class AllRequestsController {
     }
 
     //Добавление сотрудника в заявку по id
-    @PostMapping("/requests/{requestId}")
+    @PostMapping("allRequests/{requestId}")
     public String addStafferToRequest(HttpServletRequest http, @PathVariable("requestId") Long requestId) {
-        Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByUsername(principal.getName()).get();
-        Staffer staffer = user.getStaffer();
+        Staffer staffer = userDetailsService.getStafferFromLoggedUser(http);
         Request request = requestService.getRequest(requestId);
         List<Staffer> staffers = request.getNotApprovedStaffersList();
         staffers.add(staffer);
