@@ -8,85 +8,116 @@
 <div th:insert="~{parts/common :: body}"></div>
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
-<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-3">
+<div class="container-fluid h-100 justify-content-center align-items-center p-3" style="width: 20rem">
     <div class="row bg-light shadow-lg">
         <div class="col border rounded p-3">
             <h3 class="text-center mb-3">
                 <div>Редактирование</div>
                 <div>профиля</div>
             </h3>
-            <form th:method="post" th:action="@{/myProfile}">
+            <form th:method="POST" th:action="@{/myProfile}" th:object="${currentStaffer}">
+                <!--Имя-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferName">Имя</label>
-                    <input type="text" class="form-control" name="stafferName" id="stafferName"
-                           th:value="${staffer.getStafferName()}">
+                    <label class="text-muted">Имя</label>
+                    <input type="text" class="form-control" th:field="*{stafferName}"
+                           th:value="*{stafferName}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferName')}"
+                         th:errors="*{stafferName}" class="invalid-feedback text-break"></div>
                 </div>
+                <!--Фамилия-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferSurname">Фамилия</label>
-                    <input type="text" class="form-control" name="stafferSurname" id="stafferSurname"
-                           th:value="${staffer.getStafferSurname()}">
+                    <label class="text-muted">Фамилия</label>
+                    <input type="text" class="form-control" th:field="*{stafferSurname}"
+                           th:value="*{stafferSurname}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferSurname')}"
+                         th:errors="*{stafferSurname}" class="invalid-feedback text-break"></div>
                 </div>
+                <!--Отчество-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferPatronymic">Отчество</label>
-                    <input type="text" class="form-control" name="stafferPatronymic" id="stafferPatronymic"
-                           th:value="${staffer.getStafferPatronymic()}">
+                    <label class="text-muted">Отчество</label>
+                    <input type="text" class="form-control" th:field="*{stafferPatronymic}"
+                           th:value="*{stafferPatronymic}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferPatronymic')}"
+                         th:errors="*{stafferPatronymic}" class="invalid-feedback text-break"></div>
                 </div>
+                <!--Дата рождения-->
                 <div class="mb-0">
-                    <label class="text-muted" for="stafferDateOfBirth">Дата рождения</label>
-                    <input type="date" class="form-control" name="stafferDateOfBirth" id="stafferDateOfBirth"
-                           th:value="${{staffer.getStafferDateOfBirth()}}">
+                    <label class="text-muted">Дата рождения</label>
+                    <input type="date" class="form-control" th:field="*{stafferDateOfBirth}"
+                           th:value="*{{stafferDateOfBirth}}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferDateOfBirth')}"
+                         th:errors="*{stafferDateOfBirth}" class="invalid-feedback text-break"></div>
                 </div>
+                <!--Филиал-->
                 <div>
-                    <label class="text-muted" for="stafferBranch">Ваш филиал</label>
-                    <select class="form-select mb-0" name="stafferBranch" id="stafferBranch">
-                        <option selected disabled th:value="${staffer.getStafferBranch().getBranchId()}"
-                                th:text="${staffer.getStafferBranch().getBranchName()}">
+                    <label class="text-muted">Ваш филиал</label>
+                    <select class="form-select mb-0" th:field="*{stafferBranch}"
+                            th:errorclass="is-invalid">
+                        <option selected disabled th:value="*{stafferBranch.branchId}"
+                                th:text="*{stafferBranch.branchName}">
                         </option>
-                        <option th:each="b : ${branches}" th:value="${b.getBranchId()}"
-                                th:text="${b.getBranchName()}">
+                        <option th:each="b : ${allBranches}" th:value="${b.branchId}"
+                                th:text="${b.branchName}">
                         </option>
                     </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferBranch')}"
+                         th:errors="*{stafferBranch}" class="invalid-feedback text-break"></div>
                 </div>
+                <!--Магазин-->
                 <div>
-                    <label class="text-muted" for="stafferShop">Ваш магазин</label>
-                    <select class="form-select mb-0" name="stafferShop" id="stafferShop">
-                        <option th:value="${staffer.getStafferShop().getShopId()}"
-                                th:text="${staffer.getStafferShop().getShopName()}">
+                    <label class="text-muted">Ваш магазин</label>
+                    <select class="form-select mb-0" th:field="*{stafferShop}"
+                            th:errorclass="is-invalid" aria-describedby="stafferShopHelper">
+                        <option selected disabled th:value="*{stafferShop.shopId}"
+                                th:text="*{stafferShop.shopName}">
                         </option>
-                        <option th:each="s : ${shops}" th:value="${s.getShopId()}"
-                                th:text="${s.getShopName()}">
+                        <option th:each="s : ${allShops}" th:value="${s.shopId}"
+                                th:text="${s.shopName}">
                         </option>
                     </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferShop')}"
+                         th:errors="*{stafferShop}" class="invalid-feedback text-break"></div>
+                    <!--TODO поправить ссылку на создание магазина-->
+                    <div id="stafferShopHelper" class="form-text text-center mb-0">
+                        Не нашли свой магазин? Нажмите <a href="#"> здесь</a>
+                    </div>
                 </div>
+                <!--Скрипт для отображения списка магазинов в зависимости от выбранного филиала-->
+
                 <script>
                     $(document).ready(function () {
                         $('#stafferBranch').on('change', function () {
                             $('#stafferShop').empty().append('<option th:value="null">Выберите из списка</option>');
-                            var branchId = $(this).val();
-                            var href = "http://192.168.0.106:8080/branch/" + branchId
+                            var selectedBranchId = $(this).val();
+                            var href = "http://192.168.0.106:8080/branch/" + selectedBranchId
                             $.get(href, function (branchFromBranchesPage) {
                                 var shopsFromBranch = branchFromBranchesPage.shopsOfBranch;
-                                for (var i = 0; i <= branchShops.length - 1; i++) {
-                                    $('#stafferShop').append('<option value="' + shopsFromBranch[i].id + '">' + shopsFromBranch[i].name + '</option>');
+                                for (var i = 0; i <= shopsFromBranch.length - 1; i++) {
+                                    $('#stafferShop').append('<option value="' + shopsFromBranch[i].shopId + '">' + shopsFromBranch[i].shopName + '</option>');
                                 }
                             })
                         })
                     })
                 </script>
                 <div>
-                    <label class="text-muted" for="stafferPosition">Ваша должность</label>
-                    <select class="form-select mb-0" id="stafferPosition" name="stafferPosition">
-                        <option selected disabled th:value="${staffer.getStafferPosition().getPositionId()}"
-                                th:text="${staffer.getStafferPosition().getPositionName()}"></option>
-                        <option th:each="position : ${positions}" th:value="${position.getPositionId()}"
-                                th:text="${position.getPositionName()}">
+                    <label class="text-muted">Ваша должность</label>
+                    <select class="form-select mb-0" th:field="*{stafferPosition}"
+                            th:errorclass="is-invalid">
+                        <option selected disabled th:value="*{stafferPosition.positionId}"
+                                th:text="*{stafferPosition.positionName}"></option>
+                        <option th:each="p : ${allPositions}" th:value="${p.positionId}"
+                                th:text="${p.positionName}">
                         </option>
                     </select>
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferPosition')}"
+                         th:errors="*{stafferPosition}" class="invalid-feedback text-break"></div>
                 </div>
-                <div class="mb-2">
-                    <label class="text-muted" for="stafferPhoneNumber">Номер телефона</label>
-                    <input type="text" class="form-control" name="stafferPhoneNumber" id="stafferPhoneNumber"
-                           th:value="${staffer.getStafferPhoneNumber()}">
+                <div class="mb-3">
+                    <label class="text-muted">Номер телефона</label>
+                    <input type="text" class="form-control" th:field="*{stafferPhoneNumber}"
+                           th:value="*{stafferPhoneNumber}" th:errorclass="is-invalid">
+                    <div style="color: red" th:if="${#fields.hasErrors('stafferPhoneNumber')}"
+                         th:errors="*{stafferPhoneNumber}" class="invalid-feedback text-break"></div>
                 </div>
                 <script>
                     $("#stafferPhoneNumber").mask("+7 (999) 999-9999");

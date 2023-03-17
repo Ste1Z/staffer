@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,27 +43,25 @@ public class MyProfileController {
 
     //Подгрузка данных пользователя на основе залогиненного пользователя
     @GetMapping("/myProfile")
-    public String myProfilePage(HttpServletRequest http, @ModelAttribute("branch") Branch branch, @ModelAttribute("shop") Shop shop,
-                                @ModelAttribute("position") Position position, Model model) {
-        Principal principal = http.getUserPrincipal();
-        User user = userDetailsService.findUserByUsername(principal.getName()).get();
-        model.addAttribute("staffer", user.getStaffer());
-        model.addAttribute("branches", branchService.getAllBranches());
-        model.addAttribute("shops", shopService.getAllShops());
-        model.addAttribute("positions", positionService.getAllPositions());
+    public String myProfilePage(HttpServletRequest http, Model model) {
+        Staffer currentStaffer = userDetailsService.getStafferFromLoggedUser(http);
+        model.addAttribute("currentStaffer", currentStaffer);
+        model.addAttribute("allBranches", branchService.getAllBranches());
+        model.addAttribute("allShops", shopService.getAllShops());
+        model.addAttribute("allPositions", positionService.getAllPositions());
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Отображение страницы профиля");
         return "myProfile";
     }
 
     //Сохранение измененных данных пользователя
     @PostMapping("/myProfile")
-    public String saveProfileChanges(HttpServletRequest http, @ModelAttribute("staffer") @Valid Staffer staffer) {
+    public String saveProfileChanges(@Valid Staffer staffer, BindingResult bindingResult, HttpServletRequest http) {
+        if (bindingResult.hasErrors()) return "/myProfile";
         Principal principal = http.getUserPrincipal();
         User user = userDetailsService.findUserByUsername(principal.getName()).get();
         staffer.setStafferId(user.getStaffer().getStafferId());
         staffer.setUsersStaffer(user);
         //TODO проверить на работоспособность
-        staffer.checkChangesOfStafferProfileAndSetPreviousValues(user.getStaffer());
         stafferService.saveStaffer(staffer);
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Сохранение данных профиля");
         return "redirect:/main";
