@@ -15,6 +15,7 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -89,19 +90,6 @@ public class Staffer {
     //Получаем фамилию И. О.
     public String getFullName() {
         return this.stafferSurname + " " + this.stafferName.charAt(0) + ". " + this.stafferPatronymic.charAt(0) + ".";
-    }
-
-    //Проверяем изменения данных пользователя и выставляем старые значения, если ничего не выбрано в полях
-    public void checkChangesOfStafferProfileAndSetPreviousValues(Staffer oldVersionofStaffer) {
-        if (this.getStafferBranch() == null) {
-            this.setStafferBranch(oldVersionofStaffer.getStafferBranch());
-        }
-        if (this.getStafferShop() == null) {
-            this.setStafferShop(oldVersionofStaffer.getStafferShop());
-        }
-        if (this.getStafferPosition() == null) {
-            this.setStafferPosition(oldVersionofStaffer.getStafferPosition());
-        }
     }
 
 }

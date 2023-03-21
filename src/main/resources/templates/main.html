@@ -9,6 +9,203 @@
 <div th:insert="~{parts/common :: body}"></div>
 <div th:insert="~{parts/navbar :: navbar}"></div>
 
+<!--навигация по страницам-->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb m-3">
+        <li class="breadcrumb-item"><a href="/requests/allRequests">Заявки</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Мои отклики</li>
+    </ol>
+</nav>
+
+<ul class="nav nav-tabs mx-3" id="tabsOfRequests" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="approvedTab" data-bs-toggle="tab" data-bs-target="#approvedTabPane"
+                type="button" role="tab" aria-controls="approvedTabPane" aria-selected="true">Одобренные заявки
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="notApprovedTab" data-bs-toggle="tab" data-bs-target="#notApprovedTabPane"
+                type="button" role="tab" aria-controls="notApprovedTabPane" aria-selected="false">На рассмотрении
+        </button>
+
+    </li>
+</ul>
+<div class="tab-content" id="tabsOfRequestsContent">
+    <div class="tab-pane fade show active" id="approvedTabPane" role="tabpanel" aria-labelledby="approvedTab"
+         tabindex="0">
+        <!--список одобренных заявок-->
+        <div class="container-fluid d-flex">
+            <div class="bg-light shadow border rounded">
+                <div class="row flex-row p-2">
+                    <!--Проверка на наличие сотрудника в списках одобренных заявок-->
+                    <div th:if="${#lists.size(currentStafferRequestsWithApprove) == 0}">
+                        <h6>У вас отсутствуют одобренные заявки</h6>
+                    </div>
+
+                    <th:block th:each="r : ${currentStafferRequestsWithApprove}">
+                        <div class="col">
+                            <!--карточка с заявкой-->
+                            <div class="card shadow" style="width: 20rem; height: 20rem">
+                                <div class="card-header bg-transparent text-center">
+                                    <h4><b th:text="${r.requestShop.shopName}"></b></h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    <!--<a class="stretched-link" th:href="/requests/staffers_list/${request.getRequestId()}"></a>-->
+
+                                    <!--отображение необходимого кол-ва сотрудников, поданных заявок и одобренных заявок-->
+                                    <div class="mb-3">
+                                        <h5>
+                                            <a th:href="@{/requests/staffersList/{id}(id = ${r.requestId})}"
+                                               class="btn btn-light bg-body border-white">
+
+                                                <img th:src="@{/images/staffer_search_min.png}" alt="staffer_search_min"
+                                                     th:text="${r.getRequestNumOfReqStaffers()}">
+                                                <img th:src="@{/images/staffer_not_approved_min.png}"
+                                                     alt="staffer_not_approved_min"
+                                                     th:text="${r.getCountOfNotApprovedStaffersInRequest()}">
+                                                <img th:src="@{/images/staffer_approved_min.png}"
+                                                     alt="staffer_approved_min"
+                                                     th:text="${r.getCountOfApprovedStaffersInRequest()}">
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <!--требуемая должность-->
+                                    <div class="mb-3">
+                                        <h5><b class="bi bi-search p-1"
+                                               th:text=" ${r.requestReqPosition.positionName}"></b>
+                                        </h5>
+                                    </div>
+                                    <!--требуемая дата выхода на работу-->
+                                    <div class="mb-3">
+                                        <h5>
+                                            <b class="bi bi-calendar2-date-fill p-1"
+                                               th:text=" ${#dates.format(r.getRequestDateOfWork(), 'dd.MM.yyyy')}"></b>
+                                        </h5>
+                                    </div>
+                                    <!--требуемое время работы-->
+                                    <div class="mb-3">
+                                        <h5>
+                                            <b class="bi bi-clock-fill p-1" th:text=" ${#dates.format(r.getRequestStartTime(), 'HH:mm')} + ' - ' +
+                                    ${#dates.format(r.getRequestEndTime(), 'HH:mm')}"></b>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row justify-content-end">
+                                        <!--кнопка добавления залогиненного пользователя в заявку-->
+                                        <div class="col-auto">
+                                            <form th:method="POST"
+                                                  th:action="@{/requests/allRequests/{id}(id = ${r.requestId})}">
+                                                <button type="submit" class="btn btn-outline-danger">Подать заявку
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <!--кнопка редактирования заявки-->
+                                        <div class="col-auto">
+                                            <form th:method="GET"
+                                                  th:action="@{/requests/editRequest/{id}(id = ${r.getRequestId()})}">
+                                                <button type="submit" class="btn btn-outline-danger">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="notApprovedTabPane" role="tabpanel" aria-labelledby="notApprovedTab" tabindex="0">
+        <!--список заявок на рассмотрении-->
+        <div class="container-fluid d-flex">
+            <div class="bg-light shadow border rounded">
+                <div class="row flex-row p-2">
+                    <!--Проверка на наличие сотрудника в списках НЕодобренных заявок-->
+                    <div class="container-fluid" th:if="${#lists.size(currentStafferRequestsWithoutApprove) == 0}">
+                        <h6>У вас отсутствуют заявки на рассмотрении</h6>
+                    </div>
+
+                    <th:block th:each="r : ${currentStafferRequestsWithoutApprove}">
+                        <div class="col">
+                            <!--карточка с заявкой-->
+                            <div class="card shadow" style="width: 20rem; height: 20rem">
+                                <div class="card-header bg-transparent text-center">
+                                    <h4><b th:text="${r.requestShop.shopName}"></b></h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    <!--<a class="stretched-link" th:href="/requests/staffers_list/${request.getRequestId()}"></a>-->
+
+                                    <!--отображение необходимого кол-ва сотрудников, поданных заявок и одобренных заявок-->
+                                    <div class="mb-3">
+                                        <h5>
+                                            <a th:href="@{/requests/staffersList/{id}(id = ${r.requestId})}"
+                                               class="btn btn-light bg-body border-white">
+
+                                                <img th:src="@{/images/staffer_search_min.png}" alt="staffer_search_min"
+                                                     th:text="${r.getRequestNumOfReqStaffers()}">
+                                                <img th:src="@{/images/staffer_not_approved_min.png}"
+                                                     alt="staffer_not_approved_min"
+                                                     th:text="${r.getCountOfNotApprovedStaffersInRequest()}">
+                                                <img th:src="@{/images/staffer_approved_min.png}"
+                                                     alt="staffer_approved_min"
+                                                     th:text="${r.getCountOfApprovedStaffersInRequest()}">
+                                            </a>
+                                        </h5>
+                                    </div>
+                                    <!--требуемая должность-->
+                                    <div class="mb-3">
+                                        <h5><b class="bi bi-search p-1"
+                                               th:text=" ${r.requestReqPosition.positionName}"></b>
+                                        </h5>
+                                    </div>
+                                    <!--требуемая дата выхода на работу-->
+                                    <div class="mb-3">
+                                        <h5>
+                                            <b class="bi bi-calendar2-date-fill p-1"
+                                               th:text=" ${#dates.format(r.getRequestDateOfWork(), 'dd.MM.yyyy')}"></b>
+                                        </h5>
+                                    </div>
+                                    <!--требуемое время работы-->
+                                    <div class="mb-3">
+                                        <h5>
+                                            <b class="bi bi-clock-fill p-1" th:text=" ${#dates.format(r.getRequestStartTime(), 'HH:mm')} + ' - ' +
+                                    ${#dates.format(r.getRequestEndTime(), 'HH:mm')}"></b>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row justify-content-end">
+                                        <!--кнопка добавления залогиненного пользователя в заявку-->
+                                        <div class="col-auto">
+                                            <form th:method="POST"
+                                                  th:action="@{/requests/allRequests/{id}(id = ${r.requestId})}">
+                                                <button type="submit" class="btn btn-outline-danger">Подать заявку
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <!--кнопка редактирования заявки-->
+                                        <div class="col-auto">
+                                            <form th:method="GET"
+                                                  th:action="@{/requests/editRequest/{id}(id = ${r.getRequestId()})}">
+                                                <button type="submit" class="btn btn-outline-danger">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>

@@ -30,12 +30,12 @@
                 </div>
             </div>
 
-            <th:block th:each="request : ${filterRequests}">
+            <th:block th:each="r : ${filterRequests}">
                 <div class="col">
                     <!--карточка с заявкой-->
                     <div class="card shadow" style="width: 20rem; height: 20rem">
                         <div class="card-header bg-transparent text-center">
-                            <h4><b th:text="${request.getRequestShop()}"></b></h4>
+                            <h4><b th:text="${r.requestShop.shopName}"></b></h4>
                         </div>
                         <div class="card-body text-center">
                             <!--<a class="stretched-link" th:href="/requests/staffers_list/${request.getRequestId()}"></a>-->
@@ -43,39 +43,39 @@
                             <!--отображение необходимого кол-ва сотрудников, поданных заявок и одобренных заявок-->
                             <div class="mb-3">
                                 <h5>
-                                    <a th:href="@{/requests/staffersList/{id}(id = ${request.getRequestId()})}"
+                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.requestId})}"
                                        style="color: #f9d403">
                                         <img th:src="@{/images/staffer_search_min.png}" alt="staffer_search_min"
-                                             th:text="${request.getRequestNumOfReqStaffers()}">
+                                             th:text="${r.requestNumOfReqStaffers}">
                                     </a>
-                                    <a th:href="@{/requests/staffersList/{id}(id = ${request.getRequestId()})}"
+                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.requestId})}"
                                        style="color: #7f7f7f">
                                         <img th:src="@{/images/staffer_not_approved_min.png}" alt="staffer_not_approved_min"
-                                             th:text="${request.getCountOfNotApprovedStaffersInRequest()}">
+                                             th:text="${r.countOfNotApprovedStaffersInRequest}">
                                     </a>
-                                    <a th:href="@{/requests/staffersList/{id}(id = ${request.getRequestId()})}"
+                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.requestId})}"
                                        style="color: #07c967">
                                         <img th:src="@{/images/staffer_approved_min.png}" alt="staffer_approved_min"
-                                             th:text="${request.getCountOfApprovedStaffersInRequest()}">
+                                             th:text="${r.countOfApprovedStaffersInRequest}">
                                     </a>
                                 </h5>
                             </div>
                             <!--требуемая должность-->
                             <div class="mb-3">
-                                <h5><b class="bi bi-search p-1" th:text=" ${request.getRequestReqPosition()}"></b></h5>
+                                <h5><b class="bi bi-search p-1" th:text=" ${r.requestReqPosition.positionName}"></b></h5>
                             </div>
                             <!--требуемая дата выхода на работу-->
                             <div class="mb-3">
                                 <h5>
                                     <b class="bi bi-calendar2-date-fill p-1"
-                                       th:text=" ${#dates.format(request.getRequestDateOfWork(), 'dd.MM.yyyy')}"></b>
+                                       th:text=" ${#dates.format(r.requestDateOfWork, 'dd.MM.yyyy')}"></b>
                                 </h5>
                             </div>
                             <!--требуемое время работы-->
                             <div class="mb-3">
                                 <h5>
-                                    <b class="bi bi-clock-fill p-1" th:text=" ${#dates.format(request.getRequestStartTime(), 'HH:mm')} + ' - ' +
-                                    ${#dates.format(request.getRequestEndTime(), 'HH:mm')}"></b>
+                                    <b class="bi bi-clock-fill p-1" th:text=" ${#dates.format(r.requestStartTime, 'HH:mm')} + ' - ' +
+                                    ${#dates.format(r.requestEndTime, 'HH:mm')}"></b>
                                 </h5>
                             </div>
                         </div>
@@ -84,15 +84,15 @@
                                 <!--кнопка добавления залогиненного пользователя в заявку-->
                                 <div class="col-auto">
                                     <form name="add_staffer_to_request" th:method="post"
-                                          th:action="@{/requests/allRequests/{id}(id = ${request.getRequestId()})}">
+                                          th:action="@{/requests/allRequests/{id}(id = ${r.requestId})}">
                                         <button type="submit" class="btn btn-outline-danger">Подать заявку</button>
                                     </form>
                                 </div>
                                 <!--кнопка редактирования заявки-->
                                 <div class="col-auto">
                                     <form name="edit_request" th:method="get"
-                                          th:action="@{/requests/editRequest/{id}(id = ${request.getRequestId()})}">
-                                        <button type="submit" class="btn">
+                                          th:action="@{/requests/editRequest/{id}(id = ${r.requestId})}">
+                                        <button type="submit" class="btn btn-outline-danger">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                     </form>

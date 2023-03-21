@@ -7,13 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.alexanderrogachev.staffer.controllers.requests.AddRequestController;
 import ru.alexanderrogachev.staffer.domains.User;
-import ru.alexanderrogachev.staffer.models.Branch;
-import ru.alexanderrogachev.staffer.models.Position;
-import ru.alexanderrogachev.staffer.models.Shop;
 import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.services.*;
 
@@ -24,7 +19,7 @@ import java.security.Principal;
 @Controller
 public class MyProfileController {
 
-    private static final Logger logger = LogManager.getLogger(AddRequestController.class);
+    private static final Logger logger = LogManager.getLogger(MyProfileController.class);
 
     private final UserDetailsServiceImpl userDetailsService;
     private final StafferServiceImpl stafferService;
@@ -61,7 +56,6 @@ public class MyProfileController {
         User user = userDetailsService.findUserByUsername(principal.getName()).get();
         staffer.setStafferId(user.getStaffer().getStafferId());
         staffer.setUsersStaffer(user);
-        //TODO проверить на работоспособность
         stafferService.saveStaffer(staffer);
         logger.info("[" + this.getClass().getSimpleName() + "]" + " Сохранение данных профиля");
         return "redirect:/main";

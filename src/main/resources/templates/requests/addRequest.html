@@ -94,7 +94,6 @@
                     <label class="text-muted">Комментарий(необязательно)</label>
                     <textarea class="form-control mb-3" th:field="*{requestComment}"
                               th:errorclass="is-invalid" rows="6"></textarea>
-
                     <div style="color: red" th:if="${#fields.hasErrors('requestComment')}"
                          th:errors="*{requestComment}" class="invalid-feedback text-break"></div>
                 </div>

@@ -35,10 +35,10 @@
 <!--список заявок-->
 <div class="container-fluid mb-2 d-flex">
     <div class="bg-light shadow border rounded">
-        <div class="row flex-row p-2">
+        <div class="row flex-row">
             <!--карточка с добавлением заявки-->
             <div class="col">
-                <div class="card shadow justify-content-center text-center"
+                <div class="m-2 card shadow justify-content-center text-center"
                      style="width: 20rem; height: 20rem">
                     <a class="stretched-link" th:href="@{/requests/addRequest}"></a>
                     <i class="bi bi-file-plus opacity-50" style="font-size: 17rem;"></i>
@@ -48,7 +48,7 @@
             <th:block th:each="r : ${filterRequests}">
                 <div class="col">
                     <!--карточка с заявкой-->
-                    <div class="card shadow" style="width: 20rem; height: 20rem">
+                    <div class="m-2 card shadow" style="width: 20rem; height: 20rem">
                         <div class="card-header bg-transparent text-center">
                             <h4><b th:text="${r.requestShop.shopName}"></b></h4>
                         </div>
@@ -60,22 +60,13 @@
                                 <h5>
                                     <a th:href="@{/requests/staffersList/{id}(id = ${r.requestId})}"
                                        class="btn btn-light bg-body border-white">
-                                        <!--                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"-->
-                                        <!--                                       style="color: #f9d403">-->
                                         <img th:src="@{/images/staffer_search_min.png}" alt="staffer_search_min"
                                              th:text="${r.getRequestNumOfReqStaffers()}">
-                                        <!--                                    </a>-->
-                                        <!--                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"-->
-                                        <!--                                       style="color: #7f7f7f">-->
                                         <img th:src="@{/images/staffer_not_approved_min.png}"
                                              alt="staffer_not_approved_min"
                                              th:text="${r.getCountOfNotApprovedStaffersInRequest()}">
-                                        <!--                                    </a>-->
-                                        <!--                                    <a th:href="@{/requests/staffersList/{id}(id = ${r.getRequestId()})}"-->
-                                        <!--                                       style="color: #07c967">-->
                                         <img th:src="@{/images/staffer_approved_min.png}" alt="staffer_approved_min"
                                              th:text="${r.getCountOfApprovedStaffersInRequest()}">
-                                        <!--                                    </a>-->
                                     </a>
                                 </h5>
                             </div>
