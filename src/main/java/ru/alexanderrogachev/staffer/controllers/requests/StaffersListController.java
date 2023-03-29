@@ -48,7 +48,7 @@ public class StaffersListController {
     @PostMapping("/staffersList/{requestId}/{stafferId}")
     public String staffersListApprove(@PathVariable("requestId") Long requestId, @PathVariable("stafferId") Long stafferId) {
         Request request = requestService.getRequest(requestId);
-        Staffer staffer = stafferService.findStafferById(stafferId);
+        Staffer staffer = stafferService.findStafferById(stafferId).get();
         request.switchStafferInRequest(staffer);
         requestService.saveRequest(request);
         stafferService.saveStaffer(staffer);

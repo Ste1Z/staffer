@@ -6,6 +6,7 @@ import ru.alexanderrogachev.staffer.models.Staffer;
 import ru.alexanderrogachev.staffer.repositories.StafferRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StafferServiceImpl implements StafferService {
@@ -28,11 +29,6 @@ public class StafferServiceImpl implements StafferService {
     }
 
     @Override
-    public Staffer getStaffer(Long stafferId) {
-        return stafferRepository.findById(stafferId).get();
-    }
-
-    @Override
     public void deleteStaffer(Long stafferId) {
         stafferRepository.deleteById(stafferId);
     }
@@ -43,7 +39,7 @@ public class StafferServiceImpl implements StafferService {
     }
 
     @Override
-    public Staffer findStafferById(Long stafferId) {
+    public Optional<Staffer> findStafferById(Long stafferId) {
         return stafferRepository.findByStafferId(stafferId);
     }
 

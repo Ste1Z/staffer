@@ -3,18 +3,17 @@ package ru.alexanderrogachev.staffer.services;
 import ru.alexanderrogachev.staffer.models.Staffer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StafferService {
     List<Staffer> getAllStaffers();
 
     void saveStaffer(Staffer staffer);
 
-    Staffer getStaffer(Long stafferId);
-
     void deleteStaffer(Long stafferId);
 
     List<Staffer> findStafferByStafferName(String stafferName);
 
-    Staffer findStafferById(Long stafferId);
+    Optional<Staffer> findStafferById(Long stafferId);
 
 }

@@ -12,7 +12,5 @@ public interface ShopRepository extends JpaRepository<Shop, Long> {
 
     void deleteShopByShopName(String shopName);
 
-    Shop findShopByShopName(String shopName);
-
     List<Shop> findShopsByShopBranch(Branch branch);
 }
