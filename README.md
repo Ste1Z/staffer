@@ -6,6 +6,23 @@
 создаёт заявку с нужными критерями, сотрудники с других магазинов видят эту заявку и могут подписаться, администратор
 отмечает всех подписавшихся, после чего
 сотрудник выходит на работу.
+<details>
+<summary><b><h2>Скриншоты приложения:</h2></b></summary>
+<div align="center">
+<img src="https://github.com/Ste1Z/staffer/blob/master/screenshots/login.png?raw=true"><br>
+Окно логина<br>
+<img src="https://github.com/Ste1Z/staffer/blob/master/screenshots/registration.png?raw=true"><br>
+Окно регистрации<br>
+<img src="https://github.com/Ste1Z/staffer/blob/master/screenshots/allRequests.png?raw=true"><br>
+Все заявки<br>
+<img src="https://github.com/Ste1Z/staffer/blob/master/screenshots/addRequest.png?raw=true"><br>
+Страница создания заявки<br>
+<img src="https://github.com/Ste1Z/staffer/blob/master/screenshots/staffersList.png"><br>
+Страница с откликнувшимися на заявку работниками<br>
+<img src="https://github.com/Ste1Z/staffer/blob/master/screenshots/admin.png?raw=true"><br>
+Панель администратора<br>
+</div>
+</details>
 
 <h2>Технологический стек:</h2>
 <li>Java + Spring Boot + Hibernate</li>

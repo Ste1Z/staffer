@@ -13,7 +13,7 @@
             <form th:method="POST" th:action="@{/process_login}" th:object="${user}">
                 <!--Логин-->
                 <div class="mb-0">
-                    <label class="text-muted" for="username">Почтовый ящик:</label>
+                    <label class="text-muted" for="username">Почтовый ящик</label>
                     <input type="text" class="form-control" name="username" id="username"
                            th:value="*{getUsername}" th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{getUsername}"
@@ -21,7 +21,7 @@
                 </div>
                 <!--Пароль-->
                 <div class="mb-3">
-                    <label class="text-muted" for="password">Пароль:</label>
+                    <label class="text-muted" for="password">Пароль</label>
                     <input type="password" class="form-control" name="password" id="password"
                            th:value="*{password}" th:errorclass="is-invalid">
                     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
