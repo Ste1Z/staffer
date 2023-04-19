@@ -1,18 +1,22 @@
 package ru.alexanderrogachev.staffer.controllers.requests;
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import ru.alexanderrogachev.staffer.models.Position;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.alexanderrogachev.staffer.models.Request;
 import ru.alexanderrogachev.staffer.services.PositionServiceImpl;
 import ru.alexanderrogachev.staffer.services.RequestServiceImpl;
 
 import javax.validation.Valid;
+
 
 //Страница редактирования заявки по id
 @Controller
@@ -41,8 +45,7 @@ public class EditRequestController {
 
     //Сохранение новых данных заявки
     @PostMapping("/editRequest/{requestId}")
-    public String editRequest(@Valid Request request, BindingResult bindingResult,
-                              @PathVariable("requestId") Long requestId, Model model) {
+    public String editRequest(@Valid Request request, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("allPositions", positionService.getAllPositions());
             return "requests/editRequest";
